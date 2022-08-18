@@ -1,3 +1,5 @@
+import "./Savebutton.css";
+
 export default  function SaveButton() {
     function handleClick() {
         //console.log("Clicked");
@@ -6,7 +8,7 @@ export default  function SaveButton() {
       }
 
     return (
-        <button onClick={handleClick}>Save</button> 
+        <button className="Savebutton" onClick={handleClick}>Save</button> 
     );
 };
  
