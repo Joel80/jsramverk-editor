@@ -1,23 +1,25 @@
-import logo from './logo.svg';
 import './App.css';
+import Editor from './components/editor/Editor';
+import SaveButton from './components/toolbar/savebutton/Savebutton';
 
 function App() {
   return (
     <div className="App">
       <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
+       Real time collaborative text editor
       </header>
+      <main className="App-main">
+        <div className='App-toolbar'>
+          <SaveButton />
+        </div>
+        <div className='App-editor'>
+          <Editor />
+        </div>
+        
+      </main>
+      <nav className='App-nav'>
+
+      </nav>
     </div>
   );
 }
