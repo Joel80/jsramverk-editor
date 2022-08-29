@@ -1,40 +1,40 @@
 .App {
-  /* text-align: center; */
+    /* text-align: center; */
 }
 
 
 .App-header {
-  background-color: #550080;
-  box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
-  /* box-shadow: 0px 2px #dcdcdc; */
-  min-height: 5em;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  /* font-size: calc(10px + 2vmin); */
-  font-size: 3rem;
-  color: white;
-  padding: 0.1em;
-  border-bottom: 1px black solid;
-  margin-bottom: 0.5em;
+    background-color: #550080;
+    box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
+    /* box-shadow: 0px 2px #dcdcdc; */
+    min-height: 5em;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    /* font-size: calc(10px + 2vmin); */
+    font-size: 3rem;
+    color: white;
+    padding: 0.1em;
+    border-bottom: 1px black solid;
+    margin-bottom: 0.5em;
 }
 
 .App-main {
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  font-size: calc(10px + 2vmin);
-  color: black;
-  margin-left: auto;
-  margin-right: auto;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    font-size: calc(10px + 2vmin);
+    color: black;
+    margin-left: auto;
+    margin-right: auto;
 }
 
 .App-toolbar {
- margin-bottom: 1em;
+    margin-bottom: 1em;
 }
 
-.App-editor {
+/* .App-editor {
 
-}
+} */
