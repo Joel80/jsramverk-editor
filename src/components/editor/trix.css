@@ -4,7 +4,10 @@ trix-editor {
   margin: 0;
   padding: 0.4em 0.6em;
   min-height: 5em;
-  outline: none; }
+  outline: none;
+  word-wrap: break-word;
+  white-space: pre-wrap;
+  word-break: break-word; }
 
 trix-toolbar * {
   box-sizing: border-box; }
@@ -334,7 +337,8 @@ trix-editor .attachment__metadata {
     white-space: nowrap; }
 
 .trix-content {
-  line-height: 1.5; }
+  line-height: 1.5;
+  }
   .trix-content * {
     box-sizing: border-box;
     margin: 0;
