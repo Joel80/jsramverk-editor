@@ -9,7 +9,7 @@ export default function Texteditor() {
     };
   
     const handleChange = (html: string, text: string) => {
-        console.log(html);
+        //console.log(html);
     };
   
     return(
