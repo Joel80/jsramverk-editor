@@ -5,9 +5,11 @@ export default  function SaveButton() {
     function handleClick() {
         //console.log("Clicked");
         const editorElement = document.querySelector("trix-editor") as any | null;
-        /* console.log(editorElement);
-        console.log(editorElement.getDocument()); */
-        console.log(editorElement?.editor.getDocument().toString());
+        // Output as text
+        console.log(`Content as unformatted string:  ${editorElement?.editor.getDocument().toString()}`);
+        //Output as html
+        console.log(`Content as html-value: ${editorElement.value}`);
+
       }
 
     return (
