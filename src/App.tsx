@@ -1,5 +1,5 @@
 import './App.css';
-import Editor from './components/editor/Editor';
+import Texteditor from './components/editor/Texteditor';
 import SaveButton from './components/toolbar/savebutton/Savebutton';
 
 function App() {
@@ -13,7 +13,7 @@ function App() {
               <SaveButton />
             </div>
             <div className='App-editor'>
-              <Editor />
+              <Texteditor />
             </div>
             
           </main>
