@@ -1,5 +1,6 @@
 import "trix/dist/trix";
 import { Editor, TrixEditor } from "react-trix";
+import "./trix.css";
 
 export default function Texteditor() {
 
@@ -8,10 +9,10 @@ export default function Texteditor() {
     };
   
     const handleChange = (html: string, text: string) => {
-        
+        console.log(html);
     };
   
     return(
-      <TrixEditor  autoFocus={true} onChange={handleChange} onEditorReady={handleEditorReady} mergeTags={[]}/>
+      <TrixEditor /* className="trix-content" */ autoFocus={true} onChange={handleChange} onEditorReady={handleEditorReady} mergeTags={[]}/>
     );
   }
