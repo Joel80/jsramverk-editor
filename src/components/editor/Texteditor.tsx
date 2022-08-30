@@ -7,12 +7,14 @@ export default function Texteditor() {
     const handleEditorReady = (editor: Editor) => {
         editor.insertString("");
     };
-  
+
     const handleChange = (html: string, text: string) => {
         //console.log(html);
+        //console.log(el);
+        
     };
   
     return(
-      <TrixEditor /* className="trix-content" */ autoFocus={true} onChange={handleChange} onEditorReady={handleEditorReady} mergeTags={[]}/>
+      <TrixEditor className="trix-content" autoFocus={true} onChange={handleChange} onEditorReady={handleEditorReady} mergeTags={[]} />
     );
   }
