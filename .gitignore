@@ -8,6 +8,9 @@
 # testing
 /coverage
 
+# deployment
+deploy.bash
+
 # production
 /build
 
