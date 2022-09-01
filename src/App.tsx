@@ -1,6 +1,7 @@
 import './App.css';
 import Texteditor from './components/editor/Texteditor';
-import SaveButton from './components/toolbar/savebutton/Savebutton';
+//import SaveButton from './components/toolbar/savebutton/Savebutton';
+import Toolbar from './components/toolbar/toolbar/Toolbar';
 
 function App() {
     return (
@@ -9,13 +10,8 @@ function App() {
           Real time collaborative text editor
           </header>
           <main className="App-main">
-            <div className='App-toolbar'>
-              <SaveButton />
-            </div>
-            <div className='App-editor'>
+              <Toolbar />
               <Texteditor />
-            </div>
-            
           </main>
           <nav className='App-nav'>
 

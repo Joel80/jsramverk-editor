@@ -27,10 +27,6 @@
     margin-right: auto;
 }
 
-.App-toolbar {
-    margin-bottom: 1em;
-}
-
 
 @media screen and (max-width: 710px) {
     .App-header {
