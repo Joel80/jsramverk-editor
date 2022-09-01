@@ -30,3 +30,16 @@
 .App-toolbar {
     margin-bottom: 1em;
 }
+
+
+@media screen and (max-width: 710px) {
+    .App-header {
+        font-size: 2rem;
+    }
+}
+
+@media screen and (max-width: 455px) {
+    .App-header {
+        font-size: 1.5rem;
+    }
+}
