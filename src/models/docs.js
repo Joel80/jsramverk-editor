@@ -23,7 +23,30 @@ const docsModel = {
         const document = await response.json();
 
         return document.data;
+    },
+
+    saveDoc: async function saveDoc(doc) {
+        const response = await fetch(`${docsModel.baseUrl}/docs`, { 
+            body: JSON.stringify(doc),
+            headers: {
+                'content-type': 'application/json'
+            },
+            method: 'POST'
+        });
+
+        console.log(response);
+    },
+
+    updateDoc: async function updateDoc(doc) {
+        const response = await fetch(`${docsModel.baseUrl}/docs/update`, { 
+            body: JSON.stringify(doc),
+            headers: {
+                'content-type': 'application/json'
+            },
+            method: 'POST'
+        });
     }
+
 }
 
 module.exports = docsModel;
