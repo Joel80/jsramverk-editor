@@ -38,12 +38,12 @@ const docsModel = {
     },
 
     updateDoc: async function updateDoc(doc) {
-        const response = await fetch(`${docsModel.baseUrl}/docs/update`, { 
+        const response = await fetch(`${docsModel.baseUrl}/docs`, { 
             body: JSON.stringify(doc),
             headers: {
                 'content-type': 'application/json'
             },
-            method: 'POST'
+            method: 'PUT'
         });
     }
 
