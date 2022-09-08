@@ -10,12 +10,13 @@ function App() {
     let defaultDoc: docInterface = {
         _id: null,
         name: "No title",
-        html: "<p>starthtml</p>"
+        html: ""
     };
 
     const [docs, setDocs] = useState([]);
     const [currentDoc, setCurrentDoc] = useState(defaultDoc);
     const [documentLoaded, setDocumentLoaded] = useState(false);
+    const [documentSaved, setDocumentSaved] = useState(false);
 
    console.log(`Log from app: ${currentDoc._id} - ${currentDoc.html} - ${currentDoc.name}`);
 
@@ -27,21 +28,28 @@ function App() {
         element.editor.insertHTML(content);
     }
 
-    async function fetchDocs() {
-        const allDocs = await docsModel.getAllDocs();
-
-        setDocs(allDocs);
+    function setSelectElement(id: string, value: string | null) {
+        let selectElement = document.getElementById(id) as HTMLSelectElement | null;
+        if (selectElement !== null) {
+            if (value !== null)
+                selectElement.value = value;
+        }
     }
 
-    async function setDoc(doc: docInterface) {
-        await setCurrentDoc(doc);
+    async function fetchDocs() {
+        const allDocs = await docsModel.getAllDocs();
+        setDocs(allDocs);
     }
 
     useEffect ( () => {
         (async () => {
             await fetchDocs();
+            setCurrentDoc(currentDoc);
+            //console.log(`Documen : ${currentDoc._id} saved`)
+            setSelectElement("documentSelect", currentDoc._id);
+            setDocumentSaved(false);
         })();
-    }, []);
+    }, [documentSaved]);
 
     useEffect (() => {
         setEditorContent(currentDoc.html);
@@ -54,8 +62,7 @@ function App() {
           Real time collaborative text editor
           </header>
           <main className="App-main">
-            {/* <div>{currentDoc.html}</div> */}
-              <Toolbar setDocumentLoaded={setDocumentLoaded} setCurrentDoc={setCurrentDoc} docs={docs} currentDoc={currentDoc}/>
+              <Toolbar setDocumentSaved={setDocumentSaved} setDocumentLoaded={setDocumentLoaded} setCurrentDoc={setCurrentDoc} docs={docs} currentDoc={currentDoc}/>
               <Texteditor setCurrentDoc={setCurrentDoc} currentDoc={currentDoc}/>
           </main>
           <nav className='App-nav'>
