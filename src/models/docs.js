@@ -49,6 +49,10 @@ const docsModel = {
             },
             method: 'PUT'
         });
+
+        const result = await response.json();
+
+        return result;
     }
 
 }
