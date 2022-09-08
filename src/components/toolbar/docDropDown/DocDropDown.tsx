@@ -1,6 +1,6 @@
 import docInterface from '../../../interfaces/doc';
 
-const documentModel = require('../../../models/docs');
+import docsModel from '../../../models/docs';
 
 export default  function DocDropDown({setDocumentLoaded, docs, setCurrentDoc}: {setDocumentLoaded(param: boolean): void, docs: docInterface[], setCurrentDoc(param: docInterface): void}) {
 
@@ -12,7 +12,7 @@ export default  function DocDropDown({setDocumentLoaded, docs, setCurrentDoc}: {
         //console.log(id);
 
         if (id !== "-99") {
-            const fetchedDoc = await documentModel.getOneDocById(id);
+            const fetchedDoc = await docsModel.getOneDocById(id);
             setCurrentDoc(fetchedDoc);
             setDocumentLoaded(true);
         } else {
