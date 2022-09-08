@@ -24,6 +24,7 @@ export default  function SaveButton({setCurrentDoc, setDocumentSaved, currentDoc
         } else {
           //currentDoc.html = editorElement?.editor.getDocument();
           docModel.updateDoc(currentDoc);
+          setDocumentSaved(true);
         }
 
 
