@@ -44,7 +44,7 @@ function App() {
     useEffect ( () => {
         (async () => {
             await fetchDocs();
-            setCurrentDoc(currentDoc);
+            //setCurrentDoc(currentDoc);
             //console.log(`Documen : ${currentDoc._id} saved`)
             setSelectElement("documentSelect", currentDoc._id);
             setDocumentSaved(false);
