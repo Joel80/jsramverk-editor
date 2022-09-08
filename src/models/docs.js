@@ -53,4 +53,4 @@ const docsModel = {
 
 }
 
-module.exports = docsModel;
+export default docsModel;
