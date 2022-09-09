@@ -1,6 +1,7 @@
 import docInterface from '../../../interfaces/doc';
-
 import docsModel from '../../../models/docs';
+import "./DocDropDown.css";
+
 
 export default  function DocDropDown({setDocumentLoaded, docs, setCurrentDoc}: {setDocumentLoaded(param: boolean): void, docs: docInterface[], setCurrentDoc(param: docInterface): void}) {
 
@@ -27,7 +28,7 @@ export default  function DocDropDown({setDocumentLoaded, docs, setCurrentDoc}: {
     }
 
     return (
-            <select id="documentSelect" onChange={(e) => fetchDoc(e)} className="DocList">
+            <select id="documentSelect" onChange={(e) => fetchDoc(e)} className="doc-list">
                 <option value= "-99" key="0">New document</option>
                 {docs.map((doc: docInterface, index:number) => <option value={doc._id || ""} key={index}>{doc.name} {/* - {doc._id} */}</option>)}
             </select> 
