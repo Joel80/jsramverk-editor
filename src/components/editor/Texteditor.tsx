@@ -6,9 +6,9 @@ import docInterface from '../../interfaces/doc';
 
 export default function Texteditor({ currentDoc, setCurrentDoc }: {currentDoc: docInterface, setCurrentDoc(param: docInterface): void} ) {
 
-    console.log("Rendering editor");
+    //console.log("Rendering editor");
 
-    console.log(`Log from editor: ${currentDoc.html}`);
+    //console.log(`Log from editor: ${currentDoc.html}`);
     //const editorElement = document.querySelector("trix-editor") as any | null;
     //editorElement?.editor.loadHTML(currentDoc.html);
 
