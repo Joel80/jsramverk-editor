@@ -1,6 +1,7 @@
 import "trix/dist/trix";
 import { Editor, TrixEditor } from "react-trix";
 import "./trix.css";
+import "./nameForm.css";
 import docInterface from '../../interfaces/doc';
 
 
