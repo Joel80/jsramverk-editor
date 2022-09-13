@@ -49,11 +49,7 @@ test('save button calls docsModel.saveDoc on click when current doc id is null',
         html: ""
     };
 
-    docsModel.saveDoc = jest.fn((doc)=> {
-        return {
-            id: 1,
-        }
-    });
+    docsModel.saveDoc = jest.fn().mockResolvedValue({id: 1});
     docsModel.updateDoc = jest.fn();
     docsModel.getOneDocById = jest.fn();
 
