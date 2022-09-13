@@ -59,7 +59,7 @@ function App() {
     return (
         <div className="App">
           <header className="App-header">
-          Real time collaborative text editor
+            <h1 className="main-site-h1">Real-time collaborative text editor</h1>
           </header>
           <main className="App-main">
               <Toolbar setDocumentSaved={setDocumentSaved} setDocumentLoaded={setDocumentLoaded} setCurrentDoc={setCurrentDoc} docs={docs} currentDoc={currentDoc}/>
