@@ -1,14 +1,10 @@
-import { render, screen, fireEvent, getByText } from '@testing-library/react';
+import { render, screen, fireEvent, getByTestId } from '@testing-library/react';
+import userEvent from '@testing-library/user-event/';
 import SaveButton from './components/toolbar/savebutton/Savebutton';
+import DocDropDown from './components/toolbar/docDropDown/DocDropDown';
 import { unmountComponentAtNode } from "react-dom";
 import docsModel from './models/docs';
-//import App from './App';
-import Toolbar from './components/toolbar/savebutton/Savebutton';
-/* test('renders learn react link', () => {
-    render(<App />);
-    const linkElement = screen.getByText("collaborative");
-    expect(linkElement).toBeInTheDocument();
-}); */
+import App from './App';
 
 let container : any = null;
 
@@ -25,24 +21,67 @@ afterEach(() => {
     container = null;
 })
 
-test('save button renders text Save', () => {
+/* test('renders main heading', () => {
+    jest.mock('trix.js');
+    render(<App />, container);
+    const heading = screen.getByText("Real-time");
+    expect(heading).toBeInTheDocument();
+}); */
+
+test('docDropDown calls doc model load function on change to document', async () => {
+    const mockSetDocumentLoaded = jest.fn();
+    const mockSetCurrentDoc = jest.fn();
+    docsModel.getOneDocById = jest.fn().mockResolvedValue(
+        {
+            _id: "2",
+            name: "Dokument 2",
+            html: "html2"
+        }
+    );
+    
+    let docs =  [
+            {
+                _id: "1",
+                name: "Dokument 1",
+                html: "html1"
+            },
+
+            {
+                _id: "2",
+                name: "Dokument 2",
+                html: "html2"
+            },
+        ]
+
+    render(<DocDropDown setDocumentLoaded={mockSetDocumentLoaded} setCurrentDoc={mockSetCurrentDoc} docs={docs} />, container);
+    
+    const drop = screen.getByRole('combobox');
+    
+    // Using userEvent to simulate real event of selecting options i.e. fire the onChange event in the select element
+    const user = userEvent.setup();
+    await user.selectOptions(drop, "1");
+
+    expect(docsModel.getOneDocById).toHaveBeenCalledTimes(1);
+});
+
+/* test('save button renders text Save', () => {
     let doc = {
         _id: "",
         name: "A name",
         html: ""
     };
 
-    const mockSetDocumentSaved = jest.fn(()=>{});
-    const mockSetCurrentDock = jest.fn(()=>{});
+    const mockSetDocumentSaved = jest.fn();
+    const mockSetCurrentDock = jest.fn();
 
     render(<SaveButton setDocumentSaved={mockSetDocumentSaved} setCurrentDoc={mockSetCurrentDock} currentDoc={doc}/>, container);
     const buttonText = screen.getByText("Save")
     expect(buttonText).toBeInTheDocument();
-});
+}); */
 
-test('save button calls docsModel.saveDoc on click when current doc id is null', () => {
-    const mockSetDocumentSaved = jest.fn(()=>{});
-    const mockSetCurrentDock = jest.fn(()=>{});
+test('save button calls docsModel save function on click when current doc id is null', () => {
+    const mockSetDocumentSaved = jest.fn();
+    const mockSetCurrentDock = jest.fn();
     let doc = {
         _id: null,
         name: "A name",
@@ -62,7 +101,7 @@ test('save button calls docsModel.saveDoc on click when current doc id is null',
        
  });
 
- test('save button calls docsModel.updateDoc on click when current doc id is string', () => {
+ test('save button calls docsModel update function on click when current doc id is string', () => {
     const mockSetDocumentSaved = jest.fn(()=>{});
     const mockSetCurrentDock = jest.fn(()=>{});
     let doc = {
