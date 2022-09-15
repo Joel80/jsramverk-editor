@@ -17,7 +17,7 @@ export default  function DocDropDown({setDocumentLoaded, docs, setCurrentDoc}: {
             setCurrentDoc(fetchedDoc);
             setDocumentLoaded(true);
         } else {
-            setCurrentDoc({_id: null, name:"No title", html:""});
+            setCurrentDoc({_id: null, name:"No title", html:"Write here"});
             setDocumentLoaded(true);
         }
         
