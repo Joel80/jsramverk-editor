@@ -29,6 +29,7 @@ function App() {
     }
 
     function setSelectElement(id: string, value: string | null) {
+        console.log(`Setting select: ${currentDoc._id}`)
         let selectElement = document.getElementById(id) as HTMLSelectElement | null;
         if (selectElement !== null) {
             if (value !== null)
@@ -43,9 +44,11 @@ function App() {
 
     useEffect ( () => {
         (async () => {
+            console.log(`Using effect current doc is ${currentDoc._id}`);
             await fetchDocs();
             setSelectElement("documentSelect", currentDoc._id);
             setDocumentSaved(false);
+            console.log(documentSaved);
         })();
     }, [documentSaved]);
 
