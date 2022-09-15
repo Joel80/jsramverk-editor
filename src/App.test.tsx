@@ -21,7 +21,7 @@ afterEach(() => {
     container = null;
 })
 
-/* test('renders main heading', async () => {
+test('renders main heading', async () => {
     docsModel.getAllDocs = jest.fn().mockResolvedValue(
         [
             {
@@ -50,7 +50,7 @@ afterEach(() => {
         
     }
     );
-}); */
+});
 
 test('docDropDown calls doc model load function on change to document', async () => {
     const mockSetDocumentLoaded = jest.fn();
