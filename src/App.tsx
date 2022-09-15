@@ -29,21 +29,33 @@ function App() {
         }
     }
 
-    function setSelectElement(id: string, value: string | null) {
+   /*  function setSelectElement(id: string, value: string | null) {
         console.log(`Setting select: ${currentDoc._id}`)
         let selectElement = document.getElementById(id) as HTMLSelectElement | null;
         if (selectElement !== null) {
             if (value !== null)
                 selectElement.value = value;
         }
-    }
+    } */
 
     async function fetchDocs() {
+        console.log("Calling getAllDocs");
         const allDocs = await docsModel.getAllDocs();
         setDocs(allDocs);
     }
 
     useEffect ( () => {
+        const setSelectElement = (id: string, value: string | null) => {
+                console.log(`Setting select: ${currentDoc._id}`)
+                let selectElement = document.getElementById(id) as HTMLSelectElement | null;
+                if (selectElement !== null) {
+                    if (value !== null) {
+                        selectElement.value = value;
+                    }
+                        
+                }
+            }
+    
         (async () => {
             console.log(`Using effect current doc is ${currentDoc._id}`);
             await fetchDocs();
@@ -51,12 +63,14 @@ function App() {
             setDocumentSaved(false);
             console.log(documentSaved);
         })();
-    }, [documentSaved]);
+
+    }, [documentSaved, currentDoc._id]);
 
     useEffect (() => {
+        console.log("calling setEditor from useEffect");
         setEditorContent(currentDoc.html);
         setDocumentLoaded(false);
-    }, [documentLoaded])
+    }, [documentLoaded, currentDoc.html])
 
     return (
         <div className="App">
