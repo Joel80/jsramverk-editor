@@ -24,7 +24,7 @@ afterEach(() => {
     container = null;
 }) */
 
-test('renders app', async () => {
+/* test('renders app', async () => {
     docsModel.getAllDocs = jest.fn().mockResolvedValue(
         [
             {
@@ -40,9 +40,10 @@ test('renders app', async () => {
 
     waitFor(() => {
         // Waiting for all useEffects to fire
+        //expect(docsModel.getAllDocs).toHaveBeenCalledTimes(0);
     });
 
-    expect(docsModel.getAllDocs).toHaveBeenCalled();
+    expect(docsModel.getAllDocs).toHaveBeenCalledTimes(1);
 
     // Expect certain elements to be rendered
     const heading = await screen.findByText("Real-time collaborative text editor");
@@ -54,7 +55,7 @@ test('renders app', async () => {
 
 
     //screen.debug();
-});
+}); */
 
 test('docDropDown calls doc model load function on change to document', async () => {
     const mockSetDocumentLoaded = jest.fn();
