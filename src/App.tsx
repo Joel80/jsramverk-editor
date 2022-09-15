@@ -22,10 +22,11 @@ function App() {
 
    function setEditorContent(content: string) {
     let element = document.querySelector("trix-editor") as any | null;
-
-        element.value = "";
-        element.editor.setSelectedRange([0, 0]);
-        element.editor.insertHTML(content);
+        if (element) {
+            element.value = "";
+            element.editor.setSelectedRange([0, 0]);
+            element.editor.insertHTML(content);
+        }
     }
 
     function setSelectElement(id: string, value: string | null) {
