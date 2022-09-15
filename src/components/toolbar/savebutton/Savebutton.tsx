@@ -13,19 +13,23 @@ export default  function SaveButton({setCurrentDoc, setDocumentSaved, currentDoc
         //Output as html
         console.log(`Content as html-value: ${editorElement.value}`); */
 
-    
-
-        if (currentDoc._id === null ) {
-            //currentDoc.html = editorElement?.editor.getDocument();
-            const result = await docModel.saveDoc(currentDoc);
-            const fetchedDoc = await docModel.getOneDocById(result.id);
-            setCurrentDoc(fetchedDoc);
-            setDocumentSaved(true);
+        if (currentDoc.name && currentDoc.html) {
+            if (currentDoc._id === null ) {
+                //currentDoc.html = editorElement?.editor.getDocument();
+                const result = await docModel.saveDoc(currentDoc);
+                const fetchedDoc = await docModel.getOneDocById(result.id);
+                setCurrentDoc(fetchedDoc);
+                setDocumentSaved(true);
+            } else {
+              //currentDoc.html = editorElement?.editor.getDocument();
+              docModel.updateDoc(currentDoc);
+              setDocumentSaved(true);
+            }
         } else {
-          //currentDoc.html = editorElement?.editor.getDocument();
-          docModel.updateDoc(currentDoc);
-          setDocumentSaved(true);
+            console.log("A document needs both a title and content to be saved!");
         }
+
+        
 
 
       }
