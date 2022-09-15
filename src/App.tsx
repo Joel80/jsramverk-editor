@@ -15,8 +15,8 @@ function App() {
 
     const [docs, setDocs] = useState([]);
     const [currentDoc, setCurrentDoc] = useState(defaultDoc);
-    const [documentLoaded, setDocumentLoaded] = useState(false);
-    const [documentSaved, setDocumentSaved] = useState(false);
+    const [documentLoaded, setDocumentLoaded] = useState<Boolean>();
+    const [documentSaved, setDocumentSaved] = useState<Boolean>();
 
    console.log(`Log from app: ${currentDoc._id} - ${currentDoc.html} - ${currentDoc.name}`);
 
@@ -44,8 +44,6 @@ function App() {
     useEffect ( () => {
         (async () => {
             await fetchDocs();
-            //setCurrentDoc(currentDoc);
-            //console.log(`Documen : ${currentDoc._id} saved`)
             setSelectElement("documentSelect", currentDoc._id);
             setDocumentSaved(false);
         })();
