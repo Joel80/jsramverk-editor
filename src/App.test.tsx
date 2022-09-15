@@ -1,4 +1,4 @@
-import { render, screen, fireEvent, getByTestId, waitFor } from '@testing-library/react';
+import { render, screen, fireEvent } from '@testing-library/react';
 import userEvent from '@testing-library/user-event/';
 import SaveButton from './components/toolbar/savebutton/Savebutton';
 import DocDropDown from './components/toolbar/docDropDown/DocDropDown';
@@ -77,6 +77,7 @@ test('docDropDown calls doc model load function on change to document', async ()
     await user.selectOptions(drop, "1");
 
     expect(docsModel.getOneDocById).toHaveBeenCalledTimes(1);
+
 });
 
 /* test('save button renders text Save', () => {
