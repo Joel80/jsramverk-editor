@@ -1,4 +1,4 @@
-import { render, screen, fireEvent, getByTestId } from '@testing-library/react';
+import { render, screen, fireEvent, getByTestId, waitFor } from '@testing-library/react';
 import userEvent from '@testing-library/user-event/';
 import SaveButton from './components/toolbar/savebutton/Savebutton';
 import DocDropDown from './components/toolbar/docDropDown/DocDropDown';
@@ -21,11 +21,35 @@ afterEach(() => {
     container = null;
 })
 
-/* test('renders main heading', () => {
-    jest.mock('trix.js');
-    render(<App />, container);
-    const heading = screen.getByText("Real-time");
-    expect(heading).toBeInTheDocument();
+/* test('renders main heading', async () => {
+    docsModel.getAllDocs = jest.fn().mockResolvedValue(
+        [
+            {
+                _id: "1",
+                name: "Dokument 1",
+                html: "html1"
+            }
+            
+        ]
+    );
+
+    const promise = Promise.resolve();
+
+    const setDocs=jest.fn(()=>promise);
+    const setDocumentSaved=jest.fn();
+    render(<App />);
+    
+    
+    await waitFor(() => {
+        const heading = screen.getByText("Real-time collaborative text editor");
+        expect(heading).toBeInTheDocument();
+        
+        
+        //expect(setDocs).toHaveBeenCalled();
+        //expect(setDocumentSaved).toHaveBeenCalled();
+        
+    }
+    );
 }); */
 
 test('docDropDown calls doc model load function on change to document', async () => {
