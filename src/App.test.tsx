@@ -109,7 +109,7 @@ test('save button calls docsModel save function on click when current doc id is 
     let doc = {
         _id: null,
         name: "A name",
-        html: ""
+        html: "Some html"
     };
 
     docsModel.saveDoc = jest.fn().mockResolvedValue({id: 1});
@@ -131,7 +131,7 @@ test('save button calls docsModel save function on click when current doc id is 
     let doc = {
         _id: "1",
         name: "A name",
-        html: ""
+        html: "Some html"
     };
 
     docsModel.saveDoc = jest.fn();
