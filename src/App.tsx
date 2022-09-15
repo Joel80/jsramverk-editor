@@ -15,10 +15,10 @@ function App() {
 
     const [docs, setDocs] = useState([]);
     const [currentDoc, setCurrentDoc] = useState(defaultDoc);
-    const [documentLoaded, setDocumentLoaded] = useState<Boolean>();
-    const [documentSaved, setDocumentSaved] = useState<Boolean>();
+    const [documentLoaded, setDocumentLoaded] = useState<Boolean>(false);
+    const [documentSaved, setDocumentSaved] = useState<Boolean>(false);
 
-   console.log(`Log from app: ${currentDoc._id} - ${currentDoc.html} - ${currentDoc.name}`);
+    console.log(`Log from app: ${currentDoc._id} - ${currentDoc.html} - ${currentDoc.name}`);
 
    function setEditorContent(content: string) {
     let element = document.querySelector("trix-editor") as any | null;
