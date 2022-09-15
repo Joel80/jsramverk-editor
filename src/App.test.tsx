@@ -5,6 +5,9 @@ import DocDropDown from './components/toolbar/docDropDown/DocDropDown';
 import { unmountComponentAtNode } from "react-dom";
 import docsModel from './models/docs';
 import App from './App';
+//import TextEditor from './components/editor/Texteditor';
+
+jest.mock('./components/editor/Texteditor');
 
 let container : any = null;
 
@@ -21,7 +24,7 @@ afterEach(() => {
     container = null;
 })
 
-/* test('renders main heading', async () => {
+/* test('renders main heading', () => {
     docsModel.getAllDocs = jest.fn().mockResolvedValue(
         [
             {
@@ -33,23 +36,11 @@ afterEach(() => {
         ]
     );
 
-    const promise = Promise.resolve();
-
-    const setDocs=jest.fn(()=>promise);
-    const setDocumentSaved=jest.fn();
     render(<App />);
     
-    
-    await waitFor(() => {
-        const heading = screen.getByText("Real-time collaborative text editor");
-        expect(heading).toBeInTheDocument();
-        
-        
-        //expect(setDocs).toHaveBeenCalled();
-        //expect(setDocumentSaved).toHaveBeenCalled();
-        
-    }
-    );
+    const heading = screen.getByText("Real-time collaborative text editor");
+    expect(heading).toBeInTheDocument();
+
 }); */
 
 test('docDropDown calls doc model load function on change to document', async () => {
