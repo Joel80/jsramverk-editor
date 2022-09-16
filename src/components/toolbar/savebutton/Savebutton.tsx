@@ -22,7 +22,7 @@ export default  function SaveButton({setCurrentDoc, setDocumentSaved, currentDoc
             } else {
               //currentDoc.html = editorElement?.editor.getDocument();
               docModel.updateDoc(currentDoc);
-              //setDocumentSaved(true);
+              setDocumentSaved(true);
             }
         } else {
             console.log("A document needs both a title and content to be saved!");
