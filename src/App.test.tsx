@@ -7,7 +7,7 @@ import docsModel from './models/docs';
 import App from './App';
 //import TextEditor from './components/editor/Texteditor';
 
-jest.mock('./components/editor/Texteditor');
+//jest.mock('./components/editor/Texteditor');
 
 /* let container : any = null;
 
@@ -52,7 +52,11 @@ afterEach(() => {
     expect(saveButton).toBeInTheDocument();
     const drop = await screen.findByText("New document");
     expect(drop).toBeInTheDocument();
-
+    const docNameField = await screen.findByDisplayValue("No title");
+    expect(docNameField).toBeInTheDocument();
+    const editor = await screen.findByText("Write here");
+    expect(editor).toBeInTheDocument();
+ 
 
     //screen.debug();
 }); */
