@@ -20,57 +20,44 @@ function App() {
 
     console.log(`Log from app: ${currentDoc._id} - ${currentDoc.html} - ${currentDoc.name}`);
 
-   function setEditorContent(content: string) {
-    let element = document.querySelector("trix-editor") as any | null;
-        if (element) {
-            element.value = "";
-            element.editor.setSelectedRange([0, 0]);
-            element.editor.insertHTML(content);
-        }
-    }
-
-   /*  function setSelectElement(id: string, value: string | null) {
-        console.log(`Setting select: ${currentDoc._id}`)
-        let selectElement = document.getElementById(id) as HTMLSelectElement | null;
-        if (selectElement !== null) {
-            if (value !== null)
-                selectElement.value = value;
-        }
-    } */
-
     async function fetchDocs() {
         console.log("Calling getAllDocs");
         const allDocs = await docsModel.getAllDocs();
         setDocs(allDocs);
     }
 
-    useEffect ( () => {
+    useEffect (() => {
+        const setEditorContent = (content: string) =>  {
+            let element = document.querySelector("trix-editor") as any | null;
+            //console.log(`Element: ${element.editor.getSelectedRange()}`);
+            element.value = "";
+            element.editor.setSelectedRange([0, 0]);
+            element.editor.insertHTML(content);
+        }
+        //console.log("calling setEditor from useEffect");
+        setEditorContent(currentDoc.html);
+        setDocumentLoaded(false);
+    }, [documentLoaded]);
+
+    useEffect (() => {
         const setSelectElement = (id: string, value: string | null) => {
-                console.log(`Setting select: ${currentDoc._id}`)
-                let selectElement = document.getElementById(id) as HTMLSelectElement | null;
-                if (selectElement !== null) {
-                    if (value !== null) {
-                        selectElement.value = value;
-                    }
-                        
+            //console.log(`Setting select: ${currentDoc._id}`)
+            let selectElement = document.getElementById(id) as HTMLSelectElement | null;
+            if (selectElement !== null) {
+                if (value !== null) {
+                    selectElement.value = value;
                 }
+                    
             }
-    
+        }
+
         (async () => {
-            console.log(`Using effect current doc is ${currentDoc._id}`);
             await fetchDocs();
             setSelectElement("documentSelect", currentDoc._id);
             setDocumentSaved(false);
-            console.log(documentSaved);
+            setDocumentLoaded(false);
         })();
-
-    }, [documentSaved, currentDoc._id]);
-
-    useEffect (() => {
-        console.log("calling setEditor from useEffect");
-        setEditorContent(currentDoc.html);
-        setDocumentLoaded(false);
-    }, [documentLoaded, currentDoc.html])
+    }, [currentDoc._id, documentSaved]);
 
     return (
         <div className="App">
