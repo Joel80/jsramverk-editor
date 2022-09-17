@@ -64,6 +64,7 @@ afterEach(() => {
 test('docDropDown calls doc model load function on change to document', async () => {
     const mockSetDocumentLoaded = jest.fn();
     const mockSetCurrentDoc = jest.fn();
+    const mockSetLoadedDoc = jest.fn();
     docsModel.getOneDocById = jest.fn().mockResolvedValue(
         {
             _id: "2",
@@ -86,7 +87,7 @@ test('docDropDown calls doc model load function on change to document', async ()
             },
         ]
 
-    render(<DocDropDown setDocumentLoaded={mockSetDocumentLoaded} setCurrentDoc={mockSetCurrentDoc} docs={docs} />);
+    render(<DocDropDown setLoadedDoc={mockSetLoadedDoc} setDocumentLoaded={mockSetDocumentLoaded} setCurrentDoc={mockSetCurrentDoc} docs={docs} />);
     
     const drop = screen.getByRole('combobox');
     
