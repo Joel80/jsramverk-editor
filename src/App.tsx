@@ -17,6 +17,7 @@ function App() {
     const [currentDoc, setCurrentDoc] = useState(defaultDoc);
     const [documentLoaded, setDocumentLoaded] = useState<Boolean>(false);
     const [documentSaved, setDocumentSaved] = useState<Boolean>(false);
+    const [loadedDoc, setLoadedDoc] = useState<docInterface>(defaultDoc);
 
     console.log(`Log from app: ${currentDoc._id} - ${currentDoc.html} - ${currentDoc.name}`);
 
@@ -35,9 +36,9 @@ function App() {
             element.editor.insertHTML(content);
         }
         //console.log("calling setEditor from useEffect");
-        setEditorContent(currentDoc.html);
+        setEditorContent(loadedDoc.html);
         setDocumentLoaded(false);
-    }, [documentLoaded]);
+    }, [loadedDoc, documentLoaded]);
 
     useEffect (() => {
         const setSelectElement = (id: string, value: string | null) => {
@@ -65,7 +66,7 @@ function App() {
             <h1 className="main-site-h1">Real-time collaborative text editor</h1>
           </header>
           <main className="App-main">
-              <Toolbar setDocumentSaved={setDocumentSaved} setDocumentLoaded={setDocumentLoaded} setCurrentDoc={setCurrentDoc} docs={docs} currentDoc={currentDoc}/>
+              <Toolbar setLoadedDoc={setLoadedDoc} setDocumentSaved={setDocumentSaved} setDocumentLoaded={setDocumentLoaded} setCurrentDoc={setCurrentDoc} docs={docs} currentDoc={currentDoc}/>
               <Texteditor setCurrentDoc={setCurrentDoc} currentDoc={currentDoc}/>
           </main>
           <nav className='App-nav'>

@@ -3,7 +3,7 @@ import docsModel from '../../../models/docs';
 import "./DocDropDown.css";
 
 
-export default  function DocDropDown({setDocumentLoaded, docs, setCurrentDoc}: {setDocumentLoaded(param: boolean): void, docs: docInterface[], setCurrentDoc(param: docInterface): void}) {
+export default  function DocDropDown({setLoadedDoc, setDocumentLoaded, docs, setCurrentDoc}: {setLoadedDoc(param: docInterface): void, setDocumentLoaded(param: boolean): void, docs: docInterface[], setCurrentDoc(param: docInterface): void}) {
 
     async function fetchDoc (e: React.ChangeEvent<HTMLSelectElement>) {
         //console.log(e.target.value);
@@ -15,6 +15,7 @@ export default  function DocDropDown({setDocumentLoaded, docs, setCurrentDoc}: {
         if (id !== "-99") {
             const fetchedDoc = await docsModel.getOneDocById(id);
             setCurrentDoc({_id: fetchedDoc._id, name: fetchedDoc.name, html: fetchedDoc.html});
+            setLoadedDoc(fetchedDoc);
             setDocumentLoaded(true);
         } else {
             setCurrentDoc({_id: null, name:"No title", html:"Write here"});

@@ -4,12 +4,12 @@ import "./Toolbar.css";
 import docInterface from '../../../interfaces/doc';
 
 export default function Toolbar(
-    {setDocumentSaved, setDocumentLoaded, docs, setCurrentDoc, currentDoc}: {setDocumentSaved(param: boolean): void, setDocumentLoaded(param: boolean): void, docs: docInterface[], setCurrentDoc(param: docInterface): void, currentDoc: docInterface}) {
+    {setLoadedDoc, setDocumentSaved, setDocumentLoaded, docs, setCurrentDoc, currentDoc}: {setLoadedDoc(param: docInterface): void, setDocumentSaved(param: boolean): void, setDocumentLoaded(param: boolean): void, docs: docInterface[], setCurrentDoc(param: docInterface): void, currentDoc: docInterface}) {
 
 
     return (
         <div className="App-toolbar">
-            <DocDropDown setDocumentLoaded={setDocumentLoaded} setCurrentDoc={setCurrentDoc} docs = {docs} />
+            <DocDropDown setLoadedDoc={setLoadedDoc} setDocumentLoaded={setDocumentLoaded} setCurrentDoc={setCurrentDoc} docs = {docs} />
             <SaveButton setCurrentDoc={setCurrentDoc} setDocumentSaved={setDocumentSaved} currentDoc={currentDoc}/>
         </div>
     )
