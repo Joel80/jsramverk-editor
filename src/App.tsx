@@ -10,7 +10,7 @@ function App() {
     let defaultDoc: docInterface = {
         _id: null,
         name: "No title",
-        html: "Write here"
+        html: ""
     };
 
     const [docs, setDocs] = useState([]);
