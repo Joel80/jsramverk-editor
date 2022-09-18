@@ -24,7 +24,7 @@ afterEach(() => {
     container = null;
 }) */
 
-/* test('renders app', async () => {
+test('renders app with all elements', async () => {
     docsModel.getAllDocs = jest.fn().mockResolvedValue(
         [
             {
@@ -38,14 +38,12 @@ afterEach(() => {
 
     render(<App />);
 
-    waitFor(() => {
-        // Waiting for all useEffects to fire
-        //expect(docsModel.getAllDocs).toHaveBeenCalledTimes(0);
-    });
+    /* waitFor(() => {
+    }); */
 
     expect(docsModel.getAllDocs).toHaveBeenCalledTimes(1);
 
-    // Expect certain elements to be rendered
+    // Expect app elements to be rendered
     const heading = await screen.findByText("Real-time collaborative text editor");
     expect(heading).toBeInTheDocument();;
     const saveButton = await screen.findByText("Save");
@@ -54,12 +52,12 @@ afterEach(() => {
     expect(drop).toBeInTheDocument();
     const docNameField = await screen.findByDisplayValue("No title");
     expect(docNameField).toBeInTheDocument();
-    const editor = await screen.findByText("Write here");
+    const editor = await screen.findByTestId("editor");
     expect(editor).toBeInTheDocument();
  
 
     //screen.debug();
-}); */
+});
 
 test('docDropDown calls doc model load function on change to document', async () => {
     const mockSetDocumentLoaded = jest.fn();
@@ -87,7 +85,7 @@ test('docDropDown calls doc model load function on change to document', async ()
             },
         ]
 
-    render(<DocDropDown setLoadedDoc={mockSetLoadedDoc} setDocumentLoaded={mockSetDocumentLoaded} setCurrentDoc={mockSetCurrentDoc} docs={docs} />);
+    render(<DocDropDown setLoadedDoc={mockSetLoadedDoc} /* setDocumentLoaded={mockSetDocumentLoaded} */ setCurrentDoc={mockSetCurrentDoc} docs={docs} />);
     
     const drop = screen.getByRole('combobox');
     
@@ -116,6 +114,7 @@ test('docDropDown calls doc model load function on change to document', async ()
 
 test('save button calls docsModel save function on click when current doc id is null', () => {
     const mockSetDocumentSaved = jest.fn();
+    const mockSetSavedDoc = jest.fn();
     const mockSetCurrentDock = jest.fn();
     let doc = {
         _id: null,
@@ -127,7 +126,7 @@ test('save button calls docsModel save function on click when current doc id is 
     docsModel.updateDoc = jest.fn();
     docsModel.getOneDocById = jest.fn();
 
-    render(<SaveButton setDocumentSaved={mockSetDocumentSaved} setCurrentDoc={mockSetCurrentDock} currentDoc={doc}/>);
+    render(<SaveButton setDocumentSaved={mockSetDocumentSaved} setSavedDoc={mockSetSavedDoc} setCurrentDoc={mockSetCurrentDock} currentDoc={doc}/>);
     const button = screen.getByText("Save");
 
     fireEvent.click(button);
@@ -138,6 +137,7 @@ test('save button calls docsModel save function on click when current doc id is 
 
  test('save button calls docsModel update function on click when current doc id is string', () => {
     const mockSetDocumentSaved = jest.fn(()=>{});
+    const mockSetSavedDoc = jest.fn();
     const mockSetCurrentDock = jest.fn(()=>{});
     let doc = {
         _id: "1",
@@ -149,7 +149,7 @@ test('save button calls docsModel save function on click when current doc id is 
     docsModel.updateDoc = jest.fn();
     docsModel.getOneDocById = jest.fn();
 
-    render(<SaveButton setDocumentSaved={mockSetDocumentSaved} setCurrentDoc={mockSetCurrentDock} currentDoc={doc}/>);
+    render(<SaveButton setDocumentSaved={mockSetDocumentSaved} setSavedDoc={mockSetDocumentSaved} setCurrentDoc={mockSetCurrentDock} currentDoc={doc}/>);
     const button = screen.getByText("Save");
 
     fireEvent.click(button);
