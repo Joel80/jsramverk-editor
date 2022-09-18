@@ -43,7 +43,7 @@ export default function Texteditor({ currentDoc, setCurrentDoc }: {currentDoc: d
     } 
   
     return(
-      <div>
+      <div data-testid="editor">
         <input  className="document-name-form" onChange={(e) => handleNameChange(e)} value={currentDoc.name}></input>
         <TrixEditor value={currentDoc.html} className="trix-content" autoFocus={true} onChange={handleChange} onEditorReady={handleEditorReady} mergeTags={[]} />
       </div>
