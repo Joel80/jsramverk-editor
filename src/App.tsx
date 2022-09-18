@@ -1,6 +1,6 @@
 import './App.css';
 import Texteditor from './components/editor/Texteditor';
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import docsModel from './models/docs';
 //import SaveButton from './components/toolbar/savebutton/Savebutton';
 import Toolbar from './components/toolbar/toolbar/Toolbar';
@@ -15,9 +15,12 @@ function App() {
 
     const [docs, setDocs] = useState([]);
     const [currentDoc, setCurrentDoc] = useState(defaultDoc);
-    const [documentLoaded, setDocumentLoaded] = useState<Boolean>(false);
+    //const [documentLoaded, setDocumentLoaded] = useState<Boolean>(false);
     const [documentSaved, setDocumentSaved] = useState<Boolean>(false);
     const [loadedDoc, setLoadedDoc] = useState<docInterface>(defaultDoc);
+    const [savedDoc, setSavedDoc] = useState<docInterface>(defaultDoc);
+    const shouldSetSelectElement = useRef(false);
+    //const shouldSetDocumentSaved
 
     console.log(`Log from app: ${currentDoc._id} - ${currentDoc.html} - ${currentDoc.name}`);
 
@@ -37,8 +40,8 @@ function App() {
         }
         //console.log("calling setEditor from useEffect");
         setEditorContent(loadedDoc.html);
-        setDocumentLoaded(false);
-    }, [loadedDoc, documentLoaded]);
+        //setDocumentLoaded(false);
+    }, [loadedDoc, /* documentLoaded */]);
 
     useEffect (() => {
         const setSelectElement = (id: string, value: string | null) => {
@@ -54,11 +57,17 @@ function App() {
 
         (async () => {
             await fetchDocs();
-            setSelectElement("documentSelect", currentDoc._id);
-            setDocumentSaved(false);
-            setDocumentLoaded(false);
+            // Dont set selectElement on first render
+            if (shouldSetSelectElement.current) {
+                setSelectElement("documentSelect", savedDoc._id);
+                setDocumentSaved(false);
+            }
+
+            // Forwards set select when this effect is triggered
+            shouldSetSelectElement.current = true;
+            
         })();
-    }, [currentDoc._id, documentSaved]);
+    }, [savedDoc, documentSaved]);
 
     return (
         <div className="App">
@@ -66,7 +75,7 @@ function App() {
             <h1 className="main-site-h1">Real-time collaborative text editor</h1>
           </header>
           <main className="App-main">
-              <Toolbar setLoadedDoc={setLoadedDoc} setDocumentSaved={setDocumentSaved} setDocumentLoaded={setDocumentLoaded} setCurrentDoc={setCurrentDoc} docs={docs} currentDoc={currentDoc}/>
+              <Toolbar setLoadedDoc={setLoadedDoc} setSavedDoc={setSavedDoc} setDocumentSaved={setDocumentSaved} /* setDocumentLoaded={setDocumentLoaded} */ setCurrentDoc={setCurrentDoc} docs={docs} currentDoc={currentDoc}/>
               <Texteditor setCurrentDoc={setCurrentDoc} currentDoc={currentDoc}/>
           </main>
           <nav className='App-nav'>
