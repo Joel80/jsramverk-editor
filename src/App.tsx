@@ -5,8 +5,10 @@ import docsModel from './models/docs';
 //import SaveButton from './components/toolbar/savebutton/Savebutton';
 import Toolbar from './components/toolbar/toolbar/Toolbar';
 import docInterface from './interfaces/doc';
+import { io } from 'socket.io-client';
 
 function App() {
+
     let defaultDoc: docInterface = {
         _id: null,
         name: "No title",
@@ -22,6 +24,15 @@ function App() {
     const shouldSetSelectElement = useRef(false);
     //const shouldSetDocumentSaved
 
+    const sendToSocket = useRef(true);
+
+    // Server url and socket declarations
+    const SERVER_URL = window.location.href.includes("localhost") ? 
+        "http://localhost:1337" :
+        "https://jsramverk-editor-jolf20.azurewebsites.net"
+
+    let socket: any;
+
     console.log(`Log from app: ${currentDoc._id} - ${currentDoc.html} - ${currentDoc.name}`);
 
     async function fetchDocs() {
@@ -30,18 +41,52 @@ function App() {
         setDocs(allDocs);
     }
 
+    useEffect(() => {
+        (async () => {
+            await fetchDocs();
+
+        })();
+    }, []);
+
+    // Changes to currentDoc triggers this
     useEffect (() => {
-        const setEditorContent = (content: string) =>  {
-            let element = document.querySelector("trix-editor") as any | null;
-            //console.log(`Element: ${element.editor.getSelectedRange()}`);
-            element.value = "";
-            element.editor.setSelectedRange([0, 0]);
-            element.editor.insertHTML(content);
+        const setEditorContent = (content: string, triggerChange: boolean) =>  {
+
+            if (triggerChange) {
+                let element = document.querySelector("trix-editor") as any | null;
+                element.value = "";
+                element.editor.setSelectedRange([0, 0]);
+                element.editor.insertHTML(content);
+            }
+            
         }
-        //console.log("calling setEditor from useEffect");
-        setEditorContent(loadedDoc.html);
-        //setDocumentLoaded(false);
-    }, [loadedDoc, /* documentLoaded */]);
+
+        socket = io(SERVER_URL);
+
+        socket.emit("create", currentDoc["_id"]);
+
+        socket.on("doc", (data: any) => {
+            setEditorContent(data.html, false);
+        });
+
+        let data ={
+            _id: currentDoc._id,
+            name: currentDoc.name,
+            html: currentDoc.html
+        }
+
+        socket.emit("doc", data);
+
+        setEditorContent(loadedDoc.html, true);
+
+        return () => {
+            if(socket) {
+                socket.disconnect();
+            }
+            
+        }
+
+    }, [loadedDoc]);
 
     useEffect (() => {
         const setSelectElement = (id: string, value: string | null) => {
@@ -68,6 +113,29 @@ function App() {
             
         })();
     }, [savedDoc, documentSaved]);
+
+    // Socket effect
+    /* useEffect(() => {
+        socket = io(SERVER_URL);
+
+        return () => {
+            socket.disconnect();
+        }
+    }, [loadedDoc]); */
+
+
+    /* useEffect (() => {
+        const setEditorContent = (content: string) =>  {
+            let element = document.querySelector("trix-editor") as any | null;
+            //console.log(`Element: ${element.editor.getSelectedRange()}`);
+            element.value = "";
+            element.editor.setSelectedRange([0, 0]);
+            element.editor.insertHTML(content);
+        }
+        //console.log("calling setEditor from useEffect");
+        setEditorContent(loadedDoc.html);
+        //setDocumentLoaded(false);
+    }, [loadedDoc]); */
 
     return (
         <div className="App">
