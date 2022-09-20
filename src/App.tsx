@@ -16,24 +16,48 @@ function App() {
     };
 
     const [docs, setDocs] = useState([]);
+    const [socket, setSocket] = useState<any>(null);
     const [currentDoc, setCurrentDoc] = useState(defaultDoc);
-    //const [documentLoaded, setDocumentLoaded] = useState<Boolean>(false);
     const [documentSaved, setDocumentSaved] = useState<Boolean>(false);
     const [loadedDoc, setLoadedDoc] = useState<docInterface>(defaultDoc);
     const [savedDoc, setSavedDoc] = useState<docInterface>(defaultDoc);
     const shouldSetSelectElement = useRef(false);
-    //const shouldSetDocumentSaved
-
-    const sendToSocket = useRef(true);
-
+    const sendToSocket = useRef(false);
     // Server url and socket declarations
     const SERVER_URL = window.location.href.includes("localhost") ? 
         "http://localhost:1337" :
         "https://jsramverk-editor-jolf20.azurewebsites.net"
 
-    let socket: any;
 
-    console.log(`Log from app: ${currentDoc._id} - ${currentDoc.html} - ${currentDoc.name}`);
+    //let sendToSocket = false;
+
+    let updateCurrentDocOnChange: boolean = false;
+
+    /* function changeSendToSocket(value: boolean) {
+        sendToSocket = value;
+    } */
+
+    function handleChange(html: string, text: string) {
+        if (updateCurrentDocOnChange) {
+            const copy = Object.assign({}, currentDoc);
+    
+            copy.html = html;
+    
+            setCurrentDoc(copy);
+        }
+    
+        updateCurrentDocOnChange = true;
+    }
+    
+    function setEditorContent(content: string, triggerChange: boolean) {
+        let element = document.querySelector("trix-editor") as any | null;
+
+        updateCurrentDocOnChange = triggerChange;
+        element.value = "";
+        element.editor.setSelectedRange([0, 0]);
+        updateCurrentDocOnChange = triggerChange;
+        element.editor.insertHTML(content);
+    }
 
     async function fetchDocs() {
         console.log("Calling getAllDocs");
@@ -44,50 +68,61 @@ function App() {
     useEffect(() => {
         (async () => {
             await fetchDocs();
-
         })();
     }, []);
 
-    // Changes to currentDoc triggers this
-    useEffect (() => {
-        const setEditorContent = (content: string, triggerChange: boolean) =>  {
+    useEffect( () => {
+        setSocket(io(SERVER_URL));
 
-            if (triggerChange) {
-                let element = document.querySelector("trix-editor") as any | null;
-                element.value = "";
-                element.editor.setSelectedRange([0, 0]);
-                element.editor.insertHTML(content);
-            }
-            
+        if (socket) {
+            socket.emit("create", loadedDoc["_id"]);
         }
 
-        socket = io(SERVER_URL);
-
-        socket.emit("create", currentDoc["_id"]);
-
-        socket.on("doc", (data: any) => {
-            setEditorContent(data.html, false);
-        });
-
-        let data ={
-            _id: currentDoc._id,
-            name: currentDoc.name,
-            html: currentDoc.html
-        }
-
-        socket.emit("doc", data);
-
-        setEditorContent(loadedDoc.html, true);
+        setEditorContent(loadedDoc.html, false);
 
         return () => {
             if(socket) {
                 socket.disconnect();
             }
-            
         }
-
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [loadedDoc]);
 
+    // Changes to currentDoc triggers this
+    useEffect (() => {
+        console.log(sendToSocket);
+        if (socket && sendToSocket.current) {
+
+            let data ={
+                _id: currentDoc._id,
+                name: currentDoc.name,
+                html: currentDoc.html
+            }
+
+            socket.emit("doc", data);
+        }
+
+        sendToSocket.current = true;
+        //changeSendToSocket(true);
+        console.log(sendToSocket);
+
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [currentDoc]);
+
+    // Get updates from socket
+    useEffect (() => {
+        console.log("Updates from socket");
+        if (socket) {
+            socket.on("doc", (data: any) => {
+                sendToSocket.current = false;
+                //changeSendToSocket(false);
+                setEditorContent(data.html, false);
+            });
+        }
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [socket])
+
+    // For saving - will be removed when saving via sockets are implemented
     useEffect (() => {
         const setSelectElement = (id: string, value: string | null) => {
             //console.log(`Setting select: ${currentDoc._id}`)
@@ -114,28 +149,7 @@ function App() {
         })();
     }, [savedDoc, documentSaved]);
 
-    // Socket effect
-    /* useEffect(() => {
-        socket = io(SERVER_URL);
-
-        return () => {
-            socket.disconnect();
-        }
-    }, [loadedDoc]); */
-
-
-    /* useEffect (() => {
-        const setEditorContent = (content: string) =>  {
-            let element = document.querySelector("trix-editor") as any | null;
-            //console.log(`Element: ${element.editor.getSelectedRange()}`);
-            element.value = "";
-            element.editor.setSelectedRange([0, 0]);
-            element.editor.insertHTML(content);
-        }
-        //console.log("calling setEditor from useEffect");
-        setEditorContent(loadedDoc.html);
-        //setDocumentLoaded(false);
-    }, [loadedDoc]); */
+    console.log(`Log from app: ${currentDoc._id} - ${currentDoc.html} - ${currentDoc.name}`);
 
     return (
         <div className="App">
@@ -144,7 +158,7 @@ function App() {
           </header>
           <main className="App-main">
               <Toolbar setLoadedDoc={setLoadedDoc} setSavedDoc={setSavedDoc} setDocumentSaved={setDocumentSaved} /* setDocumentLoaded={setDocumentLoaded} */ setCurrentDoc={setCurrentDoc} docs={docs} currentDoc={currentDoc}/>
-              <Texteditor setCurrentDoc={setCurrentDoc} currentDoc={currentDoc}/>
+              <Texteditor handleChange={handleChange} setCurrentDoc={setCurrentDoc} currentDoc={currentDoc}/>
           </main>
           <nav className='App-nav'>
 
