@@ -14,7 +14,7 @@ export default  function DocDropDown({setLoadedDoc, /* setDocumentLoaded, */ doc
 
         if (id !== "-99") {
             const fetchedDoc = await docsModel.getOneDocById(id);
-            setCurrentDoc({_id: fetchedDoc._id, name: fetchedDoc.name, html: fetchedDoc.html});
+            setCurrentDoc(fetchedDoc);
             setLoadedDoc(fetchedDoc);
             //setDocumentLoaded(true);
         } else {
