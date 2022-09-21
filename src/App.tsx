@@ -65,14 +65,27 @@ function App() {
 
     
     async function handleClick() {
-        await docsModel.saveDoc(
-            {
-                name: "No title",
-                html: "No content"
-            }
-        );
+        let doc: Partial<docInterface>= {
+            name: "Ingen titel",
+            html: "No content"
+        }
+        const result = await docsModel.saveDoc(doc);
+
+        const fetchedDoc = await docsModel.getOneDocById(result.id);
+
+        //await fetchDocs();
+
+        //setSelectElement("documentSelect", fetchedDoc._id);
+
+        setEditorContent(fetchedDoc.html, false);
+
+        setCurrentDoc(fetchedDoc);
+
+        setSavedDoc(fetchedDoc);
+
+        setDocumentSaved(true);
     }
-    
+
     function setEditorContent(content: string, triggerChange: boolean) {
         let element = document.querySelector("trix-editor") as any | null;
 
@@ -168,7 +181,7 @@ function App() {
                     
             }
         }
-
+        
         (async () => {
             await fetchDocs();
             // Dont set selectElement on first render
