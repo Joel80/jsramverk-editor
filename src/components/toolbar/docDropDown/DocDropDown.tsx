@@ -32,7 +32,7 @@ export default  function DocDropDown({setLoadedDoc, /* setDocumentLoaded, */ doc
 
     return (
             <select id="documentSelect" onChange={(e) => fetchDoc(e)} className="doc-list">
-                <option value= "-99" key="0">New document</option>
+                <option value= "-99" key="0">Choose document</option>
                 {docs.map((doc: docInterface, index:number) => <option value={doc._id || ""} key={index}>{doc.name} {/* - {doc._id} */}</option>)}
             </select> 
     );
