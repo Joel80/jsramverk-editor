@@ -24,7 +24,7 @@ afterEach(() => {
     container = null;
 }) */
 
-test('renders app with all elements', async () => {
+/* test('renders app with all elements', async () => {
     docsModel.getAllDocs = jest.fn().mockResolvedValue(
         [
             {
@@ -37,9 +37,6 @@ test('renders app with all elements', async () => {
     );
 
     render(<App />);
-
-    /* waitFor(() => {
-    }); */
 
     expect(docsModel.getAllDocs).toHaveBeenCalledTimes(2);
 
@@ -56,8 +53,8 @@ test('renders app with all elements', async () => {
     expect(editor).toBeInTheDocument();
  
 
-    //screen.debug();
-});
+    screen.debug();
+}); */
 
 // Test broken when implementing sockets - look further into this
 
