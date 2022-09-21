@@ -31,13 +31,9 @@ function App() {
         "https://jsramverk-editor-jolf20.azurewebsites.net"
 
 
-    //let sendToSocket = false;
 
     let updateCurrentDocOnChange: boolean = false;
-
-    /* function changeSendToSocket(value: boolean) {
-        sendToSocket = value;
-    } */
+    let updateNameFieldOnChange: boolean =false;
 
     function handleChange(html: string, text: string) {
         if (updateCurrentDocOnChange) {
@@ -52,15 +48,15 @@ function App() {
     }
 
     const handleNameChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-        if (updateCurrentDocOnChange) {
+        //if (updateNameFieldOnChange) {
             const copy = Object.assign({}, currentDoc);
     
             copy.name = e.target.value;;
     
             setCurrentDoc(copy);
-        }
+        //}
     
-        updateCurrentDocOnChange = true;
+        //updateNameFieldOnChange = true;
     }
 
     
@@ -99,7 +95,7 @@ function App() {
     function setNameFormContent(content: string, triggerChange: boolean) {
         let element = document.querySelector("document-name-form") as any | null;
         if (element) {
-            updateCurrentDocOnChange = triggerChange;
+            updateNameFieldOnChange = triggerChange;
             element.value=content;
         }
     }
@@ -110,12 +106,14 @@ function App() {
         setDocs(allDocs);
     }
 
+    // Fetch all docs on loading app
     useEffect(() => {
         (async () => {
             await fetchDocs();
         })();
     }, []);
 
+    // When a doc i selected in the dropDown
     useEffect( () => {
         setSocket(io(SERVER_URL));
 
@@ -169,7 +167,7 @@ function App() {
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [socket])
 
-    // For saving - will be removed when saving via sockets are implemented
+    // Used when creating new doc to reflect changes in drop down list
     useEffect (() => {
         const setSelectElement = (id: string, value: string | null) => {
             //console.log(`Setting select: ${currentDoc._id}`)
