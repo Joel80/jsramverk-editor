@@ -23,6 +23,7 @@ function App() {
     const [savedDoc, setSavedDoc] = useState<docInterface>(defaultDoc);
     const shouldSetSelectElement = useRef(false);
     const sendToSocket = useRef(false);
+
     // Server url and socket declarations
     const SERVER_URL = window.location.href.includes("localhost") ? 
         "http://localhost:1337" :
@@ -48,6 +49,18 @@ function App() {
     
         updateCurrentDocOnChange = true;
     }
+
+    const handleNameChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+        //if (updateCurrentDocOnChange) {
+            const copy = Object.assign({}, currentDoc);
+    
+            copy.name = e.target.value;;
+    
+            setCurrentDoc(copy);
+        //}
+    
+        //updateCurrentDocOnChange = true;
+    } 
     
     function setEditorContent(content: string, triggerChange: boolean) {
         let element = document.querySelector("trix-editor") as any | null;
@@ -57,6 +70,14 @@ function App() {
         element.editor.setSelectedRange([0, 0]);
         updateCurrentDocOnChange = triggerChange;
         element.editor.insertHTML(content);
+    }
+
+    function setNameFormContent(content: string, triggerChange: boolean) {
+        let element = document.querySelector("document-name-form") as any | null;
+        if (element) {
+            updateCurrentDocOnChange = triggerChange;
+            element.value=content;
+        }
     }
 
     async function fetchDocs() {
@@ -79,6 +100,7 @@ function App() {
         }
 
         setEditorContent(loadedDoc.html, false);
+        setNameFormContent(loadedDoc.name, false);
 
         return () => {
             if(socket) {
@@ -117,6 +139,7 @@ function App() {
                 sendToSocket.current = false;
                 //changeSendToSocket(false);
                 setEditorContent(data.html, false);
+                setNameFormContent(data.name, false);
             });
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -158,7 +181,7 @@ function App() {
           </header>
           <main className="App-main">
               <Toolbar setLoadedDoc={setLoadedDoc} setSavedDoc={setSavedDoc} setDocumentSaved={setDocumentSaved} /* setDocumentLoaded={setDocumentLoaded} */ setCurrentDoc={setCurrentDoc} docs={docs} currentDoc={currentDoc}/>
-              <Texteditor handleChange={handleChange} setCurrentDoc={setCurrentDoc} currentDoc={currentDoc}/>
+              <Texteditor handleChange={handleChange} handleNameChange={handleNameChange} setCurrentDoc={setCurrentDoc} currentDoc={currentDoc}/>
           </main>
           <nav className='App-nav'>
 
