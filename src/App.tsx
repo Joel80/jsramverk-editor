@@ -61,7 +61,17 @@ function App() {
         }
     
         updateCurrentDocOnChange = true;
-    } 
+    }
+
+    
+    async function handleClick() {
+        await docsModel.saveDoc(
+            {
+                name: "No title",
+                html: "No content"
+            }
+        );
+    }
     
     function setEditorContent(content: string, triggerChange: boolean) {
         let element = document.querySelector("trix-editor") as any | null;
@@ -181,7 +191,7 @@ function App() {
             <h1 className="main-site-h1">Real-time collaborative text editor</h1>
           </header>
           <main className="App-main">
-              <Toolbar setLoadedDoc={setLoadedDoc} setSavedDoc={setSavedDoc} setDocumentSaved={setDocumentSaved} /* setDocumentLoaded={setDocumentLoaded} */ setCurrentDoc={setCurrentDoc} docs={docs} currentDoc={currentDoc}/>
+              <Toolbar handleClick={handleClick} setLoadedDoc={setLoadedDoc} setSavedDoc={setSavedDoc} setDocumentSaved={setDocumentSaved} /* setDocumentLoaded={setDocumentLoaded} */ setCurrentDoc={setCurrentDoc} docs={docs} currentDoc={currentDoc}/>
               <NameForm handleNameChange={handleNameChange} currentDoc={currentDoc} />
               <Texteditor handleChange={handleChange} setCurrentDoc={setCurrentDoc} currentDoc={currentDoc}/>
           </main>
