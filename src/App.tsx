@@ -1,5 +1,6 @@
 import './App.css';
 import Texteditor from './components/editor/Texteditor';
+import NameForm from './components/editor/NameForm';
 import { useState, useEffect, useRef } from 'react';
 import docsModel from './models/docs';
 //import SaveButton from './components/toolbar/savebutton/Savebutton';
@@ -51,15 +52,15 @@ function App() {
     }
 
     const handleNameChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-        //if (updateCurrentDocOnChange) {
+        if (updateCurrentDocOnChange) {
             const copy = Object.assign({}, currentDoc);
     
             copy.name = e.target.value;;
     
             setCurrentDoc(copy);
-        //}
+        }
     
-        //updateCurrentDocOnChange = true;
+        updateCurrentDocOnChange = true;
     } 
     
     function setEditorContent(content: string, triggerChange: boolean) {
@@ -181,7 +182,8 @@ function App() {
           </header>
           <main className="App-main">
               <Toolbar setLoadedDoc={setLoadedDoc} setSavedDoc={setSavedDoc} setDocumentSaved={setDocumentSaved} /* setDocumentLoaded={setDocumentLoaded} */ setCurrentDoc={setCurrentDoc} docs={docs} currentDoc={currentDoc}/>
-              <Texteditor handleChange={handleChange} handleNameChange={handleNameChange} setCurrentDoc={setCurrentDoc} currentDoc={currentDoc}/>
+              <NameForm handleNameChange={handleNameChange} currentDoc={currentDoc} />
+              <Texteditor handleChange={handleChange} setCurrentDoc={setCurrentDoc} currentDoc={currentDoc}/>
           </main>
           <nav className='App-nav'>
 
