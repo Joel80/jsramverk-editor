@@ -91,8 +91,9 @@ function App() {
         updateCurrentDocOnChange = triggerChange;
         // Get selected range (save the current cursor position)
         cursorPos.current = element.editor.getSelectedRange();
-        console.log(`Cursorpos:${cursorPos}`);
+        console.log(`Cursorpos:${cursorPos.current}`);
         element.value = "";
+        element.editor.setSelectedRange([0, 0]);
         updateCurrentDocOnChange = triggerChange;
         element.editor.insertHTML(content);
         // Set selected range to the "old" cursor position
