@@ -1,6 +1,7 @@
 import { render, screen, fireEvent, waitFor, findByText, act } from '@testing-library/react';
 import userEvent from '@testing-library/user-event/';
 import SaveButton from './components/toolbar/savebutton/Savebutton';
+import CreateButton from './components/toolbar/createButton/CreateButton';
 import DocDropDown from './components/toolbar/docDropDown/DocDropDown';
 //import { unmountComponentAtNode } from "react-dom";
 import docsModel from './models/docs';
@@ -58,7 +59,7 @@ afterEach(() => {
 
 // Test broken when implementing sockets - look further into this
 
-/* test('docDropDown calls doc model load function on change to document', async () => {
+test('docDropDown calls doc model load function on change to document', async () => {
     const mockSetCurrentDoc = jest.fn();
     const mockSetLoadedDoc = jest.fn();
     docsModel.getOneDocById = jest.fn().mockResolvedValue(
@@ -93,7 +94,34 @@ afterEach(() => {
 
     expect(docsModel.getOneDocById).toHaveBeenCalledTimes(1);
 
-}); */
+});
+
+
+test('docDropDown renders with Choose document as default text', async () => {
+    const mockSetCurrentDoc = jest.fn();
+    const mockSetLoadedDoc = jest.fn();
+
+    let docs =  [
+        {
+            _id: "1",
+            name: "Dokument 1",
+            html: "html1"
+        },
+
+        {
+            _id: "2",
+            name: "Dokument 2",
+            html: "html2"
+        },
+    ]
+
+    render(<DocDropDown setLoadedDoc={mockSetLoadedDoc} setCurrentDoc={mockSetCurrentDoc} docs={docs} />);
+    
+    const drop = screen.getByText('Choose document');
+
+    expect(drop).toBeInTheDocument();
+
+});
 
 /* test('save button renders text Save', () => {
     let doc = {
@@ -156,4 +184,24 @@ test('save button calls docsModel save function on click when current doc id is 
        
  });
 
+
+ test('create button calls the handleClick function on click', () => {
+    const mockHandleClick = jest.fn();
+    render(<CreateButton handleClick={mockHandleClick}/>);
+
+    const button = screen.getByText("Create new doc");
+
+    fireEvent.click(button);
+
+    expect(mockHandleClick).toHaveBeenCalledTimes(1);
+ });
+
+ test('create button renders with text create new doc', () => {
+    const mockHandleClick = jest.fn();
+    render(<CreateButton handleClick={mockHandleClick}/>);
+
+    const button = screen.getByText("Create new doc");
+
+    expect(button).toBeInTheDocument();
+ });
 
