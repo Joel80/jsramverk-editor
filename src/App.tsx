@@ -34,7 +34,7 @@ function App() {
 
 
     let updateCurrentDocOnChange: boolean = false;
-    let updateNameFieldOnChange: boolean =false;
+    //let updateNameFieldOnChange: boolean =false;
 
     function handleChange(html: string, text: string) {
         if (updateCurrentDocOnChange) {
@@ -97,13 +97,13 @@ function App() {
         element.editor.setSelectedRange(cursorPos.current);
     }
 
-    function setNameFormContent(content: string, triggerChange: boolean) {
+    /* function setNameFormContent(content: string, triggerChange: boolean) {
         let element = document.querySelector("document-name-form") as any | null;
         if (element) {
             updateNameFieldOnChange = triggerChange;
             element.value=content;
         }
-    }
+    } */
 
     async function fetchDocs() {
         console.log("Calling getAllDocs");
