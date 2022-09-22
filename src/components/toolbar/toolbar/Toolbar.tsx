@@ -12,7 +12,7 @@ export default function Toolbar(
         <div className="App-toolbar">
             <DocDropDown setLoadedDoc={setLoadedDoc} /* setDocumentLoaded={setDocumentLoaded} */ setCurrentDoc={setCurrentDoc} docs = {docs} />
             {/* <SaveButton setCurrentDoc={setCurrentDoc} setSavedDoc={setSavedDoc} setDocumentSaved={setDocumentSaved} currentDoc={currentDoc}/> */}
-            <CreateButton handleClick={handleClick} setCurrentDoc={setCurrentDoc} setSavedDoc={setSavedDoc} setDocumentSaved={setDocumentSaved} currentDoc={currentDoc}/>
+            <CreateButton handleClick={handleClick} />
         </div>
     )
 }
