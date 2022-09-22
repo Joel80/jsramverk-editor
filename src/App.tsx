@@ -76,6 +76,8 @@ function App() {
 
         setEditorContent(fetchedDoc.html, false);
 
+        setLoadedDoc(fetchedDoc);
+
         setCurrentDoc(fetchedDoc);
 
         setSavedDoc(fetchedDoc);
@@ -161,12 +163,17 @@ function App() {
     // When socket changes
     useEffect (() => {
         if (socket) {
+
+            // Listen to docUpdate event
             socket.on("docUpdate", (data: any) => {
                 sendToSocket.current = false;
                 //changeSendToSocket(false);
                 console.log("Updates from socket");
                 setEditorContent(data.html, false);
                 //setNameFormContent(data.name, false);
+
+                // A call to fetchDocs here to get documents
+                // created and loaded?
             });
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -199,7 +206,7 @@ function App() {
         })();
     }, [savedDoc, documentSaved]);
 
-    //console.log(`Log from app: ${currentDoc._id} - ${currentDoc.html} - ${currentDoc.name}`);
+    console.log(`Log from app: ${currentDoc._id} - ${currentDoc.html} - ${currentDoc.name}`);
 
     return (
         <div className="App">
