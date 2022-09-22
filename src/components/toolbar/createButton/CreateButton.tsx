@@ -1,6 +1,4 @@
 import "./CreateButton.css";
-import docInterface from '../../../interfaces/doc';
-import docModel from '../../../models/docs';
 
 export default  function CreateButton({handleClick}: {handleClick(): void}) {
 
