@@ -24,6 +24,7 @@ function App() {
     const [savedDoc, setSavedDoc] = useState<docInterface>(defaultDoc);
     const shouldSetSelectElement = useRef(false);
     const sendToSocket = useRef(false);
+    const cursorPos = useRef([]);
 
     // Server url and socket declarations
     const SERVER_URL = window.location.href.includes("localhost") ? 
@@ -86,10 +87,14 @@ function App() {
         let element = document.querySelector("trix-editor") as any | null;
 
         updateCurrentDocOnChange = triggerChange;
+        // Get selected range (save the current cursor position)
+        cursorPos.current = element.editor.getSelectedRange();
+        console.log(`Cursorpos:${cursorPos}`);
         element.value = "";
-        element.editor.setSelectedRange([0, 0]);
         updateCurrentDocOnChange = triggerChange;
         element.editor.insertHTML(content);
+        // Set selected range to the "old" cursor position
+        element.editor.setSelectedRange(cursorPos.current);
     }
 
     function setNameFormContent(content: string, triggerChange: boolean) {
@@ -122,7 +127,7 @@ function App() {
         }
 
         setEditorContent(loadedDoc.html, false);
-        setNameFormContent(loadedDoc.name, false);
+        //setNameFormContent(loadedDoc.name, false);
 
         return () => {
             if(socket) {
@@ -136,7 +141,7 @@ function App() {
     useEffect (() => {
         console.log(sendToSocket);
         if (socket && sendToSocket.current) {
-
+            console.log("Sending to socket");
             let data ={
                 _id: currentDoc._id,
                 name: currentDoc.name,
@@ -153,15 +158,15 @@ function App() {
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [currentDoc]);
 
-    // Get updates from socket
+    // When socket changes
     useEffect (() => {
-        console.log("Updates from socket");
         if (socket) {
-            socket.on("doc", (data: any) => {
+            socket.on("docUpdate", (data: any) => {
                 sendToSocket.current = false;
                 //changeSendToSocket(false);
+                console.log("Updates from socket");
                 setEditorContent(data.html, false);
-                setNameFormContent(data.name, false);
+                //setNameFormContent(data.name, false);
             });
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -181,9 +186,9 @@ function App() {
         }
         
         (async () => {
-            await fetchDocs();
             // Dont set selectElement on first render
             if (shouldSetSelectElement.current) {
+                await fetchDocs();
                 setSelectElement("documentSelect", savedDoc._id);
                 setDocumentSaved(false);
             }
@@ -194,7 +199,7 @@ function App() {
         })();
     }, [savedDoc, documentSaved]);
 
-    console.log(`Log from app: ${currentDoc._id} - ${currentDoc.html} - ${currentDoc.name}`);
+    //console.log(`Log from app: ${currentDoc._id} - ${currentDoc.html} - ${currentDoc.name}`);
 
     return (
         <div className="App">
