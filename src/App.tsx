@@ -91,7 +91,7 @@ function App() {
         updateCurrentDocOnChange = triggerChange;
         // Get selected range (save the current cursor position)
         cursorPos.current = element.editor.getSelectedRange();
-        console.log(`Cursorpos:${cursorPos.current}`);
+        //console.log(`Cursorpos:${cursorPos.current}`);
         element.value = "";
         element.editor.setSelectedRange([0, 0]);
         updateCurrentDocOnChange = triggerChange;
@@ -109,7 +109,7 @@ function App() {
     } */
 
     async function fetchDocs() {
-        console.log("Calling getAllDocs");
+        //console.log("Calling getAllDocs");
         const allDocs = await docsModel.getAllDocs();
         setDocs(allDocs);
     }
@@ -142,7 +142,7 @@ function App() {
 
     // Changes to currentDoc triggers this
     useEffect (() => {
-        console.log(sendToSocket);
+        //console.log(sendToSocket);
         if (socket && sendToSocket.current) {
             console.log("Sending to socket");
             let data ={
@@ -156,7 +156,7 @@ function App() {
 
         sendToSocket.current = true;
         //changeSendToSocket(true);
-        console.log(sendToSocket);
+        //console.log(sendToSocket);
 
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [currentDoc]);
@@ -169,7 +169,7 @@ function App() {
             socket.on("docUpdate", (data: any) => {
                 sendToSocket.current = false;
                 //changeSendToSocket(false);
-                console.log("Updates from socket");
+                //console.log("Updates from socket");
                 setEditorContent(data.html, false);
                 //setNameFormContent(data.name, false);
 
@@ -207,7 +207,7 @@ function App() {
         })();
     }, [savedDoc, documentSaved]);
 
-    console.log(`Log from app: ${currentDoc._id} - ${currentDoc.html} - ${currentDoc.name}`);
+    //console.log(`Log from app: ${currentDoc._id} - ${currentDoc.html} - ${currentDoc.name}`);
 
     return (
         <div className="App">
