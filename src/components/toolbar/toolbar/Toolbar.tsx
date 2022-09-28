@@ -6,12 +6,22 @@ import "./Toolbar.css";
 import docInterface from '../../../interfaces/doc';
 
 export default function Toolbar(
-    {userEmail, handleClick, setLoadedDoc, setSavedDoc, setDocumentSaved, /*  setDocumentLoaded, */ docs, setCurrentDoc, currentDoc}: {userEmail: string, handleClick(): void, setLoadedDoc(param: docInterface): void, setSavedDoc(param: docInterface): void, setDocumentSaved(param: boolean): void, /* setDocumentLoaded(param: boolean): void, */ docs: docInterface[], setCurrentDoc(param: docInterface): void, currentDoc: docInterface}) {
+    {userEmail, handleClick, setLoadedDoc, docs, setCurrentDoc, currentDoc}: {
+        userEmail: string, 
+        handleClick(): void, 
+        setLoadedDoc(param: docInterface): void, 
+        setSavedDoc(param: docInterface): void, 
+        setDocumentSaved(param: boolean): void,
+        docs: docInterface[], 
+        setCurrentDoc(param: docInterface): void, 
+        currentDoc: docInterface
+    }
+    ){
 
 
     return (
         <div className="App-toolbar">
-            <DocDropDown userEmail={userEmail} setLoadedDoc={setLoadedDoc} /* setDocumentLoaded={setDocumentLoaded} */ setCurrentDoc={setCurrentDoc} docs = {docs} />
+            <DocDropDown userEmail={userEmail} setLoadedDoc={setLoadedDoc} setCurrentDoc={setCurrentDoc} docs = {docs} />
             <ShareForm setCurrentDoc={setCurrentDoc} currentDoc={currentDoc}/>
             <CreateButton handleClick={handleClick} />
         </div>

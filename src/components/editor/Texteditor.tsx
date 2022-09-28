@@ -3,7 +3,7 @@ import { Editor, TrixEditor } from "react-trix";
 import "./trix.css";
 import docInterface from '../../interfaces/doc';
 
-export default function Texteditor({ handleChange, currentDoc }: {handleChange(param1: string, param2: string): void, currentDoc: docInterface, setCurrentDoc(param: docInterface): void} ) {
+export default function Texteditor({ handleChange, currentDoc }: {handleChange(param1: string, param2: string): void, currentDoc: docInterface} ) {
 
     const handleEditorReady = (editor: Editor) => {
         editor.insertString("");
