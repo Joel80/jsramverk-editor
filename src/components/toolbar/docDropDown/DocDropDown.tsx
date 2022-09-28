@@ -33,7 +33,7 @@ export default  function DocDropDown({userEmail, setLoadedDoc, /* setDocumentLoa
     return (
             <select id="documentSelect" onChange={(e) => fetchDoc(e)} className="doc-list">
                 <option value= "-99" key="0">Choose document</option>
-                {docs.filter((doc) => doc.allowed_users.includes(userEmail)).map((doc: docInterface, index:number) => <option value={doc._id || ""} key={index}>{doc.name} {/* - {doc._id} */}</option>)}
+                {docs.filter((doc) => doc.allowed_users?.includes(userEmail)).map((doc: docInterface, index:number) => <option value={doc._id || ""} key={index}>{doc.name} {/* - {doc._id} */}</option>)}
             </select> 
     );
 };
