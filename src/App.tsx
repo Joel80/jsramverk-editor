@@ -7,6 +7,7 @@ import docsModel from './models/docs';
 import Toolbar from './components/toolbar/toolbar/Toolbar';
 import docInterface from './interfaces/doc';
 import { io } from 'socket.io-client';
+import Login from './components/login/Login';
 
 function App() {
 
@@ -22,6 +23,7 @@ function App() {
     const [documentSaved, setDocumentSaved] = useState<Boolean>(false);
     const [loadedDoc, setLoadedDoc] = useState<docInterface>(defaultDoc);
     const [savedDoc, setSavedDoc] = useState<docInterface>(defaultDoc);
+    const [token, setToken] = useState("");
     const shouldSetSelectElement = useRef(false);
     const sendToSocket = useRef(false);
     const cursorPos = useRef([]);
@@ -88,16 +90,18 @@ function App() {
     function setEditorContent(content: string, triggerChange: boolean) {
         let element = document.querySelector("trix-editor") as any | null;
 
-        updateCurrentDocOnChange = triggerChange;
-        // Get selected range (save the current cursor position)
-        cursorPos.current = element.editor.getSelectedRange();
-        //console.log(`Cursorpos:${cursorPos.current}`);
-        element.value = "";
-        element.editor.setSelectedRange([0, 0]);
-        updateCurrentDocOnChange = triggerChange;
-        element.editor.insertHTML(content);
-        // Set selected range to the "old" cursor position
-        element.editor.setSelectedRange(cursorPos.current);
+        if (element) {
+            updateCurrentDocOnChange = triggerChange;
+            // Get selected range (save the current cursor position)
+            cursorPos.current = element.editor.getSelectedRange();
+            //console.log(`Cursorpos:${cursorPos.current}`);
+            element.value = "";
+            element.editor.setSelectedRange([0, 0]);
+            updateCurrentDocOnChange = triggerChange;
+            element.editor.insertHTML(content);
+            // Set selected range to the "old" cursor position
+            element.editor.setSelectedRange(cursorPos.current);
+        }
     }
 
     /* function setNameFormContent(content: string, triggerChange: boolean) {
@@ -109,9 +113,11 @@ function App() {
     } */
 
     async function fetchDocs() {
-        //console.log("Calling getAllDocs");
-        const allDocs = await docsModel.getAllDocs();
-        setDocs(allDocs);
+        console.log("Calling getAllDocs");
+        if (token) {
+            const allDocs = await docsModel.getAllDocs(token);
+            setDocs(allDocs);
+        }
     }
 
     // Fetch all docs on loading app
@@ -119,7 +125,7 @@ function App() {
         (async () => {
             await fetchDocs();
         })();
-    }, []);
+    }, [token]);
 
     // When a doc i selected in the dropDown
     useEffect( () => {
@@ -207,7 +213,7 @@ function App() {
         })();
     }, [savedDoc, documentSaved]);
 
-    //console.log(`Log from app: ${currentDoc._id} - ${currentDoc.html} - ${currentDoc.name}`);
+    console.log(`Log from app: ${currentDoc._id} - ${currentDoc.html} - ${currentDoc.name} - ${token}`);
 
     return (
         <div className="App">
@@ -215,9 +221,19 @@ function App() {
             <h1 className="main-site-h1">Real-time collaborative text editor</h1>
           </header>
           <main className="App-main">
-              <Toolbar handleClick={handleClick} setLoadedDoc={setLoadedDoc} setSavedDoc={setSavedDoc} setDocumentSaved={setDocumentSaved} /* setDocumentLoaded={setDocumentLoaded} */ setCurrentDoc={setCurrentDoc} docs={docs} currentDoc={currentDoc}/>
-              <NameForm handleNameChange={handleNameChange} currentDoc={currentDoc} />
-              <Texteditor handleChange={handleChange} setCurrentDoc={setCurrentDoc} currentDoc={currentDoc}/>
+
+                {token ?
+                    <>
+                        <Toolbar handleClick={handleClick} setLoadedDoc={setLoadedDoc} setSavedDoc={setSavedDoc} setDocumentSaved={setDocumentSaved} /* setDocumentLoaded={setDocumentLoaded} */ setCurrentDoc={setCurrentDoc} docs={docs} currentDoc={currentDoc}/>
+                        <NameForm handleNameChange={handleNameChange} currentDoc={currentDoc} />
+                        <Texteditor handleChange={handleChange} setCurrentDoc={setCurrentDoc} currentDoc={currentDoc}/>
+                    </> 
+                    
+                    :
+                    <Login setToken={setToken}/>
+                    
+                }
+                
           </main>
           <nav className='App-nav'>
 
