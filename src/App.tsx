@@ -24,6 +24,7 @@ function App() {
     const [loadedDoc, setLoadedDoc] = useState<docInterface>(defaultDoc);
     const [savedDoc, setSavedDoc] = useState<docInterface>(defaultDoc);
     const [token, setToken] = useState("");
+    const [userEmail, setUserEmail] = useState("");
     const shouldSetSelectElement = useRef(false);
     const sendToSocket = useRef(false);
     const cursorPos = useRef([]);
@@ -213,7 +214,7 @@ function App() {
         })();
     }, [savedDoc, documentSaved]);
 
-    console.log(`Log from app: ${currentDoc._id} - ${currentDoc.html} - ${currentDoc.name} - ${token}`);
+    console.log(`Log from app: ${currentDoc._id} - ${currentDoc.html} - ${currentDoc.name} -${userEmail}`);
 
     return (
         <div className="App">
@@ -230,7 +231,7 @@ function App() {
                     </> 
                     
                     :
-                    <Login setToken={setToken}/>
+                    <Login setToken={setToken} setUserEmail={setUserEmail} />
                     
                 }
                 
