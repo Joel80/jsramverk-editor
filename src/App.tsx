@@ -68,7 +68,8 @@ function App() {
     async function handleClick() {
         let doc: Partial<docInterface>= {
             name: "Ingen titel",
-            html: "No content"
+            html: "No content",
+            allowed_users: [userEmail],
         }
         const result = await docsModel.saveDoc(doc);
 
