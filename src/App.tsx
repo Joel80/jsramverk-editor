@@ -11,16 +11,16 @@ import Login from './components/login/Login';
 
 function App() {
 
-    let defaultDoc: docInterface = {
+    let defaultDoc = {
         _id: null,
         name: "No title",
         html: "",
-        allowed_users: []
+        allowed_users: [""]
     };
 
     const [docs, setDocs] = useState([]);
     const [socket, setSocket] = useState<any>(null);
-    const [currentDoc, setCurrentDoc] = useState(defaultDoc);
+    const [currentDoc, setCurrentDoc] = useState<docInterface>(defaultDoc);
     const [documentSaved, setDocumentSaved] = useState<Boolean>(false);
     const [loadedDoc, setLoadedDoc] = useState<docInterface>(defaultDoc);
     const [savedDoc, setSavedDoc] = useState<docInterface>(defaultDoc);
@@ -229,9 +229,26 @@ function App() {
 
                 {token ?
                     <>
-                        <Toolbar userEmail={userEmail} handleClick={handleClick} setLoadedDoc={setLoadedDoc} setSavedDoc={setSavedDoc} setDocumentSaved={setDocumentSaved} /* setDocumentLoaded={setDocumentLoaded} */ setCurrentDoc={setCurrentDoc} docs={docs} currentDoc={currentDoc}/>
+                        <Toolbar 
+                            userEmail={userEmail} 
+                            handleClick={handleClick} 
+                            setLoadedDoc={setLoadedDoc} 
+                            setSavedDoc={setSavedDoc} 
+                            setDocumentSaved={setDocumentSaved} 
+                            setCurrentDoc={setCurrentDoc} 
+                            docs={docs} 
+                            currentDoc={currentDoc}
+                        />
                         <NameForm handleNameChange={handleNameChange} currentDoc={currentDoc} />
-                        <Texteditor handleChange={handleChange} setCurrentDoc={setCurrentDoc} currentDoc={currentDoc}/>
+                        {currentDoc._id ?
+
+                            <Texteditor handleChange={handleChange} currentDoc={currentDoc}/>
+
+                            :
+                            <></>
+
+                        }
+                        
                     </> 
                     
                     :
