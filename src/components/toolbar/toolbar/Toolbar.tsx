@@ -1,6 +1,7 @@
 //import SaveButton from '../savebutton/Savebutton'
 import CreateButton from '../createButton/CreateButton'
 import DocDropDown from '../docDropDown/DocDropDown';
+import ShareForm from '../shareForm/ShareForm';
 import "./Toolbar.css";
 import docInterface from '../../../interfaces/doc';
 
@@ -11,7 +12,7 @@ export default function Toolbar(
     return (
         <div className="App-toolbar">
             <DocDropDown userEmail={userEmail} setLoadedDoc={setLoadedDoc} /* setDocumentLoaded={setDocumentLoaded} */ setCurrentDoc={setCurrentDoc} docs = {docs} />
-            {/* <SaveButton setCurrentDoc={setCurrentDoc} setSavedDoc={setSavedDoc} setDocumentSaved={setDocumentSaved} currentDoc={currentDoc}/> */}
+            <ShareForm setCurrentDoc={setCurrentDoc} currentDoc={currentDoc}/>
             <CreateButton handleClick={handleClick} />
         </div>
     )

@@ -52,6 +52,7 @@ function App() {
         updateCurrentDocOnChange = true;
     }
 
+
     const handleNameChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         //if (updateNameFieldOnChange) {
             const copy = Object.assign({}, currentDoc);
@@ -157,7 +158,8 @@ function App() {
             let data ={
                 _id: currentDoc._id,
                 name: currentDoc.name,
-                html: currentDoc.html
+                html: currentDoc.html,
+                allowed_users: currentDoc.allowed_users
             }
 
             socket.emit("doc", data);
@@ -216,7 +218,7 @@ function App() {
         })();
     }, [savedDoc, documentSaved]);
 
-    console.log(`Log from app: ${currentDoc._id} - ${currentDoc.html} - ${currentDoc.name} -${userEmail}`);
+    console.log(`Log from app: ${currentDoc._id} - ${currentDoc.html} - ${currentDoc.name} -${userEmail} - ${currentDoc.allowed_users}`);
 
     return (
         <div className="App">
