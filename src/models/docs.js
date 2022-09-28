@@ -9,8 +9,13 @@ const docsModel = {
         "http://localhost:1337" :
         "https://jsramverk-editor-jolf20.azurewebsites.net",
 
-    getAllDocs: async function getAllDocs() {
-        const response = await fetch(`${docsModel.baseUrl}/docs`);
+    getAllDocs: async function getAllDocs(token) {
+        const response = await fetch(`${docsModel.baseUrl}/docs`, {
+
+            headers: {
+                'x-access-token': token,
+            }
+        });
 
         const documents = await response.json();
 
