@@ -2,7 +2,7 @@ import { useState } from "react";
 import authModel from "../../models/auth"
 import UserInterface from '../../interfaces/user';
 
-export default function Login({setToken}: {setToken(param: string): void}) {
+export default function Login({setToken, setUserEmail}: {setToken(param: string): void, setUserEmail(param: string): void}) {
 
     const [user, setUser] = useState({});
 
@@ -22,6 +22,10 @@ export default function Login({setToken}: {setToken(param: string): void}) {
         if(result.data.token) {
             setToken(result.data.token);
         }
+
+        if (result.data.email) {
+            setUserEmail(result.data.email);
+        }
     }
 
     
@@ -31,6 +35,10 @@ export default function Login({setToken}: {setToken(param: string): void}) {
        if(result.data.token) {
          setToken(result.data.token);
        }
+
+       if (result.data.email) {
+        setUserEmail(result.data.email);
+    }
     }
 
     return(
