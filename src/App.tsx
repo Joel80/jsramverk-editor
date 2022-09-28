@@ -14,7 +14,8 @@ function App() {
     let defaultDoc: docInterface = {
         _id: null,
         name: "No title",
-        html: ""
+        html: "",
+        allowed_users: []
     };
 
     const [docs, setDocs] = useState([]);
@@ -225,7 +226,7 @@ function App() {
 
                 {token ?
                     <>
-                        <Toolbar handleClick={handleClick} setLoadedDoc={setLoadedDoc} setSavedDoc={setSavedDoc} setDocumentSaved={setDocumentSaved} /* setDocumentLoaded={setDocumentLoaded} */ setCurrentDoc={setCurrentDoc} docs={docs} currentDoc={currentDoc}/>
+                        <Toolbar userEmail={userEmail} handleClick={handleClick} setLoadedDoc={setLoadedDoc} setSavedDoc={setSavedDoc} setDocumentSaved={setDocumentSaved} /* setDocumentLoaded={setDocumentLoaded} */ setCurrentDoc={setCurrentDoc} docs={docs} currentDoc={currentDoc}/>
                         <NameForm handleNameChange={handleNameChange} currentDoc={currentDoc} />
                         <Texteditor handleChange={handleChange} setCurrentDoc={setCurrentDoc} currentDoc={currentDoc}/>
                     </> 
