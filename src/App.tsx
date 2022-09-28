@@ -230,7 +230,6 @@ function App() {
                 {token ?
                     <>
                         <Toolbar 
-                            userEmail={userEmail} 
                             handleClick={handleClick} 
                             setLoadedDoc={setLoadedDoc} 
                             setSavedDoc={setSavedDoc} 

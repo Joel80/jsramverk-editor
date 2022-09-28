@@ -87,9 +87,7 @@ test('docDropDown calls doc model load function on change to document', async ()
             },
     ]
 
-    const userEmail = "jolf20@bth.se"
-
-    render(<DocDropDown userEmail={userEmail} setLoadedDoc={mockSetLoadedDoc} setCurrentDoc={mockSetCurrentDoc} docs={docs} />);
+    render(<DocDropDown setLoadedDoc={mockSetLoadedDoc} setCurrentDoc={mockSetCurrentDoc} docs={docs} />);
     
     const drop = screen.getByRole('combobox');
     
@@ -122,9 +120,8 @@ test('docDropDown renders with Choose document as default text', async () => {
         },
     ]
 
-    const userEmail = "jolf20@bth.se"
 
-    render(<DocDropDown userEmail={userEmail} setLoadedDoc={mockSetLoadedDoc} setCurrentDoc={mockSetCurrentDoc} docs={docs} />);
+    render(<DocDropDown setLoadedDoc={mockSetLoadedDoc} setCurrentDoc={mockSetCurrentDoc} docs={docs} />);
     
     const drop = screen.getByText('Choose document');
 

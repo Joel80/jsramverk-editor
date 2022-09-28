@@ -6,8 +6,7 @@ import "./Toolbar.css";
 import docInterface from '../../../interfaces/doc';
 
 export default function Toolbar(
-    {userEmail, handleClick, setLoadedDoc, docs, setCurrentDoc, currentDoc}: {
-        userEmail: string, 
+    {handleClick, setLoadedDoc, docs, setCurrentDoc, currentDoc}: {
         handleClick(): void, 
         setLoadedDoc(param: docInterface): void, 
         setSavedDoc(param: docInterface): void, 
@@ -21,7 +20,7 @@ export default function Toolbar(
 
     return (
         <div className="App-toolbar">
-            <DocDropDown userEmail={userEmail} setLoadedDoc={setLoadedDoc} setCurrentDoc={setCurrentDoc} docs = {docs} />
+            <DocDropDown setLoadedDoc={setLoadedDoc} setCurrentDoc={setCurrentDoc} docs = {docs} />
             <ShareForm setCurrentDoc={setCurrentDoc} currentDoc={currentDoc}/>
             <CreateButton handleClick={handleClick} />
         </div>
