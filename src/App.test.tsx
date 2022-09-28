@@ -66,7 +66,8 @@ test('docDropDown calls doc model load function on change to document', async ()
         {
             _id: "2",
             name: "Dokument 2",
-            html: "html2"
+            html: "html2",
+            allowed_users: ["jolf20@bth.se"],
         }
     );
     
@@ -74,17 +75,21 @@ test('docDropDown calls doc model load function on change to document', async ()
             {
                 _id: "1",
                 name: "Dokument 1",
-                html: "html1"
+                html: "html1",
+                allowed_users: ["jolf20@bth.se"],
             },
 
             {
                 _id: "2",
                 name: "Dokument 2",
-                html: "html2"
+                html: "html2",
+                allowed_users: ["jolf20@bth.se"],
             },
-        ]
+    ]
 
-    render(<DocDropDown setLoadedDoc={mockSetLoadedDoc} setCurrentDoc={mockSetCurrentDoc} docs={docs} />);
+    const userEmail = "jolf20@bth.se"
+
+    render(<DocDropDown userEmail={userEmail} setLoadedDoc={mockSetLoadedDoc} setCurrentDoc={mockSetCurrentDoc} docs={docs} />);
     
     const drop = screen.getByRole('combobox');
     
@@ -105,17 +110,21 @@ test('docDropDown renders with Choose document as default text', async () => {
         {
             _id: "1",
             name: "Dokument 1",
-            html: "html1"
+            html: "html1",
+            allowed_users: ["jolf20@bth.se"],
         },
 
         {
             _id: "2",
             name: "Dokument 2",
-            html: "html2"
+            html: "html2",
+            allowed_users: ["jolf20@bth.se"],
         },
     ]
 
-    render(<DocDropDown setLoadedDoc={mockSetLoadedDoc} setCurrentDoc={mockSetCurrentDoc} docs={docs} />);
+    const userEmail = "jolf20@bth.se"
+
+    render(<DocDropDown userEmail={userEmail} setLoadedDoc={mockSetLoadedDoc} setCurrentDoc={mockSetCurrentDoc} docs={docs} />);
     
     const drop = screen.getByText('Choose document');
 
@@ -145,7 +154,8 @@ test('save button calls docsModel save function on click when current doc id is 
     let doc = {
         _id: null,
         name: "A name",
-        html: "Some html"
+        html: "Some html",
+        allowed_users: ["jolf20@bth.se"],
     };
 
     docsModel.saveDoc = jest.fn().mockResolvedValue({id: 1});
@@ -168,7 +178,8 @@ test('save button calls docsModel save function on click when current doc id is 
     let doc = {
         _id: "1",
         name: "A name",
-        html: "Some html"
+        html: "Some html",
+        allowed_users: ["jolf20@bth.se"],
     };
 
     docsModel.saveDoc = jest.fn();
