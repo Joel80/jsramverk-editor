@@ -3,7 +3,7 @@ import docsModel from '../../../models/docs';
 import "./DocDropDown.css";
 
 
-export default  function DocDropDown({setLoadedDoc, /* setDocumentLoaded, */ docs, setCurrentDoc}: {setLoadedDoc(param: docInterface): void, /* setDocumentLoaded(param: boolean): void, */ docs: docInterface[], setCurrentDoc(param: docInterface): void}) {
+export default  function DocDropDown({userEmail, setLoadedDoc, /* setDocumentLoaded, */ docs, setCurrentDoc}: {userEmail: string, setLoadedDoc(param: docInterface): void, /* setDocumentLoaded(param: boolean): void, */ docs: docInterface[], setCurrentDoc(param: docInterface): void}) {
 
     async function fetchDoc (e: React.ChangeEvent<HTMLSelectElement>) {
         //console.log(e.target.value);
@@ -18,7 +18,7 @@ export default  function DocDropDown({setLoadedDoc, /* setDocumentLoaded, */ doc
             setLoadedDoc(fetchedDoc);
             //setDocumentLoaded(true);
         } else {
-            let doc = {_id: null, name:"No title", html:""}
+            let doc = {_id: null, name:"No title", html:"", allowed_users: []}
             setCurrentDoc(doc);
             setLoadedDoc(doc);
             //setDocumentLoaded(true);
@@ -33,7 +33,7 @@ export default  function DocDropDown({setLoadedDoc, /* setDocumentLoaded, */ doc
     return (
             <select id="documentSelect" onChange={(e) => fetchDoc(e)} className="doc-list">
                 <option value= "-99" key="0">Choose document</option>
-                {docs.map((doc: docInterface, index:number) => <option value={doc._id || ""} key={index}>{doc.name} {/* - {doc._id} */}</option>)}
+                {docs.filter((doc) => doc.allowed_users.includes(userEmail)).map((doc: docInterface, index:number) => <option value={doc._id || ""} key={index}>{doc.name} {/* - {doc._id} */}</option>)}
             </select> 
     );
 };
