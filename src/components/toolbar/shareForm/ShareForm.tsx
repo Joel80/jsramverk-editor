@@ -1,5 +1,6 @@
 import { useState } from "react";
 import docInterface from "../../../interfaces/doc";
+import './shareForm.css';
 
 export default function ShareForm({setCurrentDoc, currentDoc}: {setCurrentDoc(param: docInterface): void, currentDoc: docInterface}) {
 
@@ -25,10 +26,10 @@ export default function ShareForm({setCurrentDoc, currentDoc}: {setCurrentDoc(pa
 
     return(
         <>
-            <label htmlFor="email-share">Email</label>
-            <input type="email" name="email-share" onChange={changeHandler}></input>
+            <label className="form-label" htmlFor="email-share">Add a user by e-mail: </label>
+            <input className="form-input" type="email" name="email-share" onChange={changeHandler}></input>
             
-            <button onClick={addUser}>Share</button>
+            <button className="share-button" onClick={addUser}>Share</button>
         </>
     )
 }

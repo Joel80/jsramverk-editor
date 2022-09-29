@@ -1,0 +1,62 @@
+.share-button {
+    background-color: #150080;
+    box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
+    color: white;
+    padding: 0.7em;
+    font-size: 1rem;
+    border-color: white;
+    margin-bottom: 1em;
+    margin-top: 1em;
+    align-self: center;
+    min-width: 8em;
+}
+
+
+
+.login {
+    display: flex;
+    flex-direction: column;
+}
+
+.login-heading {
+    align-self: center;
+    font-size: 2.5rem;
+    margin: 0;
+}
+
+.form-label {
+    font-size: 1em;
+}
+
+
+.login-text {
+    align-self: center;
+    font-size: 0.8em;
+
+}
+
+.form-label {
+    font-size: 0.9em;
+    align-self: center;
+    margin-top: 0.5em;
+}
+
+.form-input {
+    max-width: 50%;
+    min-width: 20em;
+    align-self: center;
+    margin-bottom: 0.5em;
+    margin-top: 0.5em;
+}
+
+@media screen and (max-width: 710px) {
+    .login-heading {
+        font-size: 1.5rem;
+    }
+}
+
+@media screen and (max-width: 455px) {
+    .login-heading {
+        font-size: 1rem;
+    }
+}
