@@ -226,7 +226,6 @@ function App() {
             <h1 className="main-site-h1">Real-time collaborative text editor</h1>
           </header>
           <main className="App-main">
-
                 {token ?
                     <>
                         <Toolbar 
