@@ -24,6 +24,14 @@
     min-width: 10em;
 }
 
+.warning {
+    align-self: center;
+    font-size: 0.9em;
+    color: red;
+    background-color: pink;
+    padding: 0.2em;
+}
+
 .login {
     display: flex;
     flex-direction: column;
