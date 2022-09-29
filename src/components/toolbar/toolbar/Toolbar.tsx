@@ -21,8 +21,8 @@ export default function Toolbar(
     return (
         <div className="App-toolbar">
             <DocDropDown setLoadedDoc={setLoadedDoc} setCurrentDoc={setCurrentDoc} docs = {docs} />
-            <ShareForm setCurrentDoc={setCurrentDoc} currentDoc={currentDoc}/>
             <CreateButton handleClick={handleClick} />
+            <ShareForm setCurrentDoc={setCurrentDoc} currentDoc={currentDoc}/>
         </div>
     )
 }
