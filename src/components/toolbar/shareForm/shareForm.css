@@ -11,7 +11,13 @@
     min-width: 8em;
 }
 
-
+.success {
+    align-self: center;
+    font-size: 0.9em;
+    color: darkgreen;
+    background-color: lightgreen;
+    padding: 0.2em;
+}
 
 .login {
     display: flex;
