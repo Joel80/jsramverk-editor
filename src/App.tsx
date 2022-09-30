@@ -129,6 +129,7 @@ function App() {
         (async () => {
             await fetchDocs();
         })();
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [token]);
 
     // When a doc i selected in the dropDown
@@ -216,6 +217,7 @@ function App() {
             shouldSetSelectElement.current = true;
             
         })();
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [savedDoc, documentSaved]);
 
     console.log(`Log from app: ${currentDoc._id} - ${currentDoc.html} - ${currentDoc.name} -${userEmail} - ${currentDoc.allowed_users}`);
