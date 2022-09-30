@@ -19,7 +19,7 @@ const authModel = {
 
         });
 
-        const result = await response.json();
+        await response.json();
     },
 
     login: async function login(user) {
