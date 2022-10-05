@@ -6,11 +6,13 @@ import "./DocDropDown.css";
 export default  function DocDropDown({
     setLoadedDoc, 
     docs, 
-    setCurrentDoc
+    setCurrentDoc,
+    token
     }: { 
         setLoadedDoc(param: docInterface): void,
         docs: docInterface[], 
-        setCurrentDoc(param: docInterface): void
+        setCurrentDoc(param: docInterface): void,
+        token: string
     }) {
 
     async function fetchDoc (e: React.ChangeEvent<HTMLSelectElement>) {
@@ -21,7 +23,7 @@ export default  function DocDropDown({
         //console.log(id);
 
         if (id !== "-99") {
-            const fetchedDoc = await docsModel.getOneDocById(id);
+            const fetchedDoc = await docsModel.getOneDocById(id, token);
             setCurrentDoc(fetchedDoc);
             setLoadedDoc(fetchedDoc);
             //setDocumentLoaded(true);
