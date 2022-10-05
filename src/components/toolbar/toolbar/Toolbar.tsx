@@ -6,21 +6,22 @@ import "./Toolbar.css";
 import docInterface from '../../../interfaces/doc';
 
 export default function Toolbar(
-    {handleClick, setLoadedDoc, docs, setCurrentDoc, currentDoc}: {
+    {handleClick, setLoadedDoc, docs, setCurrentDoc, currentDoc, token}: {
         handleClick(): void, 
         setLoadedDoc(param: docInterface): void, 
         setSavedDoc(param: docInterface): void, 
         setDocumentSaved(param: boolean): void,
         docs: docInterface[], 
         setCurrentDoc(param: docInterface): void, 
-        currentDoc: docInterface
+        currentDoc: docInterface,
+        token: string
     }
     ){
 
 
     return (
         <div className="App-toolbar">
-            <DocDropDown setLoadedDoc={setLoadedDoc} setCurrentDoc={setCurrentDoc} docs = {docs} />
+            <DocDropDown setLoadedDoc={setLoadedDoc} setCurrentDoc={setCurrentDoc} docs = {docs} token={token} />
             <CreateButton handleClick={handleClick} />
             {currentDoc._id?
                 <ShareForm setCurrentDoc={setCurrentDoc} currentDoc={currentDoc}/>
