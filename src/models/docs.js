@@ -22,19 +22,25 @@ const docsModel = {
         return documents.data;
     },
 
-    getOneDocById: async function getOneDocById(id) {
-        const response = await fetch(`${docsModel.baseUrl}/docs/${id}`);
+    getOneDocById: async function getOneDocById(id, token) {
+        const response = await fetch(`${docsModel.baseUrl}/docs/${id}`, {
+
+            headers: {
+                'x-access-token': token,
+            }
+        });
 
         const document = await response.json();
 
         return document.data;
     },
 
-    saveDoc: async function saveDoc(doc) {
+    saveDoc: async function saveDoc(doc, token) {
         const response = await fetch(`${docsModel.baseUrl}/docs`, { 
             body: JSON.stringify(doc),
             headers: {
-                'content-type': 'application/json'
+                'content-type': 'application/json',
+                'x-access-token': token
             },
             method: 'POST'
         });
@@ -46,11 +52,12 @@ const docsModel = {
         return result;
     },
 
-    updateDoc: async function updateDoc(doc) {
-        const response = await fetch(`${docsModel.baseUrl}/docs`, { 
+    updateDoc: async function updateDoc(doc, token) {
+        const response = await fetch(`${docsModel.baseUrl}/docs`, {
             body: JSON.stringify(doc),
             headers: {
-                'content-type': 'application/json'
+                'content-type': 'application/json',
+                'x-access-token': token,
             },
             method: 'PUT'
         });
