@@ -10,16 +10,39 @@ const docsModel = {
         "https://jsramverk-editor-jolf20.azurewebsites.net",
 
     getAllDocs: async function getAllDocs(token) {
-        const response = await fetch(`${docsModel.baseUrl}/docs`, {
+        /* const response = await fetch(`${docsModel.baseUrl}/docs`, {
 
             headers: {
                 'x-access-token': token,
             }
+        }); */
+
+        const response = await fetch(`${docsModel.baseUrl}/graphql`, {
+            method: 'POST',
+
+            headers: {
+                'Content-Type': 'application/json',
+                'Accept': 'application/json',
+                'x-access-token': token,
+            },
+
+            body: JSON.stringify({query: 
+                `{docs
+                    {
+                        _id
+                        name
+                        html
+                        allowed_users
+                    }
+                }`
+            })
         });
 
         const documents = await response.json();
 
-        return documents.data;
+        //console.log(`Documents = ${documents}`)
+
+        return documents.data.docs;
     },
 
     getOneDocById: async function getOneDocById(id, token) {
