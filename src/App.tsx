@@ -72,9 +72,9 @@ function App() {
             html: "No content",
             allowed_users: [userEmail],
         }
-        const result = await docsModel.saveDoc(doc);
+        const result = await docsModel.saveDoc(doc, token);
 
-        const fetchedDoc = await docsModel.getOneDocById(result.id);
+        const fetchedDoc = await docsModel.getOneDocById(result.id, token);
 
         //await fetchDocs();
 
@@ -238,6 +238,7 @@ function App() {
                             setCurrentDoc={setCurrentDoc} 
                             docs={docs} 
                             currentDoc={currentDoc}
+                            token={token}
                         />
                         <NameForm handleNameChange={handleNameChange} currentDoc={currentDoc} />
                         {currentDoc._id ?
