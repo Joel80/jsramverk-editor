@@ -7,12 +7,14 @@ export default  function DocDropDown({
     setLoadedDoc, 
     docs, 
     setCurrentDoc,
-    token
+    token,
+    setUsers
     }: { 
         setLoadedDoc(param: docInterface): void,
         docs: docInterface[], 
         setCurrentDoc(param: docInterface): void,
-        token: string
+        token: string,
+        setUsers(param: string[]): void
     }) {
 
     async function fetchDoc (e: React.ChangeEvent<HTMLSelectElement>) {
@@ -24,6 +26,9 @@ export default  function DocDropDown({
 
         if (id !== "-99") {
             const fetchedDoc = await docsModel.getOneDocById(id, token);
+            const docUsers = await docsModel.getUsers(fetchedDoc._id, token);
+            console.log(`Docusers: ${docUsers}`);
+            setUsers(docUsers);
             setCurrentDoc(fetchedDoc);
             setLoadedDoc(fetchedDoc);
             //setDocumentLoaded(true);
