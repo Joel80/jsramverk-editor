@@ -77,6 +77,10 @@ function App() {
 
         const fetchedDoc = await docsModel.getOneDocById(result.id, token);
 
+        const docUsers = await docsModel.getUsers(fetchedDoc._id, token);
+
+        setUsers(docUsers);
+
         //await fetchDocs();
 
         //setSelectElement("documentSelect", fetchedDoc._id);
