@@ -2,11 +2,13 @@ import { useState } from "react";
 import docInterface from "../../../interfaces/doc";
 import './shareForm.css';
 
-export default function ShareForm({setCurrentDoc, currentDoc}: {setCurrentDoc(param: docInterface): void, currentDoc: docInterface}) {
+export default function ShareForm({setCurrentDoc, currentDoc, setUsers, users}: {setCurrentDoc(param: docInterface): void, currentDoc: docInterface, setUsers(param: string[]): void, users: string[]}) {
 
     const [newUser, setNewUser] = useState("");
     const [value, setValue] = useState("");
     const [message, setMessage] = useState("");
+
+    //console.log(`Users in Shareform: ${users}`);
 
     function changeHandler(event: React.ChangeEvent<HTMLInputElement>) {
 
@@ -30,7 +32,13 @@ export default function ShareForm({setCurrentDoc, currentDoc}: {setCurrentDoc(pa
 
         copy.allowed_users.push(newUser);
 
-        console.log(copy.allowed_users);
+        //console.log(copy.allowed_users);
+
+        let newUsers = [...users];
+
+        newUsers.push(newUser);
+
+        setUsers(newUsers);
 
         setCurrentDoc(copy);
 
