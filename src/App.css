@@ -32,6 +32,11 @@
     font-size: 3rem;
 }
 
+.users {
+    font-size: 0.7em;
+    margin-bottom: 0.7em;
+}
+
 @media screen and (max-width: 710px) {
     .App-header {
         font-size: 2rem;
