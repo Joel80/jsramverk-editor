@@ -58,6 +58,30 @@ const docsModel = {
         return document.data;
     },
 
+    getUsers: async function getUsers(_id, token) {
+        console.log(`${_id}`);
+        const response = await fetch(`${docsModel.baseUrl}/graphql`, {
+            method: 'POST',
+
+            headers: {
+                'Content-Type': 'application/json',
+                'Accept': 'application/json',
+                'x-access-token': token,
+            },
+
+            body: JSON.stringify(
+                {query: `{doc (_id: "${_id}") { allowed_users }}`
+            })
+        });
+
+        const document = await response.json();
+
+        console.log(document);
+        //console.log(`Documents = ${documents}`)
+
+        return document.data.doc.allowed_users;
+    },
+
     saveDoc: async function saveDoc(doc, token) {
         const response = await fetch(`${docsModel.baseUrl}/docs`, { 
             body: JSON.stringify(doc),
