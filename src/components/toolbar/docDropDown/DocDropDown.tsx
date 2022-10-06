@@ -27,7 +27,7 @@ export default  function DocDropDown({
         if (id !== "-99") {
             const fetchedDoc = await docsModel.getOneDocById(id, token);
             const docUsers = await docsModel.getUsers(fetchedDoc._id, token);
-            console.log(`Docusers: ${docUsers}`);
+            //console.log(`Docusers: ${docUsers}`);
             setUsers(docUsers);
             setCurrentDoc(fetchedDoc);
             setLoadedDoc(fetchedDoc);
