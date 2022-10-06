@@ -122,7 +122,7 @@ function App() {
     } */
 
     async function fetchDocs() {
-        console.log("Calling getAllDocs");
+        //console.log("Calling getAllDocs");
         if (token) {
             const allDocs = await docsModel.getAllDocs(token);
             setDocs(allDocs);
@@ -160,7 +160,7 @@ function App() {
     useEffect (() => {
         //console.log(sendToSocket);
         if (socket && sendToSocket.current) {
-            console.log("Sending to socket");
+            //console.log("Sending to socket");
             let data ={
                 _id: currentDoc._id,
                 name: currentDoc.name,
@@ -225,7 +225,7 @@ function App() {
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [savedDoc, documentSaved]);
 
-    console.log(`Log from app: ${currentDoc._id} - ${currentDoc.html} - ${currentDoc.name} -${userEmail} - ${users}`);
+    //console.log(`Log from app: ${currentDoc._id} - ${currentDoc.html} - ${currentDoc.name} -${userEmail} - ${users}`);
 
     return (
         <div className="App">

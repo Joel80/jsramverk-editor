@@ -59,7 +59,7 @@ const docsModel = {
     },
 
     getUsers: async function getUsers(_id, token) {
-        console.log(`${_id}`);
+        //console.log(`${_id}`);
         const response = await fetch(`${docsModel.baseUrl}/graphql`, {
             method: 'POST',
 
@@ -76,7 +76,7 @@ const docsModel = {
 
         const document = await response.json();
 
-        console.log(document);
+        //console.log(document);
         //console.log(`Documents = ${documents}`)
 
         return document.data.doc.allowed_users;
