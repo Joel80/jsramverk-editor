@@ -26,6 +26,7 @@ function App() {
     const [savedDoc, setSavedDoc] = useState<docInterface>(defaultDoc);
     const [token, setToken] = useState("");
     const [userEmail, setUserEmail] = useState("");
+    const [users, setUsers] = useState<string[]>([]);
     const shouldSetSelectElement = useRef(false);
     const sendToSocket = useRef(false);
     const cursorPos = useRef([]);
@@ -220,7 +221,7 @@ function App() {
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [savedDoc, documentSaved]);
 
-    console.log(`Log from app: ${currentDoc._id} - ${currentDoc.html} - ${currentDoc.name} -${userEmail} - ${currentDoc.allowed_users}`);
+    console.log(`Log from app: ${currentDoc._id} - ${currentDoc.html} - ${currentDoc.name} -${userEmail} - ${users}`);
 
     return (
         <div className="App">
@@ -239,12 +240,15 @@ function App() {
                             docs={docs} 
                             currentDoc={currentDoc}
                             token={token}
+                            setUsers={setUsers}
+                            users={users}
                         />
-                        <NameForm handleNameChange={handleNameChange} currentDoc={currentDoc} />
                         {currentDoc._id ?
-
-                            <Texteditor handleChange={handleChange} currentDoc={currentDoc}/>
-
+                            <>
+                                <div className='users'>Users: {users.join(", ")} </div>
+                                <NameForm handleNameChange={handleNameChange} currentDoc={currentDoc} />
+                                <Texteditor handleChange={handleChange} currentDoc={currentDoc}/>
+                            </>
                             :
                             <></>
 
