@@ -99,6 +99,41 @@ const docsModel = {
         return result;
     },
 
+
+    saveDocQL: async function saveDocQL(doc, token) {
+        console.log(`${doc.name}`);
+        const response = await fetch(`${docsModel.baseUrl}/graphql`, {
+            method: 'POST',
+
+            headers: {
+                'Content-Type': 'application/json',
+                'Accept': 'application/json',
+                'x-access-token': token,
+            },
+
+
+            body: JSON.stringify(
+                {
+                    query: 
+                    `mutation{ 
+                        saveDoc(doc: {name: "${doc.name}", html: "${doc.html}", allowed_users: "${doc.allowed_users}"}) 
+                        { 
+                            _id
+                        }
+                    }`
+            })
+        });
+
+        const result = await response.json();
+
+        console.log(result);
+
+        //console.log(document);
+        //console.log(`Documents = ${documents}`)
+
+        return result.data.saveDoc;
+    },
+
     updateDoc: async function updateDoc(doc, token) {
         const response = await fetch(`${docsModel.baseUrl}/docs`, {
             body: JSON.stringify(doc),
