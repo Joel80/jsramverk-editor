@@ -75,7 +75,7 @@ function App() {
         }
         const result = await docsModel.saveDocQL(doc, token);
 
-        const fetchedDoc = await docsModel.getOneDocById(result._id, token);
+        const fetchedDoc = await docsModel.getOneDocById(result, token);
 
         const docUsers = await docsModel.getUsers(fetchedDoc._id, token);
 
