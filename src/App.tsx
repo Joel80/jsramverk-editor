@@ -73,9 +73,9 @@ function App() {
             html: "No content",
             allowed_users: [userEmail],
         }
-        const result = await docsModel.saveDoc(doc, token);
+        const result = await docsModel.saveDocQL(doc, token);
 
-        const fetchedDoc = await docsModel.getOneDocById(result.id, token);
+        const fetchedDoc = await docsModel.getOneDocById(result._id, token);
 
         const docUsers = await docsModel.getUsers(fetchedDoc._id, token);
 
