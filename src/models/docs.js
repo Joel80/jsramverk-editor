@@ -117,16 +117,13 @@ const docsModel = {
                     query: 
                     `mutation{ 
                         saveDoc(doc: {name: "${doc.name}", html: "${doc.html}", allowed_users: "${doc.allowed_users}"}) 
-                        { 
-                            _id
-                        }
                     }`
             })
         });
 
         const result = await response.json();
 
-        //console.log(result);
+        console.log(result);
 
         //console.log(document);
         //console.log(`Documents = ${documents}`)
