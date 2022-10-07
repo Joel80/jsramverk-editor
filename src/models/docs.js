@@ -101,7 +101,7 @@ const docsModel = {
 
 
     saveDocQL: async function saveDocQL(doc, token) {
-        console.log(`${doc.name}`);
+        //console.log(`${doc.name}`);
         const response = await fetch(`${docsModel.baseUrl}/graphql`, {
             method: 'POST',
 
@@ -126,7 +126,7 @@ const docsModel = {
 
         const result = await response.json();
 
-        console.log(result);
+        //console.log(result);
 
         //console.log(document);
         //console.log(`Documents = ${documents}`)
