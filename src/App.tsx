@@ -1,13 +1,14 @@
 import './App.css';
+import { useState, useEffect, useRef } from 'react';
+import { io } from 'socket.io-client';
+import { jsPDF } from "jspdf";
 import Texteditor from './components/editor/Texteditor';
 import NameForm from './components/editor/NameForm';
-import { useState, useEffect, useRef } from 'react';
 import docsModel from './models/docs';
-//import SaveButton from './components/toolbar/savebutton/Savebutton';
 import Toolbar from './components/toolbar/toolbar/Toolbar';
 import docInterface from './interfaces/doc';
-import { io } from 'socket.io-client';
 import Login from './components/login/Login';
+
 
 function App() {
 
@@ -94,6 +95,21 @@ function App() {
         setSavedDoc(fetchedDoc);
 
         setDocumentSaved(true);
+    }
+
+    function createPdf () {
+        let element = document.querySelector("trix-editor") as any | null;
+        const doc = new jsPDF('p', 'pt', 'a4');
+        doc.setFontSize(1);
+        doc.html(element, {
+            callback: function (doc) {
+                doc.save("doc");
+            },
+            width: 800,
+            windowWidth: 1200,
+            margin: [30, 30, 30, 30]
+        });
+
     }
 
     function setEditorContent(content: string, triggerChange: boolean) {
@@ -246,6 +262,7 @@ function App() {
                             token={token}
                             setUsers={setUsers}
                             users={users}
+                            createPdf={createPdf}
                         />
                         {currentDoc._id ?
                             <>
