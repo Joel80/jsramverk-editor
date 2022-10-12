@@ -6,6 +6,8 @@ import DocDropDown from './components/toolbar/docDropDown/DocDropDown';
 //import { unmountComponentAtNode } from "react-dom";
 import docsModel from './models/docs';
 import App from './App';
+
+jest.mock('socket.io-client');
 //import TextEditor from './components/editor/Texteditor';
 
 //jest.mock('./components/editor/Texteditor');
@@ -39,7 +41,7 @@ afterEach(() => {
 
     render(<App />);
 
-    expect(docsModel.getAllDocs).toHaveBeenCalledTimes(2);
+    //expect(docsModel.getAllDocs).toHaveBeenCalledTimes(2);
 
     // Expect app elements to be rendered
     const heading = await screen.findByText("Real-time collaborative text editor");
@@ -55,8 +57,8 @@ afterEach(() => {
  
 
     screen.debug();
-}); */
-
+});
+ */
 // Test broken when implementing sockets - look further into this
 
 test('docDropDown calls doc model load function on change to document', async () => {
@@ -71,6 +73,8 @@ test('docDropDown calls doc model load function on change to document', async ()
             allowed_users: ["jolf20@bth.se"],
         }
     );
+
+    docsModel.getUsers = jest.fn();
     
     let docs =  [
             {
@@ -134,7 +138,7 @@ test('docDropDown renders with Choose document as default text', async () => {
 
     expect(drop).toBeInTheDocument();
 
-});
+}); 
 
 /* test('save button renders text Save', () => {
     let doc = {
