@@ -8,6 +8,8 @@ import docsModel from './models/docs';
 import Toolbar from './components/toolbar/toolbar/Toolbar';
 import docInterface from './interfaces/doc';
 import Login from './components/login/Login';
+import CodeEditor from './components/editor/CodeEditor';
+import RunButton from './components/editor/RunButton';
 
 
 function App() {
@@ -31,6 +33,8 @@ function App() {
     const shouldSetSelectElement = useRef(false);
     const sendToSocket = useRef(false);
     const cursorPos = useRef([]);
+    const codeEditorRef = useRef<any>(null);
+    const codeMode = useRef(false);
 
     // Server url and socket declarations
     const SERVER_URL = window.location.href.includes("localhost") ? 
@@ -41,6 +45,43 @@ function App() {
 
     let updateCurrentDocOnChange: boolean = false;
     //let updateNameFieldOnChange: boolean =false;
+
+    function handleModeChange() {
+        codeMode.current = !codeMode.current;
+        let doc = {_id: null, name:"No title", html:"", allowed_users: []}
+        setCurrentDoc(doc);
+        setLoadedDoc(doc);
+
+        console.log(codeMode.current);
+    }
+
+    function showCodeEditorValue() {
+        if (codeEditorRef.current) {
+            
+            console.log(codeEditorRef.current.getValue())
+        } else {
+            console.log(codeEditorRef.current);
+        }
+    }
+
+    function handleClickRun() {
+        console.log("Running");
+        showCodeEditorValue();
+    }
+
+    function handleCodeEditorChange(content: string | undefined) {
+        if (updateCurrentDocOnChange) {
+           /*  const copy = Object.assign({}, currentDoc);
+    
+            copy.html = content;
+    
+            setCurrentDoc(copy); */
+
+            console.log(codeEditorRef.current.getValue());
+        }
+    
+        updateCurrentDocOnChange = true;
+    }
 
     function handleChange(html: string, text: string) {
         if (updateCurrentDocOnChange) {
@@ -112,7 +153,7 @@ function App() {
 
     }
 
-    function setEditorContent(content: string, triggerChange: boolean) {
+    function setEditorContent(content: string | undefined, triggerChange: boolean) {
         let element = document.querySelector("trix-editor") as any | null;
 
         if (element) {
@@ -263,12 +304,23 @@ function App() {
                             setUsers={setUsers}
                             users={users}
                             createPdf={createPdf}
+                            handleModeChange={handleModeChange}
                         />
+
+                        
                         {currentDoc._id ?
                             <>
                                 <div className='users'>Users: {users.join(", ")} </div>
                                 <NameForm handleNameChange={handleNameChange} currentDoc={currentDoc} />
-                                <Texteditor handleChange={handleChange} currentDoc={currentDoc}/>
+                                {codeMode.current ?
+                                    <>
+                                        <RunButton handleClickRun={handleClickRun} />
+                                        <CodeEditor codeEditorRef={codeEditorRef} handleCodeEditorChange={handleCodeEditorChange}/>
+                                    </>
+                                    
+                                    :
+                                    <Texteditor handleChange={handleChange} currentDoc={currentDoc}/>
+                                }
                             </>
                             :
                             <></>
