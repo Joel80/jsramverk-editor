@@ -1,13 +1,13 @@
-//import SaveButton from '../savebutton/Savebutton'
+import "./Toolbar.css";
 import CreateButton from '../createButton/CreateButton'
 import DocDropDown from '../docDropDown/DocDropDown';
 import ShareForm from '../shareForm/ShareForm';
 import PdfGenerator from '../pdfGenerator/PdfGenerator'
-import "./Toolbar.css";
+import TypeChooser from "../typeChooser/TypeChooser";
 import docInterface from '../../../interfaces/doc';
 
 export default function Toolbar(
-    {handleClick, setLoadedDoc, docs, setCurrentDoc, currentDoc, token, setUsers, users, createPdf}: {
+    {handleClick, setLoadedDoc, docs, setCurrentDoc, currentDoc, token, setUsers, users, createPdf, handleModeChange}: {
         handleClick(): void, 
         setLoadedDoc(param: docInterface): void, 
         setSavedDoc(param: docInterface): void, 
@@ -18,7 +18,8 @@ export default function Toolbar(
         token: string,
         setUsers(param: []): void,
         users: string[],
-        createPdf(): void
+        createPdf(): void,
+        handleModeChange(): void
     }
     ){
 
@@ -26,6 +27,7 @@ export default function Toolbar(
         <div className="App-toolbar">
             <DocDropDown setLoadedDoc={setLoadedDoc} setCurrentDoc={setCurrentDoc} docs = {docs} token={token} setUsers={setUsers} />
             <CreateButton handleClick={handleClick} />
+            <TypeChooser handleModeChange={handleModeChange}/>
             {currentDoc._id?
                 <>
                     <ShareForm setCurrentDoc={setCurrentDoc} currentDoc={currentDoc} setUsers={setUsers} users={users}/>
