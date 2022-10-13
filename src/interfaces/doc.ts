@@ -3,4 +3,5 @@ export default interface doc {
     name: string;
     html: string | undefined;
     allowed_users: string[];
+    code: boolean | undefined
 }
