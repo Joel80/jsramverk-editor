@@ -8,7 +8,7 @@ import docInterface from '../../../interfaces/doc';
 import { MutableRefObject } from "react";
 
 export default function Toolbar(
-    {handleClick, setLoadedDoc, docs, setCurrentDoc, currentDoc, token, setUsers, users, createPdf, handleModeChange, codeMode}: {
+    {handleClick, setLoadedDoc, docs, setCurrentDoc, currentDoc, token, setUsers, users, createPdf, handleModeChange, codeMode, userEmail}: {
         handleClick(): void, 
         setLoadedDoc(param: docInterface): void, 
         setSavedDoc(param: docInterface): void, 
@@ -21,7 +21,8 @@ export default function Toolbar(
         users: string[],
         createPdf(): void,
         handleModeChange(): void,
-        codeMode: MutableRefObject<boolean>
+        codeMode: MutableRefObject<boolean>;
+        userEmail: string
     }
     ){
 
@@ -39,7 +40,7 @@ export default function Toolbar(
             <TypeChooser handleModeChange={handleModeChange}/>
             {currentDoc._id?
                 <>
-                    <ShareForm setCurrentDoc={setCurrentDoc} currentDoc={currentDoc} setUsers={setUsers} users={users}/>
+                    <ShareForm setCurrentDoc={setCurrentDoc} currentDoc={currentDoc} setUsers={setUsers} users={users} userEmail={userEmail} token={token}/>
                     <PdfGenerator createPdf={createPdf} />
                 </>
                 
