@@ -2,7 +2,7 @@ export default function TypeChooser({handleModeChange}: {handleModeChange(): voi
 
     return (
             <>
-                <label>Editor mode</label>
+                <label>Code mode</label>
                 <input id="typeChooser" type="checkbox" onChange={handleModeChange} /> 
             </>
             
