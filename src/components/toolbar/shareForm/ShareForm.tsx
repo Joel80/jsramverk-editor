@@ -1,8 +1,16 @@
 import { useState } from "react";
 import docInterface from "../../../interfaces/doc";
+import docsModel from "../../../models/docs";
 import './shareForm.css';
 
-export default function ShareForm({setCurrentDoc, currentDoc, setUsers, users}: {setCurrentDoc(param: docInterface): void, currentDoc: docInterface, setUsers(param: string[]): void, users: string[]}) {
+export default function ShareForm({setCurrentDoc, currentDoc, setUsers, users, userEmail, token}: 
+    {
+        setCurrentDoc(param: docInterface): void, 
+        currentDoc: docInterface, setUsers(param: string[]): void, 
+        users: string[],
+        userEmail: string,
+        token: string
+    }) {
 
     const [newUser, setNewUser] = useState("");
     const [value, setValue] = useState("");
@@ -45,6 +53,8 @@ export default function ShareForm({setCurrentDoc, currentDoc, setUsers, users}: 
         setNewUser("");
         setValue("");
         flashMessage("User added!")
+
+        await docsModel.emailNewUser(userEmail, newUser, token);
     }
 
     return(
