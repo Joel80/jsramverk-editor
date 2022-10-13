@@ -18,7 +18,8 @@ function App() {
         _id: null,
         name: "No title",
         html: "",
-        allowed_users: [""]
+        allowed_users: [""],
+        code: false
     };
 
     const [docs, setDocs] = useState([]);
@@ -34,6 +35,7 @@ function App() {
     const sendToSocket = useRef(false);
     const cursorPos = useRef([]);
     const codeEditorRef = useRef<any>(null);
+    const monacoRef = useRef<any>(null);
     const codeMode = useRef(false);
 
     // Server url and socket declarations
@@ -48,7 +50,7 @@ function App() {
 
     function handleModeChange() {
         codeMode.current = !codeMode.current;
-        let doc = {_id: null, name:"No title", html:"", allowed_users: []}
+        let doc = {_id: null, name:"No title", html:"", allowed_users: [], code: codeMode.current}
         setCurrentDoc(doc);
         setLoadedDoc(doc);
 
@@ -58,7 +60,8 @@ function App() {
     function showCodeEditorValue() {
         if (codeEditorRef.current) {
             
-            console.log(codeEditorRef.current.getValue())
+            console.log(codeEditorRef.current.getValue());
+            codeEditorRef.current.setValue("Hej");
         } else {
             console.log(codeEditorRef.current);
         }
@@ -71,13 +74,11 @@ function App() {
 
     function handleCodeEditorChange(content: string | undefined) {
         if (updateCurrentDocOnChange) {
-           /*  const copy = Object.assign({}, currentDoc);
+            const copy = Object.assign({}, currentDoc);
     
             copy.html = content;
     
-            setCurrentDoc(copy); */
-
-            console.log(codeEditorRef.current.getValue());
+            setCurrentDoc(copy);
         }
     
         updateCurrentDocOnChange = true;
@@ -114,6 +115,7 @@ function App() {
             name: "Ingen titel",
             html: "No content",
             allowed_users: [userEmail],
+            code: codeMode.current
         }
         const result = await docsModel.saveDocQL(doc, token);
 
@@ -127,8 +129,10 @@ function App() {
 
         //setSelectElement("documentSelect", fetchedDoc._id);
 
+        
         setEditorContent(fetchedDoc.html, false);
-
+     
+        
         setLoadedDoc(fetchedDoc);
 
         setCurrentDoc(fetchedDoc);
@@ -154,20 +158,39 @@ function App() {
     }
 
     function setEditorContent(content: string | undefined, triggerChange: boolean) {
-        let element = document.querySelector("trix-editor") as any | null;
+        let element = null;
 
-        if (element) {
-            updateCurrentDocOnChange = triggerChange;
-            // Get selected range (save the current cursor position)
-            cursorPos.current = element.editor.getSelectedRange();
-            //console.log(`Cursorpos:${cursorPos.current}`);
-            element.value = "";
-            element.editor.setSelectedRange([0, 0]);
-            updateCurrentDocOnChange = triggerChange;
-            element.editor.insertHTML(content);
-            // Set selected range to the "old" cursor position
-            element.editor.setSelectedRange(cursorPos.current);
+        if (codeMode.current) {
+            element = codeEditorRef.current;
+            if (element) {
+                console.log(content);
+               /*  console.log(element.getStartPosition()); */
+                updateCurrentDocOnChange = triggerChange;
+                console.log(monacoRef.current);
+                if (content !== element.getValue()) {
+                    element.setValue(content);
+                }
+                console.log(element.getPosition());
+            }
+        } else {
+            element = document.querySelector("trix-editor") as any | null;
+            if (element) {
+                updateCurrentDocOnChange = triggerChange;
+                // Get selected range (save the current cursor position)
+                cursorPos.current = element.editor.getSelectedRange();
+                //console.log(`Cursorpos:${cursorPos.current}`);
+                if (content !== element.value) {
+                    element.value = "";
+                    element.editor.setSelectedRange([0, 0]);
+                    updateCurrentDocOnChange = triggerChange;
+                    element.editor.insertHTML(content);
+                    // Set selected range to the "old" cursor position
+                    element.editor.setSelectedRange(cursorPos.current);
+                }
+            }
         }
+                
+        
     }
 
     /* function setNameFormContent(content: string, triggerChange: boolean) {
@@ -222,7 +245,8 @@ function App() {
                 _id: currentDoc._id,
                 name: currentDoc.name,
                 html: currentDoc.html,
-                allowed_users: currentDoc.allowed_users
+                allowed_users: currentDoc.allowed_users,
+                code: codeMode.current
             }
 
             socket.emit("doc", data);
@@ -282,7 +306,7 @@ function App() {
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [savedDoc, documentSaved]);
 
-    //console.log(`Log from app: ${currentDoc._id} - ${currentDoc.html} - ${currentDoc.name} -${userEmail} - ${users}`);
+    console.log(`Log from app: ${currentDoc._id} - ${currentDoc.html} - ${currentDoc.name} ${currentDoc.code} -${userEmail} - ${users}`);
 
     return (
         <div className="App">
@@ -316,7 +340,7 @@ function App() {
                                 {codeMode.current ?
                                     <>
                                         <RunButton handleClickRun={handleClickRun} />
-                                        <CodeEditor codeEditorRef={codeEditorRef} handleCodeEditorChange={handleCodeEditorChange}/>
+                                        <CodeEditor monacoRef={monacoRef} codeEditorRef={codeEditorRef} handleCodeEditorChange={handleCodeEditorChange} currentDoc={currentDoc}/>
                                     </>
                                     
                                     :
