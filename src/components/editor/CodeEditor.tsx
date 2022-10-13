@@ -1,11 +1,13 @@
 import Editor from "@monaco-editor/react";
+import docInterface from '../../interfaces/doc';
 
-export default function CodeEditor({codeEditorRef, handleCodeEditorChange}: {codeEditorRef: any, handleCodeEditorChange(param1: string | undefined): void}) {
+export default function CodeEditor({codeEditorRef, monacoRef, handleCodeEditorChange, currentDoc}: {monacoRef: any, codeEditorRef: any, handleCodeEditorChange(param1: string | undefined): void, currentDoc: docInterface}) {
 
     function handleEditorDidMount(editor: any, monaco: any) {
         console.log("Editor did mount");
         codeEditorRef.current = editor;
         console.log(codeEditorRef);
+        monacoRef = monaco;
     }
 
     return (
@@ -15,6 +17,8 @@ export default function CodeEditor({codeEditorRef, handleCodeEditorChange}: {cod
             defaultValue="// some comment"
             onMount={handleEditorDidMount}
             onChange={handleCodeEditorChange}
+            value={currentDoc.html}
+            theme="vs-dark"
         />
     );
 }
