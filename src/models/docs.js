@@ -144,6 +144,48 @@ const docsModel = {
         const result = await response.json();
 
         return result;
+    },
+
+    sendCode: async function sendCode(code) {
+
+        const data = {
+            code: btoa(code)
+        }
+
+        const response = await fetch(`https://execjs.emilfolino.se/code`, { 
+            body: JSON.stringify(data),
+            headers: {
+                'content-type': 'application/json',
+            },
+            method: 'POST'
+        });
+
+        const result = await response.json();
+        //console.log(result);
+        const decodedResult = atob(result.data);
+
+        console.log(decodedResult);
+
+        return decodedResult;
+
+        /*     var data = {
+            code: btoa('console.log("hej");')
+        };
+        
+        fetch("https://execjs.emilfolino.se/code", {
+            body: JSON.stringify(data),
+            headers: {
+                'content-type': 'application/json'
+            },
+            method: 'POST'
+        })
+        .then(function (response) {
+            return response.json();
+        })
+        .then(function(result) {
+            let decodedOutput = atob(result.data);
+            console.log(decodedOutput); // outputs: hej
+        }); */
     }
 
 }
