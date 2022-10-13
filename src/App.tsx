@@ -10,6 +10,7 @@ import docInterface from './interfaces/doc';
 import Login from './components/login/Login';
 import CodeEditor from './components/editor/CodeEditor';
 import RunButton from './components/editor/RunButton';
+import CodeConsole from './components/editor/CodeConsole';
 
 
 function App() {
@@ -67,9 +68,17 @@ function App() {
         }
     }
 
-    function handleClickRun() {
+    async function handleClickRun() {
         console.log("Running");
-        showCodeEditorValue();
+        //showCodeEditorValue();
+        const codeConsole = document.getElementById('codeConsole');
+        if (codeConsole) {
+            codeConsole.innerHTML = "Running your code...";
+        }
+        const result = await docsModel.sendCode(codeEditorRef.current.getValue());
+        if (codeConsole) {
+            codeConsole.innerHTML = result;
+        }
     }
 
     function handleCodeEditorChange(content: string | undefined) {
@@ -341,6 +350,7 @@ function App() {
                                     <>
                                         <RunButton handleClickRun={handleClickRun} />
                                         <CodeEditor monacoRef={monacoRef} codeEditorRef={codeEditorRef} handleCodeEditorChange={handleCodeEditorChange} currentDoc={currentDoc}/>
+                                        <CodeConsole />
                                     </>
                                     
                                     :
