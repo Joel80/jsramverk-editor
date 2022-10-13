@@ -36,13 +36,18 @@ export default  function DocDropDown({
                 if (typeChooser) {
                     typeChooser.checked=true;
                 }
-            }
+            } else {
+                const typeChooser = document.getElementById("typeChooser") as HTMLInputElement | null;
+                if (typeChooser) {
+                    typeChooser.checked=false;
+                }
+            }   
             
             setUsers(docUsers);
             setCurrentDoc(fetchedDoc);
             setLoadedDoc(fetchedDoc);
         } else {
-            let doc = {_id: null, name:"No title", html:"", allowed_users: []}
+            let doc = {_id: null, name:"No title", html:"", allowed_users: [], code: false}
             setCurrentDoc(doc);
             setLoadedDoc(doc);
         }
