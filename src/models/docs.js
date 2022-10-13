@@ -168,24 +168,28 @@ const docsModel = {
 
         return decodedResult;
 
-        /*     var data = {
-            code: btoa('console.log("hej");')
-        };
-        
-        fetch("https://execjs.emilfolino.se/code", {
+    },
+
+    emailNewUser: async function emailNewUser(user, email, token) {
+        const data = {
+            user: user,
+            email: email
+        }
+
+        const response = await fetch(`${docsModel.baseUrl}/docs/user`, {
             body: JSON.stringify(data),
             headers: {
-                'content-type': 'application/json'
+                'content-type': 'application/json',
+                'x-access-token': token,
             },
             method: 'POST'
-        })
-        .then(function (response) {
-            return response.json();
-        })
-        .then(function(result) {
-            let decodedOutput = atob(result.data);
-            console.log(decodedOutput); // outputs: hej
-        }); */
+        });
+
+        const result = await response.json();
+
+        //console.log(result);
+
+        return result;
     }
 
 }
