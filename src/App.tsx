@@ -339,6 +339,7 @@ function App() {
                             createPdf={createPdf}
                             handleModeChange={handleModeChange}
                             codeMode = {codeMode}
+                            userEmail={userEmail}
                         />
 
                         
