@@ -3,7 +3,7 @@ export default function TypeChooser({handleModeChange}: {handleModeChange(): voi
     return (
             <>
                 <label>Editor mode</label>
-                <input type="checkbox" onChange={handleModeChange} /> 
+                <input id="typeChooser" type="checkbox" onChange={handleModeChange} /> 
             </>
             
     );

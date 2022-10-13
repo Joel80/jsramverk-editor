@@ -1,3 +1,4 @@
+import { MutableRefObject } from 'react';
 import docInterface from '../../../interfaces/doc';
 import docsModel from '../../../models/docs';
 import "./DocDropDown.css";
@@ -8,13 +9,15 @@ export default  function DocDropDown({
     docs, 
     setCurrentDoc,
     token,
-    setUsers
+    setUsers,
+    codeMode
     }: { 
         setLoadedDoc(param: docInterface): void,
         docs: docInterface[], 
         setCurrentDoc(param: docInterface): void,
         token: string,
-        setUsers(param: string[]): void
+        setUsers(param: string[]): void,
+        codeMode: MutableRefObject<boolean>
     }) {
 
     async function fetchDoc (e: React.ChangeEvent<HTMLSelectElement>) {
@@ -27,16 +30,21 @@ export default  function DocDropDown({
         if (id !== "-99") {
             const fetchedDoc = await docsModel.getOneDocById(id, token);
             const docUsers = await docsModel.getUsers(fetchedDoc._id, token);
-            //console.log(`Docusers: ${docUsers}`);
+            codeMode.current = fetchedDoc.code;
+            if (codeMode.current) {
+                const typeChooser = document.getElementById("typeChooser") as HTMLInputElement | null;
+                if (typeChooser) {
+                    typeChooser.checked=true;
+                }
+            }
+            
             setUsers(docUsers);
             setCurrentDoc(fetchedDoc);
             setLoadedDoc(fetchedDoc);
-            //setDocumentLoaded(true);
         } else {
             let doc = {_id: null, name:"No title", html:"", allowed_users: []}
             setCurrentDoc(doc);
             setLoadedDoc(doc);
-            //setDocumentLoaded(true);
         }
         
 

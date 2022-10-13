@@ -5,9 +5,10 @@ import ShareForm from '../shareForm/ShareForm';
 import PdfGenerator from '../pdfGenerator/PdfGenerator'
 import TypeChooser from "../typeChooser/TypeChooser";
 import docInterface from '../../../interfaces/doc';
+import { MutableRefObject } from "react";
 
 export default function Toolbar(
-    {handleClick, setLoadedDoc, docs, setCurrentDoc, currentDoc, token, setUsers, users, createPdf, handleModeChange}: {
+    {handleClick, setLoadedDoc, docs, setCurrentDoc, currentDoc, token, setUsers, users, createPdf, handleModeChange, codeMode}: {
         handleClick(): void, 
         setLoadedDoc(param: docInterface): void, 
         setSavedDoc(param: docInterface): void, 
@@ -19,13 +20,21 @@ export default function Toolbar(
         setUsers(param: []): void,
         users: string[],
         createPdf(): void,
-        handleModeChange(): void
+        handleModeChange(): void,
+        codeMode: MutableRefObject<boolean>
     }
     ){
 
     return (
         <div className="App-toolbar">
-            <DocDropDown setLoadedDoc={setLoadedDoc} setCurrentDoc={setCurrentDoc} docs = {docs} token={token} setUsers={setUsers} />
+            <DocDropDown 
+                setLoadedDoc={setLoadedDoc} 
+                setCurrentDoc={setCurrentDoc} 
+                docs = {docs} 
+                token={token} 
+                setUsers={setUsers}
+                codeMode={codeMode}
+            />
             <CreateButton handleClick={handleClick} />
             <TypeChooser handleModeChange={handleModeChange}/>
             {currentDoc._id?

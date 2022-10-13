@@ -1,3 +1,4 @@
+import { useRef } from 'react';
 import { render, screen, fireEvent, waitFor, findByText, act } from '@testing-library/react';
 import userEvent from '@testing-library/user-event/';
 import SaveButton from './components/toolbar/savebutton/Savebutton';
@@ -94,9 +95,11 @@ test('docDropDown calls doc model load function on change to document', async ()
 
     const token = "";
 
+    const codeMode = useRef(false);
+
     
 
-    render(<DocDropDown setLoadedDoc={mockSetLoadedDoc} setCurrentDoc={mockSetCurrentDoc} docs={docs} token={token} setUsers={mockSetUsers}/>);
+    render(<DocDropDown setLoadedDoc={mockSetLoadedDoc} setCurrentDoc={mockSetCurrentDoc} docs={docs} token={token} setUsers={mockSetUsers} codeMode={codeMode}/>);
     
     const drop = screen.getByRole('combobox');
     
@@ -132,7 +135,9 @@ test('docDropDown renders with Choose document as default text', async () => {
 
     const token = "";
 
-    render(<DocDropDown setLoadedDoc={mockSetLoadedDoc} setCurrentDoc={mockSetCurrentDoc} docs={docs} token={token} setUsers={mockSetUsers} />);
+    const codeMode = useRef(false);
+
+    render(<DocDropDown setLoadedDoc={mockSetLoadedDoc} setCurrentDoc={mockSetCurrentDoc} docs={docs} token={token} setUsers={mockSetUsers} codeMode={codeMode}/>);
     
     const drop = screen.getByText('Choose document');
 

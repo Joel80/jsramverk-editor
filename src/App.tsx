@@ -305,6 +305,7 @@ function App() {
                             users={users}
                             createPdf={createPdf}
                             handleModeChange={handleModeChange}
+                            codeMode = {codeMode}
                         />
 
                         
