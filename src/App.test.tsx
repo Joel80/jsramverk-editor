@@ -1,4 +1,4 @@
-import { useRef } from 'react';
+import { MutableRefObject, useRef } from 'react';
 import { render, screen, fireEvent, waitFor, findByText, act } from '@testing-library/react';
 import userEvent from '@testing-library/user-event/';
 import SaveButton from './components/toolbar/savebutton/Savebutton';
@@ -83,6 +83,7 @@ test('docDropDown calls doc model load function on change to document', async ()
                 name: "Dokument 1",
                 html: "html1",
                 allowed_users: ["jolf20@bth.se"],
+                code: false
             },
 
             {
@@ -90,14 +91,16 @@ test('docDropDown calls doc model load function on change to document', async ()
                 name: "Dokument 2",
                 html: "html2",
                 allowed_users: ["jolf20@bth.se"],
+                code: false
             },
     ]
 
     const token = "";
 
-    const codeMode = useRef(false);
+    const codeMode = {
+        current: false
+    }
 
-    
 
     render(<DocDropDown setLoadedDoc={mockSetLoadedDoc} setCurrentDoc={mockSetCurrentDoc} docs={docs} token={token} setUsers={mockSetUsers} codeMode={codeMode}/>);
     
@@ -123,6 +126,7 @@ test('docDropDown renders with Choose document as default text', async () => {
             name: "Dokument 1",
             html: "html1",
             allowed_users: ["jolf20@bth.se"],
+            code: false
         },
 
         {
@@ -130,12 +134,15 @@ test('docDropDown renders with Choose document as default text', async () => {
             name: "Dokument 2",
             html: "html2",
             allowed_users: ["jolf20@bth.se"],
+            code: false
         },
     ]
 
     const token = "";
 
-    const codeMode = useRef(false);
+    const codeMode = {
+        current: false
+    }
 
     render(<DocDropDown setLoadedDoc={mockSetLoadedDoc} setCurrentDoc={mockSetCurrentDoc} docs={docs} token={token} setUsers={mockSetUsers} codeMode={codeMode}/>);
     
@@ -169,6 +176,7 @@ test('save button calls docsModel save function on click when current doc id is 
         name: "A name",
         html: "Some html",
         allowed_users: ["jolf20@bth.se"],
+        code: false
     };
 
     docsModel.saveDoc = jest.fn().mockResolvedValue({id: 1});
@@ -193,6 +201,7 @@ test('save button calls docsModel save function on click when current doc id is 
         name: "A name",
         html: "Some html",
         allowed_users: ["jolf20@bth.se"],
+        code: false
     };
 
     docsModel.saveDoc = jest.fn();
