@@ -42,7 +42,6 @@ export default  function DocDropDown({
                     typeChooser.checked=false;
                 }
             }   
-            
             setUsers(docUsers);
             setCurrentDoc(fetchedDoc);
             setLoadedDoc(fetchedDoc);
