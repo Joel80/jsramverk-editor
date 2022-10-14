@@ -116,7 +116,7 @@ const docsModel = {
                 {
                     query: 
                     `mutation{ 
-                        saveDoc(doc: {name: "${doc.name}", html: "${doc.html}", allowed_users: "${doc.allowed_users}"}) 
+                        saveDoc(doc: {name: "${doc.name}", html: "${doc.html}", allowed_users: "${doc.allowed_users}", code: "${doc.code}", comments: "${doc.comments}"}) 
                     }`
             })
         });
