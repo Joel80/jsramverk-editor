@@ -37,6 +37,11 @@
     margin-bottom: 0.7em;
 }
 
+.text-editor-wrapper {
+    display: flex;
+    flex-direction: row;
+}
+
 @media screen and (max-width: 710px) {
     .App-header {
         font-size: 2rem;

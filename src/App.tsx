@@ -14,6 +14,7 @@ import RunButton from './components/editor/RunButton';
 import CodeConsole from './components/editor/CodeConsole';
 import CommentButton from './components/editor/CommentButton';
 import AddComment from './components/editor/AddComment';
+import CommentList from './components/editor/CommentList';
 
 
 function App() {
@@ -423,12 +424,28 @@ function App() {
                                         {showAddCommentField? 
                                             <>
                                                 <AddComment handleAddCommentButtonClick={handleAddCommentButtonClick} handleCancelCommentButtonClick={handleCancelCommentButtonClick} />
-                                                <Texteditor handleChange={handleChange} currentDoc={currentDoc}/>
+                                                <div className='text-editor-wrapper'>
+                                                    <Texteditor handleChange={handleChange} currentDoc={currentDoc}/>
+                                                    {currentDoc.comments? 
+                                                        <CommentList comments={currentDoc.comments} />
+                                                        :
+                                                        <></>
+                                                    }
+                                                </div>
                                             </>
                                             :
                                             <>
                                                 <CommentButton handleCommentButtonClick={handleCommentButtonClick}/>
+                                                <div className='text-editor-wrapper'>
+                                                
                                                 <Texteditor handleChange={handleChange} currentDoc={currentDoc}/>
+                                                    {currentDoc.comments? 
+                                                        <CommentList comments={currentDoc.comments} />
+                                                        :
+                                                        <></>
+                                                    }
+                                                </div>
+                                                
                                             </>
                                         }
                                         
