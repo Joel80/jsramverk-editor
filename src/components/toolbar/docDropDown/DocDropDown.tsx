@@ -47,7 +47,7 @@ export default  function DocDropDown({
             setCurrentDoc(fetchedDoc);
             setLoadedDoc(fetchedDoc);
         } else {
-            let doc = {_id: null, name:"No title", html:"", allowed_users: [], code: false}
+            let doc = {_id: null, name:"No title", html:"", allowed_users: [], code: false, comments: []}
             setCurrentDoc(doc);
             setLoadedDoc(doc);
         }

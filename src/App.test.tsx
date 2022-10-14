@@ -83,7 +83,8 @@ test('docDropDown calls doc model load function on change to document', async ()
                 name: "Dokument 1",
                 html: "html1",
                 allowed_users: ["jolf20@bth.se"],
-                code: false
+                code: false,
+                comments: []
             },
 
             {
@@ -91,7 +92,8 @@ test('docDropDown calls doc model load function on change to document', async ()
                 name: "Dokument 2",
                 html: "html2",
                 allowed_users: ["jolf20@bth.se"],
-                code: false
+                code: false,
+                comments: []
             },
     ]
 
@@ -126,7 +128,8 @@ test('docDropDown renders with Choose document as default text', async () => {
             name: "Dokument 1",
             html: "html1",
             allowed_users: ["jolf20@bth.se"],
-            code: false
+            code: false,
+            comments: []
         },
 
         {
@@ -134,7 +137,8 @@ test('docDropDown renders with Choose document as default text', async () => {
             name: "Dokument 2",
             html: "html2",
             allowed_users: ["jolf20@bth.se"],
-            code: false
+            code: false,
+            comments: []
         },
     ]
 
@@ -176,7 +180,8 @@ test('save button calls docsModel save function on click when current doc id is 
         name: "A name",
         html: "Some html",
         allowed_users: ["jolf20@bth.se"],
-        code: false
+        code: false,
+        comments: []
     };
 
     docsModel.saveDoc = jest.fn().mockResolvedValue({id: 1});
@@ -201,7 +206,8 @@ test('save button calls docsModel save function on click when current doc id is 
         name: "A name",
         html: "Some html",
         allowed_users: ["jolf20@bth.se"],
-        code: false
+        code: false,
+        comments: []
     };
 
     docsModel.saveDoc = jest.fn();

@@ -20,7 +20,8 @@ function App() {
         name: "No title",
         html: "",
         allowed_users: [""],
-        code: false
+        code: false,
+        comments: []
     };
 
     const [docs, setDocs] = useState([]);
@@ -51,7 +52,7 @@ function App() {
 
     function handleModeChange() {
         codeMode.current = !codeMode.current;
-        let doc = {_id: null, name:"No title", html:"", allowed_users: [], code: codeMode.current}
+        let doc = {_id: null, name:"No title", html:"", allowed_users: [], code: codeMode.current, comments: []}
         setCurrentDoc(doc);
         setLoadedDoc(doc);
 
@@ -124,7 +125,8 @@ function App() {
             name: "Ingen titel",
             html: "No content",
             allowed_users: [userEmail],
-            code: codeMode.current
+            code: codeMode.current,
+            comments: []
         }
         const result = await docsModel.saveDocQL(doc, token);
 
@@ -255,7 +257,8 @@ function App() {
                 name: currentDoc.name,
                 html: currentDoc.html,
                 allowed_users: currentDoc.allowed_users,
-                code: codeMode.current
+                code: codeMode.current,
+                comments: currentDoc.comments
             }
 
             socket.emit("doc", data);
