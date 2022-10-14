@@ -1,0 +1,11 @@
+.comment-card {
+    width: 15vw;
+    border: 1px solid black;
+    padding: 1em;
+    margin: 1em;
+    font-size: 0.6em;
+}
+
+p {
+    margin: 0.2em;
+}
