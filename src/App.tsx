@@ -7,10 +7,13 @@ import NameForm from './components/editor/NameForm';
 import docsModel from './models/docs';
 import Toolbar from './components/toolbar/toolbar/Toolbar';
 import docInterface from './interfaces/doc';
+import docComment from './interfaces/comment';
 import Login from './components/login/Login';
 import CodeEditor from './components/editor/CodeEditor';
 import RunButton from './components/editor/RunButton';
 import CodeConsole from './components/editor/CodeConsole';
+import CommentButton from './components/editor/CommentButton';
+import AddComment from './components/editor/AddComment';
 
 
 function App() {
@@ -39,6 +42,8 @@ function App() {
     const codeEditorRef = useRef<any>(null);
     const monacoRef = useRef<any>(null);
     const codeMode = useRef(false);
+    const [showAddCommentField, setShowAddCommentField] = useState(false);
+    const selectedRange = useRef([]);
 
     // Server url and socket declarations
     const SERVER_URL = window.location.href.includes("localhost") ? 
@@ -49,6 +54,57 @@ function App() {
 
     let updateCurrentDocOnChange: boolean = false;
     //let updateNameFieldOnChange: boolean =false;
+
+    function handleCommentButtonClick() {
+        if (!codeMode.current) {
+            const element = document.querySelector("trix-editor") as any | null;
+            if (element) { 
+                const range = element.editor.getSelectedRange();
+                selectedRange.current = range;
+            }
+        }
+        setShowAddCommentField(true);
+    }
+
+    function handleAddCommentButtonClick() {
+        if (!codeMode.current) {
+            const element = document.querySelector("trix-editor") as any | null;
+            if (element) {
+                element.editor.activateAttribute("comment");
+                const start = selectedRange.current[0];
+                const end = selectedRange.current[1];
+                element.editor.setSelectedRange([start]);
+                element.editor.insertHTML("<comment>")
+                element.editor.setSelectedRange([end]);
+                element.editor.insertHTML("</comment>");
+
+                const commentInput = document.getElementById("commentInput") as HTMLInputElement | null;
+
+                if (commentInput) {
+                    const comment = {
+                        user: userEmail,
+                        date: new Date(),
+                        text: commentInput.value,
+                        range: selectedRange.current
+                    }
+
+                    currentDoc.comments.push(comment);
+
+                    commentInput.innerHTML='';
+                    setShowAddCommentField(false);
+                }
+            }
+        }
+    }
+
+    function handleCancelCommentButtonClick() {
+        const commentInput = document.getElementById("commentInput") as HTMLInputElement | null;
+        if (commentInput) {
+            commentInput.innerHTML='';
+        }
+
+        setShowAddCommentField(false);
+    }
 
     function handleModeChange() {
         codeMode.current = !codeMode.current;
@@ -173,9 +229,13 @@ function App() {
 
         if (codeMode.current) {
             element = codeEditorRef.current;
+             /* console.log(`Current content: ${element.getValue()}`);
+                 */
             if (element) {
-                console.log(content);
-               /*  console.log(element.getStartPosition()); */
+                // This gives the same as below, new and current content are
+                // the same but still it is loaded?
+                /* console.log(`New content: ${content}`);
+                console.log(`Current content: ${element.getValue()}`); */
                 updateCurrentDocOnChange = triggerChange;
                 console.log(monacoRef.current);
                 if (content !== element.getValue()) {
@@ -190,14 +250,18 @@ function App() {
                 // Get selected range (save the current cursor position)
                 cursorPos.current = element.editor.getSelectedRange();
                 //console.log(`Cursorpos:${cursorPos.current}`);
-                if (content !== element.value) {
+                /* console.log(`Current content: ${element.value}`);
+                console.log(`New content: ${content}`); */
+
+                // To check if content equals works with code editor not with text editor?
+                /* if (content !== element.value) { */
                     element.value = "";
                     element.editor.setSelectedRange([0, 0]);
                     updateCurrentDocOnChange = triggerChange;
                     element.editor.insertHTML(content);
                     // Set selected range to the "old" cursor position
                     element.editor.setSelectedRange(cursorPos.current);
-                }
+                /* } */
             }
         }
                 
@@ -318,7 +382,7 @@ function App() {
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [savedDoc, documentSaved]);
 
-    console.log(`Log from app: ${currentDoc._id} - ${currentDoc.html} - ${currentDoc.name} ${currentDoc.code} -${userEmail} - ${users}`);
+    console.log(`Log from app: ${currentDoc._id} - ${currentDoc.html} - ${currentDoc.name} ${currentDoc.code} -${currentDoc.comments}`);
 
     return (
         <div className="App">
@@ -344,8 +408,6 @@ function App() {
                             codeMode = {codeMode}
                             userEmail={userEmail}
                         />
-
-                        
                         {currentDoc._id ?
                             <>
                                 <div className='users'>Users: {users.join(", ")} </div>
@@ -356,9 +418,22 @@ function App() {
                                         <CodeEditor monacoRef={monacoRef} codeEditorRef={codeEditorRef} handleCodeEditorChange={handleCodeEditorChange} currentDoc={currentDoc}/>
                                         <CodeConsole />
                                     </>
-                                    
                                     :
-                                    <Texteditor handleChange={handleChange} currentDoc={currentDoc}/>
+                                    <>
+                                        {showAddCommentField? 
+                                            <>
+                                                <AddComment handleAddCommentButtonClick={handleAddCommentButtonClick} handleCancelCommentButtonClick={handleCancelCommentButtonClick} />
+                                                <Texteditor handleChange={handleChange} currentDoc={currentDoc}/>
+                                            </>
+                                            :
+                                            <>
+                                                <CommentButton handleCommentButtonClick={handleCommentButtonClick}/>
+                                                <Texteditor handleChange={handleChange} currentDoc={currentDoc}/>
+                                            </>
+                                        }
+                                        
+                                    </>
+                                    
                                 }
                             </>
                             :
