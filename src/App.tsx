@@ -2,12 +2,14 @@ import './App.css';
 import { useState, useEffect, useRef } from 'react';
 import { io } from 'socket.io-client';
 import { jsPDF } from "jspdf";
+/* @ts-ignore */
+//import Trix from "trix";
 import Texteditor from './components/editor/Texteditor';
 import NameForm from './components/editor/NameForm';
 import docsModel from './models/docs';
 import Toolbar from './components/toolbar/toolbar/Toolbar';
 import docInterface from './interfaces/doc';
-import docComment from './interfaces/comment';
+//import docComment from './interfaces/comment';
 import Login from './components/login/Login';
 import CodeEditor from './components/editor/CodeEditor';
 import RunButton from './components/editor/RunButton';
@@ -71,13 +73,20 @@ function App() {
         if (!codeMode.current) {
             const element = document.querySelector("trix-editor") as any | null;
             if (element) {
-                element.editor.activateAttribute("comment");
+                //element.editor.activateAttribute("comment");
+               /*  let attachement = new Trix.Attachment({content: "<span id='0'>"});
                 const start = selectedRange.current[0];
                 const end = selectedRange.current[1];
                 element.editor.setSelectedRange([start]);
+                element.editor.insertAttachment(attachement);
+                attachement = new Trix.Attachment({content: "</span>"});
+                element.editor.setSelectedRange([end]);
+                element.editor.insertAttachment(attachement); */
+                
+                /* element.editor.setSelectedRange([start]);
                 element.editor.insertHTML("<comment>")
                 element.editor.setSelectedRange([end]);
-                element.editor.insertHTML("</comment>");
+                element.editor.insertHTML("</comment>"); */
 
                 const commentInput = document.getElementById("commentInput") as HTMLInputElement | null;
 
@@ -116,7 +125,7 @@ function App() {
         console.log(codeMode.current);
     }
 
-    function showCodeEditorValue() {
+    /* function showCodeEditorValue() {
         if (codeEditorRef.current) {
             
             console.log(codeEditorRef.current.getValue());
@@ -125,7 +134,7 @@ function App() {
             console.log(codeEditorRef.current);
         }
     }
-
+ */
     async function handleClickRun() {
         console.log("Running");
         //showCodeEditorValue();
