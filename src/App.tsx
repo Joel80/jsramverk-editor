@@ -221,9 +221,10 @@ function App() {
 
     function createPdf () {
         let element = document.querySelector("trix-editor") as any | null;
+        let html = element.value;
         const doc = new jsPDF('p', 'pt', 'a4');
         doc.setFontSize(1);
-        doc.html(element, {
+        doc.html(html, {
             callback: function (doc) {
                 doc.save("doc");
             },
@@ -447,12 +448,12 @@ function App() {
                                                 <CommentButton handleCommentButtonClick={handleCommentButtonClick}/>
                                                 <div className='text-editor-wrapper'>
                                                 
-                                                <Texteditor handleChange={handleChange} currentDoc={currentDoc}/>
-                                                    {currentDoc.comments? 
-                                                        <CommentList comments={currentDoc.comments} />
-                                                        :
-                                                        <></>
-                                                    }
+                                                    <Texteditor handleChange={handleChange} currentDoc={currentDoc}/>
+                                                        {currentDoc.comments? 
+                                                            <CommentList comments={currentDoc.comments} />
+                                                            :
+                                                            <></>
+                                                        }
                                                 </div>
                                                 
                                             </>
