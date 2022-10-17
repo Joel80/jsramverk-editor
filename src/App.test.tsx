@@ -23,7 +23,7 @@ import App from './App';
 // https://github.com/suren-atoyan/monaco-react#use-monaco-editor-as-an-npm-package
 
 jest.mock('socket.io-client');
-jest.mock('jspdf');
+//jest.mock('jspdf');
 
 /* test('renders app with all elements', async () => {
     docsModel.getAllDocs = jest.fn().mockResolvedValue(
@@ -345,8 +345,7 @@ test('save button calls docsModel save function on click when current doc id is 
  });
 
  test('clicking on code chooser then on create new doc renders code editor', async () => {
-    HTMLCanvasElement.prototype.getContext = jest.fn();
-    window.HTMLCanvasElement.prototype.getContext = jest.fn();
+    
     render(<App />);
 
     authModel.login = jest.fn().mockReturnValue({data: {token: "1", email:"test@test.se"}});
