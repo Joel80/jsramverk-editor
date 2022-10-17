@@ -1,9 +1,10 @@
-import "trix/dist/trix";
+/* @ts-ignore */
+import Trix from "trix/dist/trix";
 import { Editor, TrixEditor } from "react-trix";
 import "./trix.css";
 import docInterface from '../../interfaces/doc';
 /* @ts-ignore */
-import Trix from "trix"
+//import Trix from "trix"
 
 
 export default function Texteditor({ handleChange, currentDoc }: {handleChange(param1: string, param2: string): void, currentDoc: docInterface} ) {
