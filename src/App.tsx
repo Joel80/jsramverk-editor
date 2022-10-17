@@ -97,8 +97,10 @@ function App() {
                         text: commentInput.value,
                         range: selectedRange.current
                     }
+                    const currentDocCopy = Object.assign({}, currentDoc); 
+                    currentDocCopy.comments.push(comment);
 
-                    currentDoc.comments.push(comment);
+                    setCurrentDoc(currentDocCopy);
 
                     commentInput.innerHTML='';
                     setShowAddCommentField(false);
