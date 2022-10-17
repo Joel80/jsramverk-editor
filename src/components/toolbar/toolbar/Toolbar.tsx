@@ -37,7 +37,7 @@ export default function Toolbar(
                 codeMode={codeMode}
             />
             <CreateButton handleClick={handleClick} />
-            <TypeChooser handleModeChange={handleModeChange}/>
+            <TypeChooser setCurrentDoc={setCurrentDoc} setLoadedDoc={setLoadedDoc} codeMode={codeMode}/>
             {currentDoc._id?
                 <>
                     <ShareForm setCurrentDoc={setCurrentDoc} currentDoc={currentDoc} setUsers={setUsers} users={users} userEmail={userEmail} token={token}/>
