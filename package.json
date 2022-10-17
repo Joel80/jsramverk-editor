@@ -48,6 +48,7 @@
     ]
   },
   "devDependencies": {
+    "jest-canvas-mock": "^2.4.0",
     "react-test-renderer": "^18.2.0"
   }
 }
