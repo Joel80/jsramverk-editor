@@ -593,7 +593,7 @@ test('save button calls docsModel save function on click when current doc id is 
 
     await user.click(createDocButton);
     
-    await waitFor(()=>{});
+    //await waitFor(()=>{});
 
     const commentButton = screen.getByText("Comment");
 
