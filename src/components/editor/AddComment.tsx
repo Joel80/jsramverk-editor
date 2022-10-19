@@ -5,7 +5,7 @@ export default  function AddComment({handleAddCommentButtonClick, handleCancelCo
 
     return (
             <>
-                <input className="comment-input" id="commentInput"></input>
+                <input data-testid="comment-input" className="comment-input" id="commentInput"></input>
                 <button className="comment-button" onClick={handleAddCommentButtonClick}>Add comment</button>
                 <button className="comment-button" onClick={handleCancelCommentButtonClick}>Cancel</button>
             </>
