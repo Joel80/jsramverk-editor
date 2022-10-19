@@ -1,4 +1,4 @@
-import { render, screen, fireEvent, getAllByRole } from '@testing-library/react';
+import { render, screen, fireEvent, getAllByRole, waitFor } from '@testing-library/react';
 import userEvent from '@testing-library/user-event/';
 import SaveButton from './components/toolbar/savebutton/Savebutton';
 import CreateButton from './components/toolbar/createButton/CreateButton';
@@ -559,7 +559,7 @@ test('save button calls docsModel save function on click when current doc id is 
     expect(inputField).toBeInTheDocument();
  });
 
- /* test('adding a comment renders comment to screen', async() => {
+ test('adding a comment renders comment to screen', async() => {
     render(<App />);
 
     authModel.login = jest.fn().mockReturnValue({data: {token: "1", email:"test@test.se"}});
@@ -590,29 +590,26 @@ test('save button calls docsModel save function on click when current doc id is 
     await user.click(logInButton);
 
     const createDocButton = screen.getByText("Create new doc");
-    
-    screen.debug();
 
     await user.click(createDocButton);
-
-    screen.debug();
+    
+    await waitFor(()=>{});
 
     const commentButton = screen.getByText("Comment");
 
-    user.click(commentButton);
+    await user.click(commentButton);
 
     const commentInput = screen.getByTestId("comment-input");
 
-    user.type(commentInput, "A comment");
+    await user.type(commentInput, "A comment");
 
     const addCommentButton = screen.getByText("Add comment");
 
-    user.click(addCommentButton);
+    await user.click(addCommentButton);
 
     const comment = screen.getByText("A comment");
 
-    screen.debug();
- }) */
+ });
 
  test('comment card renders with correct comment', () => {
 
