@@ -64,6 +64,15 @@ function App() {
             if (element) { 
                 const range = element.editor.getSelectedRange();
                 selectedRange.current = range;
+                
+                element.editor.activateAttribute("comment");
+                const start = selectedRange.current[0];
+                console.log(start);
+                const end = selectedRange.current[1];
+                element.editor.setSelectedRange([start]);
+                element.editor.insertHTML("<comment>")
+                element.editor.setSelectedRange([end]);
+                element.editor.insertHTML("</comment>");
             }
         }
         setShowAddCommentField(true);
@@ -82,11 +91,6 @@ function App() {
                 attachement = new Trix.Attachment({content: "</span>"});
                 element.editor.setSelectedRange([end]);
                 element.editor.insertAttachment(attachement); */
-                
-                /* element.editor.setSelectedRange([start]);
-                element.editor.insertHTML("<comment>")
-                element.editor.setSelectedRange([end]);
-                element.editor.insertHTML("</comment>"); */
 
                 const commentInput = document.getElementById("commentInput") as HTMLInputElement | null;
 
@@ -113,6 +117,12 @@ function App() {
         const commentInput = document.getElementById("commentInput") as HTMLInputElement | null;
         if (commentInput) {
             commentInput.innerHTML='';
+        }
+        const element = document.querySelector("trix-editor") as any | null;
+        if (element) {             
+            
+            element.editor.setSelectedRange(selectedRange.current);
+            element.editor.deactivateAttribute("comment");
         }
 
         setShowAddCommentField(false);
