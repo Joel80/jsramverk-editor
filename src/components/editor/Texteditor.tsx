@@ -12,7 +12,10 @@ export default function Texteditor({ handleChange, currentDoc }: {handleChange(p
     Trix.config.textAttributes.comment = { 
       tagName: "comment",
       style: {
-        backgroundColor: "purple"
+        backgroundColor: "purple",
+        selection: {
+          background: "pink"
+        }
       },
     }
     
