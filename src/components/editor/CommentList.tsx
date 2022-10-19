@@ -8,7 +8,7 @@ export default function CommentList({comments}: {comments: docComment[]}) {
             return <CommentCard _id={`commentCard${index}`} comment={comment} key={index} />
         }
 
-        return <></>;
+        return <div key={index}></div>;
     });
 
     return (
