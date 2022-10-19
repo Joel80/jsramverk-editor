@@ -16,7 +16,16 @@ import CommentList from './components/editor/CommentList';
 import docsModel from './models/docs';
 import authModel from './models/auth';
 import App from './App';
+import Texteditor from './components/editor/Texteditor';
 
+/* jest.mock("window.Selection"); */
+
+/* .removeAllRanges = jest.fn(); */
+
+
+//window.getSelection = () => ({});
+
+//jest.spyOn(window, () => {});
 
 // https://github.com/suren-atoyan/monaco-react/issues/88
 
@@ -380,7 +389,7 @@ test('save button calls docsModel save function on click when current doc id is 
 
     const user = userEvent.setup();
 
-    screen.debug();
+    //screen.debug();
 
     await user.click(button);
 
@@ -392,7 +401,7 @@ test('save button calls docsModel save function on click when current doc id is 
 
     screen.getByText("Loading...");
 
-    screen.debug();
+    //screen.debug();
 
  });
 
@@ -549,6 +558,183 @@ test('save button calls docsModel save function on click when current doc id is 
     expect(cancelButton).toBeInTheDocument();
     expect(inputField).toBeInTheDocument();
  });
+
+ /* test('adding a comment renders comment to screen', async() => {
+    render(<App />);
+
+    authModel.login = jest.fn().mockReturnValue({data: {token: "1", email:"test@test.se"}});
+
+    const doc = {
+        _id: "1",
+        name: "A name",
+        html: "Some html",
+        allowed_users: ["test@test.se"],
+        code: false,
+        comments: []
+    }
+    
+    docsModel.getOneDocById = jest.fn().mockReturnValue(doc);
+
+    docsModel.getUsers = jest.fn().mockReturnValue(["test@test.se"]);
+
+    docsModel.getAllDocs = jest.fn().mockReturnValue(
+        [ doc ] 
+    );
+
+    docsModel.saveDocQL = jest.fn().mockReturnValue("1");
+
+    const logInButton = screen.getByText("Log in");
+
+    const user = userEvent.setup();
+
+    await user.click(logInButton);
+
+    const createDocButton = screen.getByText("Create new doc");
+    
+    screen.debug();
+
+    await user.click(createDocButton);
+
+    screen.debug();
+
+    const commentButton = screen.getByText("Comment");
+
+    user.click(commentButton);
+
+    const commentInput = screen.getByTestId("comment-input");
+
+    user.type(commentInput, "A comment");
+
+    const addCommentButton = screen.getByText("Add comment");
+
+    user.click(addCommentButton);
+
+    const comment = screen.getByText("A comment");
+
+    screen.debug();
+ }) */
+
+ test('comment card renders with correct comment', () => {
+
+    /* const mockHandleChange = jest.fn();
+
+    const currentDoc = {
+        _id: "1",
+        name: "A name",
+        html: "// some comment",
+        allowed_users: ["jolf20@bth.se"],
+        code: false,
+        comments: []
+    } */
+
+    const _id = "1";
+
+    const key = 1;
+
+    const comment = {
+        date: new Date("2022-10-19"),
+        user: "test@test.se",
+        text: "A comment",
+        range: [1, 1]
+
+    }
+    //render(<Texteditor handleChange={mockHandleChange} currentDoc={currentDoc}/>)
+    render(<CommentCard _id={_id} comment={comment} key={key}/>)
+
+    const commentCard = screen.getByText("A comment");
+
+    expect(commentCard).toBeInTheDocument();
+
+    const user = userEvent.setup();
+
+    user.hover(commentCard);
+
+    //screen.debug();
+    
+ });
+
+ test('comment list renders with correct comments', () => {
+
+    /* const mockHandleChange = jest.fn();
+
+    const currentDoc = {
+        _id: "1",
+        name: "A name",
+        html: "// some comment",
+        allowed_users: ["jolf20@bth.se"],
+        code: false,
+        comments: []
+    }
+    */
+    const _id = "1";
+
+    const key = 1;
+
+    const comments = [
+        {
+            date: new Date("2022-10-19"),
+            user: "test@test.se",
+            text: "A comment",
+            range: [1, 1]
+        },
+
+        {
+            date: new Date("2022-10-19"),
+            user: "test@test.se",
+            text: "Another comment",
+            range: [2, 2]
+        },
+    ]
+
+    //render(<Texteditor handleChange={mockHandleChange} currentDoc={currentDoc}/>)
+    render(<CommentList comments={comments}/>)
+
+    const commentCard1 = screen.getByText("A comment");
+
+    expect(commentCard1).toBeInTheDocument();
+
+    const commentCard2 = screen.getByText("Another comment");
+
+    expect(commentCard2).toBeInTheDocument();
+
+    //screen.debug();
+    
+ });
+
+
+
+ /* test('comment card renders with correct comment', () => {
+
+    const mockHandleChange = jest.fn();
+
+    const currentDoc = {
+        _id: "1",
+        name: "A name",
+        html: "// some comment",
+        allowed_users: ["jolf20@bth.se"],
+        code: true,
+        comments: []
+    }
+
+    const _id = "1";
+
+    const key = 1;
+
+    const comment = {
+        date: new Date("2022-10-19"),
+        user: "test@test.se",
+        text: "A comment",
+        range: [1, 1]
+
+    }
+    render(<Texteditor handleChange={mockHandleChange} currentDoc={currentDoc}/>)
+    render(<CommentCard _id={_id} comment={comment} key={key}/>)
+
+    const commentCard = screen.getByText("A comment");
+
+    expect(commentCard).toBeInTheDocument();
+    
+ }); */
 
 
 
