@@ -47,6 +47,7 @@ function App() {
     const codeMode = useRef(false);
     const [showAddCommentField, setShowAddCommentField] = useState(false);
     const selectedRange = useRef([]);
+    const shouldSetEditorContent = useRef(true);
 
     // Server url and socket declarations
     const SERVER_URL = window.location.href.includes("localhost") ? 
@@ -219,9 +220,11 @@ function App() {
         //setSelectElement("documentSelect", fetchedDoc._id);
 
         
-        setEditorContent(fetchedDoc.html, false);
-     
         
+        setEditorContent(fetchedDoc.html, false);
+
+        shouldSetEditorContent.current = false;
+
         setLoadedDoc(fetchedDoc);
 
         setCurrentDoc(fetchedDoc);
@@ -323,7 +326,13 @@ function App() {
             socket.emit("create", loadedDoc["_id"]);
         }
 
-        setEditorContent(loadedDoc.html, false);
+        console.log(loadedDoc);
+        if (shouldSetEditorContent.current) {
+            setEditorContent(loadedDoc.html, false);
+        } else {
+            shouldSetEditorContent.current = true;
+        }
+        
         //setNameFormContent(loadedDoc.name, false);
 
         return () => {
