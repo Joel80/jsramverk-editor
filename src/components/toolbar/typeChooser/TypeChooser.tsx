@@ -9,8 +9,6 @@ export default function TypeChooser({codeMode, setCurrentDoc, setLoadedDoc}: {co
         let doc = {_id: null, name:"No title", html:"", allowed_users: [], code: codeMode.current, comments: []}
         setCurrentDoc(doc);
         setLoadedDoc(doc);
-
-        console.log(codeMode.current);
     }
 
     return (
