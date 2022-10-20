@@ -18,7 +18,6 @@ import CommentButton from './components/editor/CommentButton';
 import AddComment from './components/editor/AddComment';
 import CommentList from './components/editor/CommentList';
 
-
 function App() {
 
     let defaultDoc = {
@@ -108,6 +107,7 @@ function App() {
                     setCurrentDoc(currentDocCopy);
 
                     commentInput.innerHTML='';
+
                     setShowAddCommentField(false);
                 }
             }
@@ -116,6 +116,7 @@ function App() {
 
     function handleCancelCommentButtonClick() {
         const commentInput = document.getElementById("commentInput") as HTMLInputElement | null;
+
         if (commentInput) {
             commentInput.innerHTML='';
         }
@@ -454,27 +455,31 @@ function App() {
                                     <>
                                         {showAddCommentField? 
                                             <>
-                                                <AddComment handleAddCommentButtonClick={handleAddCommentButtonClick} handleCancelCommentButtonClick={handleCancelCommentButtonClick} />
                                                 <div className='text-editor-wrapper'>
                                                     <Texteditor handleChange={handleChange} currentDoc={currentDoc}/>
-                                                    {currentDoc.comments? 
-                                                        <CommentList comments={currentDoc.comments} />
-                                                        :
-                                                        <></>
-                                                    }
-                                                </div>
-                                            </>
-                                            :
-                                            <>
-                                                <CommentButton handleCommentButtonClick={handleCommentButtonClick}/>
-                                                <div className='text-editor-wrapper'>
-                                                
-                                                    <Texteditor handleChange={handleChange} currentDoc={currentDoc}/>
+                                                    <div className="comments-wrapper">
+                                                        <AddComment handleAddCommentButtonClick={handleAddCommentButtonClick} handleCancelCommentButtonClick={handleCancelCommentButtonClick} />
                                                         {currentDoc.comments? 
                                                             <CommentList comments={currentDoc.comments} />
                                                             :
                                                             <></>
                                                         }
+                                                    </div>
+                                                </div>
+                                            </>
+                                            :
+                                            <>
+                                                
+                                                <div className='text-editor-wrapper'>
+                                                    <Texteditor handleChange={handleChange} currentDoc={currentDoc}/>
+                                                    <div className="comments-wrapper">
+                                                        <CommentButton handleCommentButtonClick={handleCommentButtonClick}/>
+                                                        {currentDoc.comments? 
+                                                            <CommentList comments={currentDoc.comments} />
+                                                            :
+                                                            <></>
+                                                        }
+                                                    </div>
                                                 </div>
                                                 
                                             </>
