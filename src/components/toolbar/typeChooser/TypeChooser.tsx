@@ -1,5 +1,6 @@
 import { MutableRefObject } from "react";
 import docInterface from "../../../interfaces/doc";
+import './TypeChooser.css';
 
 export default function TypeChooser({codeMode, setCurrentDoc, setLoadedDoc}: {codeMode: MutableRefObject<boolean>, setCurrentDoc(param: docInterface): void, setLoadedDoc(param: docInterface): void}) {
 
@@ -14,8 +15,13 @@ export default function TypeChooser({codeMode, setCurrentDoc, setLoadedDoc}: {co
 
     return (
             <>
-                <label>Code mode</label>
-                <input id="typeChooser" type="checkbox" onChange={handleModeChange} /> 
+                <div className="type-chooser-wrapper">
+                    <div className="text">Code mode</div>
+                    <label className="switch">
+                        <input id="typeChooser" type="checkbox" onChange={handleModeChange} />
+                        <span className="slider round"></span>
+                    </label>
+                </div>
             </>
             
     );
