@@ -40,8 +40,6 @@ const docsModel = {
 
         const documents = await response.json();
 
-        //console.log(`Documents = ${documents}`)
-
         return documents.data.docs;
     },
 
@@ -59,7 +57,6 @@ const docsModel = {
     },
 
     getUsers: async function getUsers(_id, token) {
-        //console.log(`${_id}`);
         const response = await fetch(`${docsModel.baseUrl}/graphql`, {
             method: 'POST',
 
@@ -76,9 +73,6 @@ const docsModel = {
 
         const document = await response.json();
 
-        //console.log(document);
-        //console.log(`Documents = ${documents}`)
-
         return document.data.doc.allowed_users;
     },
 
@@ -94,14 +88,11 @@ const docsModel = {
 
         const result = await response.json();
 
-        //console.log(result);
-
         return result;
     },
 
 
     saveDocQL: async function saveDocQL(doc, token) {
-        //console.log(`${doc.name}`);
         const response = await fetch(`${docsModel.baseUrl}/graphql`, {
             method: 'POST',
 
@@ -122,11 +113,6 @@ const docsModel = {
         });
 
         const result = await response.json();
-
-        console.log(result);
-
-        //console.log(document);
-        //console.log(`Documents = ${documents}`)
 
         return result.data.saveDoc;
     },
@@ -161,10 +147,8 @@ const docsModel = {
         });
 
         const result = await response.json();
-        //console.log(result);
-        const decodedResult = atob(result.data);
 
-        console.log(decodedResult);
+        const decodedResult = atob(result.data);
 
         return decodedResult;
 
@@ -186,8 +170,6 @@ const docsModel = {
         });
 
         const result = await response.json();
-
-        //console.log(result);
 
         return result;
     }

@@ -6,13 +6,6 @@ import docModel from '../../../models/docs';
 export default  function SaveButton({setCurrentDoc, setSavedDoc, setDocumentSaved, currentDoc}: {setCurrentDoc(param: docInterface): void, setSavedDoc(param:docInterface): void, setDocumentSaved(param:boolean): void, currentDoc: docInterface}) {
   
     async function handleClick() {
-        //console.log("Clicked");
-        /* const editorElement = document.querySelector("trix-editor") as any | null;
-        // Output as text
-        console.log(`Content as unformatted string:  ${editorElement?.editor.getDocument().toString()}`);
-        //Output as html
-        console.log(`Content as html-value: ${editorElement.value}`); */
-
         if (currentDoc.name && currentDoc.html) {
             if (currentDoc._id === null ) {
                 const result = await docModel.saveDoc(currentDoc);

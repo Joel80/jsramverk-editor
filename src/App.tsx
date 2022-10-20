@@ -80,17 +80,7 @@ function App() {
         if (!codeMode.current) {
             const element = document.querySelector("trix-editor") as any | null;
             if (element) {
-                //element.editor.activateAttribute("comment");
-               /*  let attachement = new Trix.Attachment({content: "<span id='0'>"});
-                const start = selectedRange.current[0];
-                const end = selectedRange.current[1];
-                element.editor.setSelectedRange([start]);
-                element.editor.insertAttachment(attachement);
-                attachement = new Trix.Attachment({content: "</span>"});
-                element.editor.setSelectedRange([end]);
-                element.editor.insertAttachment(attachement); */
-
-                const commentInput = document.getElementById("commentInput") as HTMLInputElement | null;
+                 const commentInput = document.getElementById("commentInput") as HTMLInputElement | null;
 
                 if (commentInput) {
                     const comment = {
@@ -137,16 +127,6 @@ function App() {
         console.log(codeMode.current);
     }
 
-    /* function showCodeEditorValue() {
-        if (codeEditorRef.current) {
-            
-            console.log(codeEditorRef.current.getValue());
-            codeEditorRef.current.setValue("Hej");
-        } else {
-            console.log(codeEditorRef.current);
-        }
-    }
- */
     async function handleClickRun() {
         console.log("Running");
         //showCodeEditorValue();
@@ -219,12 +199,6 @@ function App() {
 
         setUsers(docUsers);
 
-        //await fetchDocs();
-
-        //setSelectElement("documentSelect", fetchedDoc._id);
-
-        
-        
         setEditorContent(fetchedDoc.html, false);
 
         shouldSetEditorContent.current = false;
@@ -259,19 +233,13 @@ function App() {
 
         if (codeMode.current) {
             element = codeEditorRef.current;
-             /* console.log(`Current content: ${element.getValue()}`);
-                 */
+
             if (element) {
-                // This gives the same as below, new and current content are
-                // the same but still it is loaded?
-                /* console.log(`New content: ${content}`);
-                console.log(`Current content: ${element.getValue()}`); */
                 updateCurrentDocOnChange = triggerChange;
                 console.log(monacoRef.current);
                 if (content !== element.getValue()) {
                     element.setValue(content);
                 }
-                console.log(element.getPosition());
             }
         } else {
             element = document.querySelector("trix-editor") as any | null;
@@ -279,32 +247,20 @@ function App() {
                 updateCurrentDocOnChange = triggerChange;
                 // Get selected range (save the current cursor position)
                 cursorPos.current = element.editor.getSelectedRange();
-                //console.log(`Cursorpos:${cursorPos.current}`);
-                /* console.log(`Current content: ${element.value}`);
-                console.log(`New content: ${content}`); */
+                
+                element.value = "";
+                element.editor.setSelectedRange([0, 0]);
+                updateCurrentDocOnChange = triggerChange;
+                element.editor.insertHTML(content);
+                
+                // Set selected range to the "old" cursor position
+                element.editor.setSelectedRange(cursorPos.current);
 
-                // To check if content equals works with code editor not with text editor?
-                /* if (content !== element.value) { */
-                    element.value = "";
-                    element.editor.setSelectedRange([0, 0]);
-                    updateCurrentDocOnChange = triggerChange;
-                    element.editor.insertHTML(content);
-                    // Set selected range to the "old" cursor position
-                    element.editor.setSelectedRange(cursorPos.current);
-                /* } */
             }
         }
                 
         
     }
-
-    /* function setNameFormContent(content: string, triggerChange: boolean) {
-        let element = document.querySelector("document-name-form") as any | null;
-        if (element) {
-            updateNameFieldOnChange = triggerChange;
-            element.value=content;
-        }
-    } */
 
     async function fetchDocs() {
         //console.log("Calling getAllDocs");
@@ -314,7 +270,7 @@ function App() {
         }
     }
 
-    // Fetch all docs on loading app
+    // Fetches all docs
     useEffect(() => {
         (async () => {
             await fetchDocs();
@@ -322,7 +278,7 @@ function App() {
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [token]);
 
-    // When a doc i selected in the dropDown
+    // When a doc is loaded
     useEffect( () => {
         setSocket(io(SERVER_URL));
 
@@ -347,7 +303,7 @@ function App() {
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [loadedDoc]);
 
-    // Changes to currentDoc triggers this
+    // When currentDoc changes
     useEffect (() => {
         //console.log(sendToSocket);
         if (socket && sendToSocket.current) {
@@ -365,8 +321,6 @@ function App() {
         }
 
         sendToSocket.current = true;
-        //changeSendToSocket(true);
-        //console.log(sendToSocket);
 
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [currentDoc]);
@@ -378,19 +332,13 @@ function App() {
             // Listen to docUpdate event
             socket.on("docUpdate", (data: any) => {
                 sendToSocket.current = false;
-                //changeSendToSocket(false);
-                //console.log("Updates from socket");
                 setEditorContent(data.html, false);
-                //setNameFormContent(data.name, false);
-
-                // A call to fetchDocs here to get documents
-                // created and loaded?
             });
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [socket])
 
-    // Used when creating new doc to reflect changes in drop down list
+    // When doc is saved
     useEffect (() => {
         const setSelectElement = (id: string, value: string | null) => {
             //console.log(`Setting select: ${currentDoc._id}`)
@@ -402,7 +350,7 @@ function App() {
                     
             }
         }
-        
+
         (async () => {
             // Dont set selectElement on first render
             if (shouldSetSelectElement.current) {
@@ -418,7 +366,7 @@ function App() {
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [savedDoc, documentSaved]);
 
-    console.log(`Log from app: ${currentDoc._id} - ${currentDoc.html} - ${currentDoc.name} ${currentDoc.code} -${currentDoc.comments}`);
+    //console.log(`Log from app: ${currentDoc._id} - ${currentDoc.html} - ${currentDoc.name} ${currentDoc.code} -${currentDoc.comments}`);
 
     return (
         <div className="App">
