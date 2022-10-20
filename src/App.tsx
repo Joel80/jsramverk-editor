@@ -2,14 +2,11 @@ import './App.css';
 import { useState, useEffect, useRef } from 'react';
 import { io } from 'socket.io-client';
 import { jsPDF } from "jspdf";
-/* @ts-ignore */
-//import Trix from "trix";
 import Texteditor from './components/editor/Texteditor';
 import NameForm from './components/editor/NameForm';
 import docsModel from './models/docs';
 import Toolbar from './components/toolbar/toolbar/Toolbar';
 import docInterface from './interfaces/doc';
-//import docComment from './interfaces/comment';
 import Login from './components/login/Login';
 import CodeEditor from './components/editor/CodeEditor';
 import RunButton from './components/editor/RunButton';
@@ -17,6 +14,7 @@ import CodeConsole from './components/editor/CodeConsole';
 import CommentButton from './components/editor/CommentButton';
 import AddComment from './components/editor/AddComment';
 import CommentList from './components/editor/CommentList';
+import PdfGenerator from './components/toolbar/pdfGenerator/PdfGenerator';
 
 function App() {
 
@@ -208,6 +206,11 @@ function App() {
             code: codeMode.current,
             comments: []
         }
+
+        if (codeMode.current) {
+            doc.html = "//Some comment"
+        }
+
         const result = await docsModel.saveDocQL(doc, token);
 
         const fetchedDoc = await docsModel.getOneDocById(result, token);
@@ -436,7 +439,6 @@ function App() {
                             token={token}
                             setUsers={setUsers}
                             users={users}
-                            createPdf={createPdf}
                             handleModeChange={handleModeChange}
                             codeMode = {codeMode}
                             userEmail={userEmail}
@@ -455,6 +457,7 @@ function App() {
                                     <>
                                         {showAddCommentField? 
                                             <>
+                                                <PdfGenerator createPdf={createPdf} />
                                                 <div className='text-editor-wrapper'>
                                                     <Texteditor handleChange={handleChange} currentDoc={currentDoc}/>
                                                     <div className="comments-wrapper">
@@ -469,7 +472,7 @@ function App() {
                                             </>
                                             :
                                             <>
-                                                
+                                                <PdfGenerator createPdf={createPdf} />
                                                 <div className='text-editor-wrapper'>
                                                     <Texteditor handleChange={handleChange} currentDoc={currentDoc}/>
                                                     <div className="comments-wrapper">
