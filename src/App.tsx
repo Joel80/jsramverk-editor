@@ -51,10 +51,7 @@ function App() {
         "http://localhost:1337" :
         "https://jsramverk-editor-jolf20.azurewebsites.net"
 
-
-
     let updateCurrentDocOnChange: boolean = false;
-    //let updateNameFieldOnChange: boolean =false;
 
     function handleCommentButtonClick() {
         if (!codeMode.current) {
@@ -65,7 +62,6 @@ function App() {
                 
                 element.editor.activateAttribute("comment");
                 const start = selectedRange.current[0];
-                console.log(start);
                 const end = selectedRange.current[1];
                 element.editor.setSelectedRange([start]);
                 element.editor.insertHTML("<comment>")
@@ -123,13 +119,9 @@ function App() {
         let doc = {_id: null, name:"No title", html:"", allowed_users: [], code: codeMode.current, comments: []}
         setCurrentDoc(doc);
         setLoadedDoc(doc);
-
-        console.log(codeMode.current);
     }
 
     async function handleClickRun() {
-        console.log("Running");
-        //showCodeEditorValue();
         const codeConsole = document.getElementById('codeConsole');
         if (codeConsole) {
             codeConsole.innerHTML = "Running your code...";
@@ -236,7 +228,6 @@ function App() {
 
             if (element) {
                 updateCurrentDocOnChange = triggerChange;
-                console.log(monacoRef.current);
                 if (content !== element.getValue()) {
                     element.setValue(content);
                 }
@@ -262,15 +253,15 @@ function App() {
         
     }
 
+    // Fetches all docs
     async function fetchDocs() {
-        //console.log("Calling getAllDocs");
         if (token) {
             const allDocs = await docsModel.getAllDocs(token);
             setDocs(allDocs);
         }
     }
 
-    // Fetches all docs
+    // When token changes
     useEffect(() => {
         (async () => {
             await fetchDocs();
@@ -286,7 +277,6 @@ function App() {
             socket.emit("create", loadedDoc["_id"]);
         }
 
-        console.log(loadedDoc);
         if (shouldSetEditorContent.current) {
             setEditorContent(loadedDoc.html, false);
         } else {
@@ -305,9 +295,8 @@ function App() {
 
     // When currentDoc changes
     useEffect (() => {
-        //console.log(sendToSocket);
         if (socket && sendToSocket.current) {
-            //console.log("Sending to socket");
+
             let data ={
                 _id: currentDoc._id,
                 name: currentDoc.name,
@@ -341,7 +330,6 @@ function App() {
     // When doc is saved
     useEffect (() => {
         const setSelectElement = (id: string, value: string | null) => {
-            //console.log(`Setting select: ${currentDoc._id}`)
             let selectElement = document.getElementById(id) as HTMLSelectElement | null;
             if (selectElement !== null) {
                 if (value !== null) {
