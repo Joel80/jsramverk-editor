@@ -1,9 +1,9 @@
 .comment-input {
-    margin-top: 1em;
-    margin-bottom: 1em;
-    min-width: 48.5vw;
-    height: 20vh;
+    align-self: center;
+    margin-left: 1em;
+    min-height: 5vh;
+    min-width: 15vw;
     padding: 0.5em;
-    font-size: 0.5em;
+    font-size: em;
     border: 1px solid black;
 }
