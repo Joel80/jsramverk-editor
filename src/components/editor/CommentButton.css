@@ -5,6 +5,33 @@
     padding: 0.7em;
     font-size: 1rem;
     border-color: white;
-    margin-bottom: 1em;
-    margin-top: 1em;
+    align-self: center;
+}
+
+.comment-buttons {
+    display: flex;
+    flex-direction: row;
+    margin-left: 1em;
+    margin-top: 0.2em;
+    justify-content: center;
+}
+
+.add-comment-button {
+    background-color: #550080;
+    box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
+    color: white;
+    padding: 0.7em;
+    font-size: 0.7rem;
+    border-color: white;
+    margin-right: 0.2em;
+    min-width: 5vw;
+}
+.cancel-comment-button {
+    background-color: #550080;
+    box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
+    color: white;
+    padding: 0.7em;
+    font-size: 0.7rem;
+    border-color: white;
+    min-width: 5vw;
 }
