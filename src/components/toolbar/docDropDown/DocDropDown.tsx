@@ -21,11 +21,8 @@ export default  function DocDropDown({
     }) {
 
     async function fetchDoc (e: React.ChangeEvent<HTMLSelectElement>) {
-        //console.log(e.target.value);
 
         const id = e.target.value.trim().toString();
-
-        //console.log(id);
 
         if (id !== "-99") {
             const fetchedDoc = await docsModel.getOneDocById(id, token);
@@ -50,11 +47,6 @@ export default  function DocDropDown({
             setCurrentDoc(doc);
             setLoadedDoc(doc);
         }
-        
-
-        //console.log(fetchedDoc);
-        //console.log(`Log from dropdown: ${currentDoc.name}`);
-
     }
 
     return (
