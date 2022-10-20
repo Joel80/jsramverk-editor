@@ -16,8 +16,6 @@ export default function ShareForm({setCurrentDoc, currentDoc, setUsers, users, u
     const [value, setValue] = useState("");
     const [message, setMessage] = useState("");
 
-    //console.log(`Users in Shareform: ${users}`);
-
     function changeHandler(event: React.ChangeEvent<HTMLInputElement>) {
 
         let user = event.target.value;
@@ -40,8 +38,6 @@ export default function ShareForm({setCurrentDoc, currentDoc, setUsers, users, u
 
         copy.allowed_users.push(newUser);
 
-        //console.log(copy.allowed_users);
-
         let newUsers = [...users];
 
         newUsers.push(newUser);
@@ -60,7 +56,7 @@ export default function ShareForm({setCurrentDoc, currentDoc, setUsers, users, u
     return(
         <>
             <label className="form-label" htmlFor="email-share">Add a user by e-mail: </label>
-            <input className="form-input" type="email" name="email-share" onChange={changeHandler} value={value}></input>
+            <input data-testid="add-user-input" className="form-input" type="email" name="email-share" onChange={changeHandler} value={value}></input>
             {message?
                 <div className="success">{message}</div>
                 :
