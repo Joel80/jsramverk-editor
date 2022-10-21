@@ -102,6 +102,10 @@ jest.mock('socket.io-client');
 
     expect(message).toBeInTheDocument();
 
+    const newUser = screen.getByText("Users: test@test.se, test2@test.se");
+
+    expect(newUser).toBeInTheDocument();
+
 });
 
 
@@ -150,7 +154,9 @@ jest.mock('socket.io-client');
 
     await user.click(button2);
 
-    screen.getByText("Loading...");
+    const codeEditor = screen.getByText("Loading...");
+
+    expect(codeEditor).toBeInTheDocument();
 
  });
 
