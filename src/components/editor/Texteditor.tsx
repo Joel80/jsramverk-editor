@@ -6,7 +6,7 @@ import docInterface from '../../interfaces/doc';
 
 export default function Texteditor({ handleChange, currentDoc }: {handleChange(param1: string, param2: string): void, currentDoc: docInterface} ) {
 
-    Trix.config.textAttributes.comment = { 
+    /* Trix.config.textAttributes.comment = { 
       tagName: "comment",
       style: {
         backgroundColor: "purple",
@@ -14,10 +14,17 @@ export default function Texteditor({ handleChange, currentDoc }: {handleChange(p
           background: "pink"
         }
       },
-    }
+    } */
     
     const handleEditorReady = (editor: Editor) => {
         editor.insertString("");
+        Trix.config.textAttributes.comment = { 
+          tagName: "comment",
+          style: {
+            backgroundColor: "purple",
+          },
+          inheritable: 1
+        }
     };
 
     return(
