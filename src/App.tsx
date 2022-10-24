@@ -65,7 +65,7 @@ function App() {
                 const start = selectedRange.current[0];
                 const end = selectedRange.current[1];
                 element.editor.setSelectedRange([start]);
-                element.editor.insertHTML("<comment>")
+                element.editor.insertHTML("<comment>");
                 element.editor.setSelectedRange([end]);
                 element.editor.insertHTML("</comment>");
             }
