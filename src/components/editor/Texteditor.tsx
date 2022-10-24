@@ -23,7 +23,6 @@ export default function Texteditor({ handleChange, currentDoc }: {handleChange(p
           style: {
             backgroundColor: "purple",
           },
-          inheritable: 1
         }
     };
 
