@@ -22,10 +22,4 @@ test('comment card renders with correct comment', () => {
 
     expect(commentCard).toBeInTheDocument();
 
-    const user = userEvent.setup();
-
-    user.hover(commentCard);
-
-    //screen.debug();
-    
  });
