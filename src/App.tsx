@@ -184,7 +184,7 @@ function App() {
     
     async function handleClick() {
         let doc: Partial<docInterface>= {
-            name: "Ingen titel",
+            name: "No title",
             html: "No content",
             allowed_users: [userEmail],
             code: codeMode.current,
