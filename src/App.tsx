@@ -45,6 +45,7 @@ function App() {
     const [showAddCommentField, setShowAddCommentField] = useState(false);
     const selectedRange = useRef([]);
     const shouldSetEditorContent = useRef(true);
+    const nameChange = useRef(false);
 
     // Server url and socket declarations
     const SERVER_URL = window.location.href.includes("localhost") ? 
@@ -158,15 +159,26 @@ function App() {
 
 
     const handleNameChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-        //if (updateNameFieldOnChange) {
-            const copy = Object.assign({}, currentDoc);
-    
-            copy.name = e.target.value;;
-    
-            setCurrentDoc(copy);
-        //}
-    
-        //updateNameFieldOnChange = true;
+
+        let timer;
+
+        const copy = Object.assign({}, currentDoc);
+
+        copy.name = e.target.value;
+
+
+        setCurrentDoc(copy);
+
+        nameChange.current = true;
+
+       /*  setDocumentSaved(true);
+
+        setDocumentSaved(true); */
+
+        clearTimeout(timer);
+        timer = setTimeout(function() {
+            setDocumentSaved(true);
+        }, 2000);
     }
 
     
@@ -239,18 +251,21 @@ function App() {
                 // Get selected range (save the current cursor position)
                 cursorPos.current = element.editor.getSelectedRange();
                 
-                element.value = "";
-                element.editor.setSelectedRange([0, 0]);
-                updateCurrentDocOnChange = triggerChange;
-                element.editor.insertHTML(content);
+                if (!nameChange.current) {
+                    element.value = "";
+                    element.editor.setSelectedRange([0, 0]);
+                    updateCurrentDocOnChange = triggerChange;
+                    element.editor.insertHTML(content);
+
+                    // Set selected range to the "old" cursor position
+                    element.editor.setSelectedRange(cursorPos.current);
+                } else {
+                    nameChange.current = false;
+                }
                 
-                // Set selected range to the "old" cursor position
-                element.editor.setSelectedRange(cursorPos.current);
 
             }
         }
-                
-        
     }
 
     // Fetches all docs
