@@ -60,14 +60,9 @@ function App() {
             if (element) { 
                 const range = element.editor.getSelectedRange();
                 selectedRange.current = range;
-                
+
+                element.editor.setSelectedRange(selectedRange.current);
                 element.editor.activateAttribute("comment");
-                const start = selectedRange.current[0];
-                const end = selectedRange.current[1];
-                element.editor.setSelectedRange([start]);
-                element.editor.insertHTML("<comment>");
-                element.editor.setSelectedRange([end]);
-                element.editor.insertHTML("</comment>");
             }
         }
         setShowAddCommentField(true);
@@ -106,8 +101,7 @@ function App() {
             commentInput.innerHTML='';
         }
         const element = document.querySelector("trix-editor") as any | null;
-        if (element) {             
-            
+        if (element) {
             element.editor.setSelectedRange(selectedRange.current);
             element.editor.deactivateAttribute("comment");
         }
